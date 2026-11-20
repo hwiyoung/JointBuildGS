@@ -17,6 +17,7 @@ import a1_variants as A1
 import js3_figs as J3
 import pandas as pd
 from mfcommon import *   # jscommon 의 O·cfg·D 등이 덮은 이름을 이 발주 것으로 되돌림 (SURF·STATE·PN·wq·JABL 은 jscommon 것 유지)
+MLABEL = {'A': 'A', 'B_orig': 'B-원문', 'B_view': 'B-시점 (세션이 정한 판)', 'C': 'C'}
 BOXR = PH/'main_prep_measure_v1/PHD-MAIN-PREP-MEASURE-v1/mvs'
 
 def survive(site):
@@ -125,16 +126,21 @@ def table(sites):
         d = A1.load(prior); A = d['area']; pc = np.load(JABL/'addendum2'/f'patch_case_{prior}.npz')['pc'].astype(int); sig = np.load(O/'judge'/prior/'patch_none.npz')['sig']
         gtp = d['gt_p']; taup = d['tau_p']
         for site in sites:
-            f = O/'box'/f'{site}__{prior}.npz'
-            if not f.exists(): continue
-            z = np.load(f); ix = z['idx']; a = A[ix]; r0 = z['none__raw_n']; within = lambda med: np.isfinite(gtp[ix]) & np.isfinite(med) & (np.abs(med - gtp[ix]) <= taup[ix])
-            w0 = within(z['none__med']); w1 = within(z['A__med']); few = (z['A__n'] >= 0) & (z['A__n'] < 4); few0 = (z['none__n'] >= 0) & (z['none__n'] < 4)
-            with np.errstate(invalid='ignore', divide='ignore'): ratio = np.where(r0 > 0, z['A__raw_n']/np.maximum(r0, 1), np.nan)
+          f = O/'box'/f'{site}__{prior}.npz'
+          if not f.exists(): continue
+          z0 = np.load(f); ix = z0['idx']; a = A[ix]; r0 = z0['none__raw_n']; within = lambda med: np.isfinite(gtp[ix]) & np.isfinite(med) & (np.abs(med - gtp[ix]) <= taup[ix])
+          w0 = within(z0['none__med']); few0 = (z0['none__n'] >= 0) & (z0['none__n'] < 4)
+          for meth in ['A', 'B_orig', 'B_view', 'C']:   # A 는 mf10_box, B·C 는 mf10b_box_bc
+            fm = f if meth == 'A' else O/'box'/f'{site}__{prior}__{meth}.npz'
+            if not fm.exists(): continue
+            z = np.load(fm); assert np.array_equal(z['idx'], ix)
+            w1 = within(z[f'{meth}__med']); few = (z[f'{meth}__n'] >= 0) & (z[f'{meth}__n'] < 4)
+            with np.errstate(invalid='ignore', divide='ignore'): ratio = np.where(r0 > 0, z[f'{meth}__raw_n']/np.maximum(r0, 1), np.nan)
             for sn, kk in SURF[prior]:
                 km = np.isin(d['kind'][ix], kk)
                 for stn, stm in [(STATE[s_], pc[ix] == s_) for s_ in STATE_ORDER] + [('모두', np.ones(len(ix), bool))]:
                     mm = sig[ix] & km & stm; aa = a[mm].sum(); ok = mm & np.isfinite(ratio); wa = a[ok]
-                    r = dict(prior=PN[prior], site=site, surface=sn, state=stn, patches=int(mm.sum()), area_m2=float(aa), box_lt4_before_area_pct=100*a[mm & few0].sum()/aa if aa else np.nan)
+                    r = dict(prior=PN[prior], site=site, method=MLABEL.get(meth, meth), surface=sn, state=stn, patches=int(mm.sum()), area_m2=float(aa), box_lt4_before_area_pct=100*a[mm & few0].sum()/aa if aa else np.nan)
                     if ok.sum():
                         for qq in [.1, .5, .9]: r[f'survive_q{int(qq*100)}_pct'] = 100*wq(ratio[ok], wa, qq)
                         r['survive_mean_pct'] = 100*float(np.sum(ratio[ok]*wa)/wa.sum())
@@ -146,13 +152,13 @@ def table(sites):
     S.to_csv(T_/'t5_survival_box.csv', index=False)
     (T_/'t5_survival_box.json').write_text(json.dumps(dict(rows=json.loads(S.to_json(orient='records', force_ascii=False)), scientific_verdict=None), ensure_ascii=False, indent=0))
     q = S[((S.prior == 'LoD2') & (S.surface == '모두')) | ((S.prior == '항공 LiDAR') & (S.surface == '지붕'))]
-    L = ['# t5_survival_box', '', '5절 상자 MVS(세 실험 지역). 방법 A(COLMAP stereo_fusion 기본값)를 상자 작업 공간에서 돌려, 상자 MVS 의 화소마다 점이 살아남은 비율. 패치·처음 상태·차이가 유의한 패치 = 캠퍼스 판(JUDGESTRUCT-v1), '
+    L = ['# t5_survival_box', '', '5절 상자 MVS(세 실험 지역). 방법마다(A = COLMAP stereo_fusion 기본값, B-원문·B-시점 = Wolff 외 2016(B-시점은 세션이 정한 판), C = 통계적 걸러내기) 상자 작업 공간에서 돌려, 상자 MVS 의 화소마다 점이 살아남은 비율. 패치·처음 상태·차이가 유의한 패치 = 캠퍼스 판(JUDGESTRUCT-v1), '
          '지역 = JUDGECHECK-v2 그림 1 장면 범위. 상자 점 4개 미만 % 앞 = 상자 지금 점으로 이미 4개 미만이던 넓이. LoD2 = 지붕+벽, 항공 LiDAR = 지붕. 지붕·벽 나눔은 csv.', '', 'scientific_verdict: null', '',
-         '| 사전 정보 | 지역 | 처음 상태 | 패치 | 넓이 m² | 살아남은 비율 10·50·90 % / 평균 | 점 4개 미만 넓이 % 앞 → 뒤 | 중앙값 τ 안 넓이 % 앞 → 뒤 |', '|---|---|---|---|---|---|---|---|']
+         '| 사전 정보 | 지역 | 방법 | 처음 상태 | 패치 | 넓이 m² | 살아남은 비율 10·50·90 % / 평균 | 점 4개 미만 넓이 % 앞 → 뒤 | 중앙값 τ 안 넓이 % 앞 → 뒤 |', '|---|---|---|---|---|---|---|---|---|']
     for _, r in q.iterrows():
-        L.append(f"| {r.prior} | {r.site} | {r.state} | {r.patches:,} | {r.area_m2:.1f} | {f1(r.get('survive_q10_pct'))} · {f1(r.get('survive_q50_pct'))} · {f1(r.get('survive_q90_pct'))} / {f1(r.get('survive_mean_pct'))} | "
+        L.append(f"| {r.prior} | {r.site} | {r.method} | {r.state} | {r.patches:,} | {r.area_m2:.1f} | {f1(r.get('survive_q10_pct'))} · {f1(r.get('survive_q50_pct'))} · {f1(r.get('survive_q90_pct'))} / {f1(r.get('survive_mean_pct'))} | "
                  f"{f1(r.box_lt4_before_area_pct)} → {f1(r.lt4_after_area_pct)} | {f1(r.median_within_tau_before_pct)} → {f1(r.median_within_tau_after_pct)} |")
-    (T_/'t5_survival_box.md').write_text('\n'.join(L) + '\n'); print('\n'.join(L[:40]), flush=True)
+    (T_/'t5_survival_box.md').write_text('\n'.join(L) + '\n'); print('\n'.join(L[:12]), flush=True)
 
 def main(sites):
     MC.cfg(); (O/'box').mkdir(exist_ok=True)
