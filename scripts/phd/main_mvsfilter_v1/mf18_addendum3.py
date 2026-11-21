@@ -244,6 +244,26 @@ def figs_mode(prior):
     J3.save(fig, f'fig11_points_{prior}', meta); meta_all['fig11_points'] = len(meta['points'])
     print('FIGS3', prior, json.dumps(meta_all), round(T.s()), flush=True); MC.progress(f'mf18 figs {prior}(덧붙임 3 3절) 끝, {round(T.s())} 초')
 
+def rates_mode():
+    """대조 뒤 채움: 본 방법·구조 하한·구조 상한 줄의 '찾은·잘못 되돌린·유효 바뀜'. 정의 = 차이가 유의한 패치 가운데 그 줄의 판정이 사전정보 사용(1)인 넓이 비율(판 가~다와 같은 분모·같은 셈 flip_rates).
+    본 방법 판정 = JUDGECHECK-v2 본값 판 j_region(method), 구조 상한 = JUDGESTRUCT-v1 fig_arrays up, 구조 하한 = 지금 점군 하한(유의 패치는 모두 영상 깊이 사용이라 0)."""
+    T = Timer(); R = []; mi = J.VARIANTS.index('method')
+    for prior in ['LoD2', 'ALS']:
+        S = M11.setup(prior); d = S['d']; b = np.load(MC.O/'judge'/prior/'patch_none.npz'); sig = b['sig']; up = np.load(MC.JS/prior/'fig_arrays.npz')['up']
+        for lab, j in [('본 방법 (JUDGECHECK-v2 본값 판정)', d['j_region'][:, mi]), ('구조 하한 (지금 점군)', b['lo']), ('구조 상한 (지금, 참값으로)', up)]:
+            for fr in flip_rates(S, prior, sig, sig & (j == 1)): R.append(dict(prior=PN[prior], line=lab, **fr))
+    pd.DataFrame(R).to_csv(DOCT/'t11_combo_line_rates.csv', index=False); dump(DOCT/'t11_combo_line_rates.json', dict(rows=json.loads(pd.DataFrame(R).to_json(orient='records', force_ascii=False)), note=rates_mode.__doc__, scientific_verdict=None))
+    show = lambda r: (r['prior'] == 'LoD2') or (r['surface'] == '지붕')
+    cell = lambda r, b: f"{f1(r[b + '_pct'])} ({r[b + '_area_m2']:,.0f}, {int(r[b + '_gt_points']):,})"
+    L = ['', '## 본 방법·구조 하한·구조 상한 줄의 찾은·잘못 되돌린 비율 (대조 뒤 채움)', '', '정의 = 차이가 유의한 패치 가운데 그 줄의 판정이 사전정보 사용인 넓이 비율(판 가~다와 같은 분모). 본 방법 판정 = JUDGECHECK-v2 본값 판 j_region(method), 구조 상한 = JUDGESTRUCT-v1 fig_arrays `up`. 위 표의 목표 맞음 값은 바뀌지 않음.', '',
+         '| 사전 정보 | 면 | 줄 | 찾은 % (m², 점) | 잘못 되돌린 % (m², 점) | 유효 바뀜 % (m², 점) | F(JS) % | 사전정보 사용 넓이 m² |', '|---|---|---|---|---|---|---|---|']
+    for r in R:
+        if show(r): L.append(f"| {r['prior']} | {r['surface']} | {r['line']} | {cell(r, 'found_imgerr')} | {cell(r, 'wrong_priorerr')} | {cell(r, 'changed_bothvalid')} | {f1(r['F_js_pct'])} | {r['changed_area_m2']:,.0f} |")
+    t = (DOCT/'t11_combo.md').read_text(); k = t.find('\n## 본 방법·구조 하한'); t = t if k < 0 else t[:k + 1]
+    (DOCT/'t11_combo.md').write_text(t.rstrip('\n') + '\n' + '\n'.join(L) + '\n')
+    for r in R: print('RATES', json.dumps(jsafe({k: r[k] for k in ['prior', 'surface', 'line', 'found_imgerr_pct', 'wrong_priorerr_pct', 'changed_bothvalid_pct']}), ensure_ascii=False), flush=True)
+    MC.progress(f'mf18 rates(덧붙임 3 대조 뒤 채움) 끝, {round(T.s())} 초')
+
 if __name__ == '__main__':
     MC.cfg()
-    {'tables': lambda: tables_mode(), 'figs': lambda: figs_mode(sys.argv[2])}[sys.argv[1]]()
+    {'tables': lambda: tables_mode(), 'rates': lambda: rates_mode(), 'figs': lambda: figs_mode(sys.argv[2])}[sys.argv[1]]()
