@@ -1,0 +1,218 @@
+{
+ "prior": "ALS",
+ "rule": "영상 깊이 오류 넷 + 사전정보 오류 둘, 넓은 모임 차례, 그림 전체에서 한 건물에 하나; 모자라면 있는 만큼",
+ "colors": {
+  "c 1~2": "#d7301f",
+  "c 3~4": "#fdae61",
+  "c 5 이상": "#1a9850"
+ },
+ "groups": [
+  {
+   "rank": 1,
+   "building": "DEBY_LOD2_4959461",
+   "group_patches": 25,
+   "group_area_m2": 1.569025191206984,
+   "section_patch_gid": 648120,
+   "view": "DJI_20241217090931_0048_D.JPG",
+   "view_rule": "모임 전체",
+   "section_cyl_points_before": 36,
+   "section_cyl_points_after": 23,
+   "section_survive_pct": 63.888888888888886,
+   "group_survive_pct": 61.505065123010134,
+   "judgment_before": "영상 깊이 사용",
+   "judgment_after": "영상 깊이 사용",
+   "group_judgment_area_m2": {
+    "영상 깊이 사용→영상 깊이 사용": 1.5690251912069844
+   },
+   "section_mvs_points_drawn": 1149,
+   "section_survived_drawn": 804,
+   "section_drawn_by_c": {
+    "c 1~2": 258,
+    "c 3~4": 87,
+    "c 5 이상": 804
+   },
+   "place": "면 안쪽",
+   "c_ge5_frac": 0.6388888888888888,
+   "photo_result": "지지",
+   "s_P": 0.5820931478990523,
+   "s_M": 0.2967082880966753,
+   "gt_mvs_dist_median_m": -0.5884332092981797,
+   "initial_state": "영상 깊이 오류",
+   "A2_returned": false,
+   "combo_D_returned": true
+  },
+  {
+   "rank": 2,
+   "building": "DEBY_LOD2_4906968",
+   "group_patches": 19,
+   "group_area_m2": 1.2978747278969247,
+   "section_patch_gid": 264501,
+   "view": "DJI_20241217103109_0011_D.JPG",
+   "view_rule": "모임 전체",
+   "section_cyl_points_before": 14,
+   "section_cyl_points_after": 6,
+   "section_survive_pct": 42.857142857142854,
+   "group_survive_pct": 28.00982800982801,
+   "judgment_before": "영상 깊이 사용",
+   "judgment_after": "일치",
+   "group_judgment_area_m2": {
+    "영상 깊이 사용→일치": 1.2301013120339597,
+    "영상 깊이 사용→영상 깊이 사용": 0.06777341586296502
+   },
+   "section_mvs_points_drawn": 468,
+   "section_survived_drawn": 265,
+   "section_drawn_by_c": {
+    "c 1~2": 181,
+    "c 3~4": 22,
+    "c 5 이상": 265
+   },
+   "place": "면 안쪽",
+   "c_ge5_frac": 0.42857142857142855,
+   "photo_result": "지지",
+   "s_P": 0.5395304098946819,
+   "s_M": 0.10329362860932498,
+   "gt_mvs_dist_median_m": 2.205696803484338,
+   "initial_state": "영상 깊이 오류",
+   "A2_returned": false,
+   "combo_D_returned": true
+  },
+  {
+   "rank": 3,
+   "building": "DEBY_LOD2_4906988",
+   "group_patches": 5,
+   "group_area_m2": 0.34220883558800114,
+   "section_patch_gid": 720553,
+   "view": "DJI_20241217090957_0061_D.JPG",
+   "view_rule": "단면 패치 둘레 1.5 m → 각도 제한 없이",
+   "section_cyl_points_before": 18,
+   "section_cyl_points_after": 11,
+   "section_survive_pct": 61.111111111111114,
+   "group_survive_pct": 59.74025974025974,
+   "judgment_before": "영상 깊이 사용",
+   "judgment_after": "영상 깊이 사용",
+   "group_judgment_area_m2": {
+    "영상 깊이 사용→영상 깊이 사용": 0.34220883558800114
+   },
+   "section_mvs_points_drawn": 635,
+   "section_survived_drawn": 267,
+   "section_drawn_by_c": {
+    "c 1~2": 219,
+    "c 3~4": 149,
+    "c 5 이상": 267
+   },
+   "place": "건물 가장자리",
+   "c_ge5_frac": 0.6111111111111112,
+   "photo_result": "지지",
+   "s_P": 0.8047320521376988,
+   "s_M": 0.03622114530391594,
+   "gt_mvs_dist_median_m": 1.618886313930322,
+   "initial_state": "영상 깊이 오류",
+   "A2_returned": false,
+   "combo_D_returned": true
+  },
+  {
+   "rank": 4,
+   "building": "DEBY_LOD2_4906975",
+   "group_patches": 5,
+   "group_area_m2": 0.3212220139865999,
+   "section_patch_gid": 379735,
+   "view": "DJI_20241217103639_0089_D.JPG",
+   "view_rule": "모임 전체",
+   "section_cyl_points_before": 26,
+   "section_cyl_points_after": 5,
+   "section_survive_pct": 19.23076923076923,
+   "group_survive_pct": 45.0,
+   "judgment_before": "영상 깊이 사용",
+   "judgment_after": "영상 깊이 사용",
+   "group_judgment_area_m2": {
+    "영상 깊이 사용→영상 깊이 사용": 0.3212220139865999
+   },
+   "section_mvs_points_drawn": 1507,
+   "section_survived_drawn": 711,
+   "section_drawn_by_c": {
+    "c 1~2": 467,
+    "c 3~4": 329,
+    "c 5 이상": 711
+   },
+   "place": "건물 가장자리",
+   "c_ge5_frac": 0.19230769230769232,
+   "photo_result": "지지",
+   "s_P": 0.2073799701047966,
+   "s_M": 0.11562616913940707,
+   "gt_mvs_dist_median_m": 2.8201789262190915,
+   "initial_state": "영상 깊이 오류",
+   "A2_returned": false,
+   "combo_D_returned": true
+  },
+  {
+   "rank": 5,
+   "building": "DEBY_LOD2_4959326",
+   "group_patches": 4,
+   "group_area_m2": 0.26513506284331767,
+   "section_patch_gid": 667740,
+   "view": "DJI_20241217091145_0115_D.JPG",
+   "view_rule": "모임 전체",
+   "section_cyl_points_before": 25,
+   "section_cyl_points_after": 25,
+   "section_survive_pct": 100.0,
+   "group_survive_pct": 95.6896551724138,
+   "judgment_before": "영상 깊이 사용",
+   "judgment_after": "영상 깊이 사용",
+   "group_judgment_area_m2": {
+    "영상 깊이 사용→영상 깊이 사용": 0.26513506284331767
+   },
+   "section_mvs_points_drawn": 1331,
+   "section_survived_drawn": 1228,
+   "section_drawn_by_c": {
+    "c 1~2": 30,
+    "c 3~4": 73,
+    "c 5 이상": 1228
+   },
+   "place": "면 안쪽",
+   "c_ge5_frac": 1.0,
+   "photo_result": "지지",
+   "s_P": 0.3762986525588788,
+   "s_M": 0.20781345527152031,
+   "gt_mvs_dist_median_m": -0.0338398161993502,
+   "initial_state": "사전정보 오류",
+   "A2_returned": false,
+   "combo_D_returned": true
+  },
+  {
+   "rank": 6,
+   "building": "DEBY_LOD2_60042",
+   "group_patches": 1,
+   "group_area_m2": 0.08706273829912109,
+   "section_patch_gid": 324410,
+   "view": "DJI_20241217095905_0037_D.JPG",
+   "view_rule": "모임 전체",
+   "section_cyl_points_before": 66,
+   "section_cyl_points_after": 22,
+   "section_survive_pct": 33.333333333333336,
+   "group_survive_pct": 33.333333333333336,
+   "judgment_before": "영상 깊이 사용",
+   "judgment_after": "영상 깊이 사용",
+   "group_judgment_area_m2": {
+    "영상 깊이 사용→영상 깊이 사용": 0.08706273829912109
+   },
+   "section_mvs_points_drawn": 3750,
+   "section_survived_drawn": 2652,
+   "section_drawn_by_c": {
+    "c 1~2": 723,
+    "c 3~4": 375,
+    "c 5 이상": 2652
+   },
+   "place": "건물 가장자리",
+   "c_ge5_frac": 0.3333333333333333,
+   "photo_result": "지지",
+   "s_P": 0.15453718031155053,
+   "s_M": 0.12059556861136306,
+   "gt_mvs_dist_median_m": 0.1740138633952484,
+   "initial_state": "사전정보 오류",
+   "A2_returned": false,
+   "combo_D_returned": true
+  }
+ ],
+ "at": "2026-11-21T23:33:04+09:00",
+ "scientific_verdict": null
+}

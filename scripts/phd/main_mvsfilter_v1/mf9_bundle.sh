@@ -11,7 +11,7 @@ cd "$REPO"
 for d in configs/phd/main_mvsfilter_v1 docs/experiments/phd/main_mvsfilter_v1; do mkdir -p "$ST/$d"; cp -r "$d/." "$ST/$d/"; done
 rm -f "$ST"/docs/experiments/phd/main_mvsfilter_v1/전달_*.md   # 전달 글은 묶음 sha 를 적으므로 묶음 밖(전달 zip)에 둠
 mkdir -p "$ST/scripts/phd/main_mvsfilter_v1"; cp scripts/phd/main_mvsfilter_v1/*.{py,sh,cpp} "$ST/scripts/phd/main_mvsfilter_v1/"
-mkdir -p "$ST/payload"; for p in LoD2 ALS; do f="$O/judge/patches2_$p.csv.gz"; [[ -f $f ]] || f="$O/judge/patches_$p.csv.gz"; [[ -f $f ]] && cp "$f" "$ST/payload/patches_$p.csv.gz"; done   # 덧붙임 2: 열을 더한 patches2 가 있으면 그것을 patches_<prior> 로
+mkdir -p "$ST/payload"; for p in LoD2 ALS; do f="$O/judge/patches3_$p.csv.gz"; [[ -f $f ]] || f="$O/judge/patches2_$p.csv.gz"; [[ -f $f ]] || f="$O/judge/patches_$p.csv.gz"; [[ -f $f ]] && cp "$f" "$ST/payload/patches_$p.csv.gz"; done   # 덧붙임 3·2: 열을 더한 patches3·patches2 가 있으면 (새 것 먼저) 그것을 patches_<prior> 로
 for f in "$O"/masks/*.json "$O"/a2_patch2/*.json "$O"/fusion/*/fusion_receipt.json "$O"/fusion/*/fusion.log; do [[ -f $f ]] || continue; [[ $B == 가 && $(basename $f) =~ ^(B|C) ]] && continue; { r=${f#$O/}; mkdir -p "$ST/payload/$(dirname $r)"; cp "$f" "$ST/payload/$r"; }; done
 for p in LoD2 ALS; do [[ -d "$O/judge/$p" ]] && { mkdir -p "$ST/payload/judge/$p"; cp "$O"/judge/$p/checks_*.json "$ST/payload/judge/$p/" 2>/dev/null || true; }; done
 echo "commit $(git rev-parse HEAD)  branch $(git rev-parse --abbrev-ref HEAD)  made $(date -Iseconds)" > "$ST/BUNDLE_INFO.txt"
