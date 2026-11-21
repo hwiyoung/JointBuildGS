@@ -1,0 +1,208 @@
+{
+ "prior": "ALS",
+ "rule": "차이가 유의한 사전정보 오류 패치 가운데 |d| < 1 m, 넓은 모임 차례(0.36 m 이어짐, 같은 건물), 한 건물에 하나",
+ "note": "단면의 걸러낸 뒤 점선·json 의 judgment_before/after·survive 값은 fig10 짜임 그대로 A2 걸러내기 값",
+ "groups": [
+  {
+   "rank": 1,
+   "building": "DEBY_LOD2_4907207",
+   "group_patches": 61,
+   "group_area_m2": 4.53652867532845,
+   "section_patch_gid": 40024,
+   "view": "DJI_20241217084915_0201_D.JPG",
+   "view_rule": "모임 전체",
+   "section_cyl_points_before": 142,
+   "section_cyl_points_after": 133,
+   "section_survive_pct": 93.66197183098592,
+   "group_survive_pct": 84.79076880300292,
+   "judgment_before": "영상 깊이 사용",
+   "judgment_after": "영상 깊이 사용",
+   "group_judgment_area_m2": {
+    "영상 깊이 사용→일치": 0.07324346236482684,
+    "영상 깊이 사용→영상 깊이 사용": 4.463285212963623
+   },
+   "section_mvs_points_drawn": 4000,
+   "section_survived_drawn": 2846,
+   "section_drawn_by_c": {
+    "c 1~2": 581,
+    "c 3~4": 573,
+    "c 5 이상": 2846
+   },
+   "place": "건물 가장자리",
+   "d_abs_m": 0.5756450544182272,
+   "L_m": 0.1512644413219284,
+   "photo_result": "반박",
+   "gt_mvs_dist_median_m": -0.05360870523975734,
+   "c_ge5_frac": 0.9366197183098591,
+   "group_d_abs_median_areaweighted": 0.43615947621480444
+  },
+  {
+   "rank": 2,
+   "building": "DEBY_LOD2_4907519",
+   "group_patches": 55,
+   "group_area_m2": 3.6173856122351666,
+   "section_patch_gid": 149686,
+   "view": "DJI_20241217084347_0037_D.JPG",
+   "view_rule": "모임 전체",
+   "section_cyl_points_before": 15,
+   "section_cyl_points_after": 12,
+   "section_survive_pct": 80.0,
+   "group_survive_pct": 78.08988764044943,
+   "judgment_before": "영상 깊이 사용",
+   "judgment_after": "영상 깊이 사용",
+   "group_judgment_area_m2": {
+    "영상 깊이 사용→영상 깊이 사용": 3.11285615105231,
+    "영상 깊이 사용→제거": 0.3392848733544541,
+    "영상 깊이 사용→결측": 0.16524458782840357
+   },
+   "section_mvs_points_drawn": 524,
+   "section_survived_drawn": 346,
+   "section_drawn_by_c": {
+    "c 1~2": 56,
+    "c 3~4": 122,
+    "c 5 이상": 346
+   },
+   "place": "건물 가장자리",
+   "d_abs_m": 0.3077241836513881,
+   "L_m": 0.11540011568250888,
+   "photo_result": "둘 다 높음",
+   "gt_mvs_dist_median_m": 0.1308624140271923,
+   "c_ge5_frac": 0.8,
+   "group_d_abs_median_areaweighted": 0.3267525323915476
+  },
+  {
+   "rank": 3,
+   "building": "DEBY_LOD2_4959325",
+   "group_patches": 28,
+   "group_area_m2": 1.7545240857480184,
+   "section_patch_gid": 664629,
+   "view": "DJI_20241217091243_0144_D.JPG",
+   "view_rule": "모임 전체",
+   "section_cyl_points_before": 34,
+   "section_cyl_points_after": 7,
+   "section_survive_pct": 20.58823529411765,
+   "group_survive_pct": 56.39386189258312,
+   "judgment_before": "영상 깊이 사용",
+   "judgment_after": "영상 깊이 사용",
+   "group_judgment_area_m2": {
+    "영상 깊이 사용→일치": 0.06257998735898858,
+    "영상 깊이 사용→영상 깊이 사용": 1.5043486383254236,
+    "영상 깊이 사용→결측": 0.18759546006360617
+   },
+   "section_mvs_points_drawn": 1490,
+   "section_survived_drawn": 1022,
+   "section_drawn_by_c": {
+    "c 1~2": 217,
+    "c 3~4": 251,
+    "c 5 이상": 1022
+   },
+   "place": "건물 가장자리",
+   "d_abs_m": 0.7655363554588602,
+   "L_m": 0.19266342375169027,
+   "photo_result": "반박",
+   "gt_mvs_dist_median_m": 0.09927004907616216,
+   "c_ge5_frac": 0.20588235294117646,
+   "group_d_abs_median_areaweighted": 0.5844689559293261
+  },
+  {
+   "rank": 4,
+   "building": "DEBY_LOD2_108580336",
+   "group_patches": 9,
+   "group_area_m2": 0.7256735298877631,
+   "section_patch_gid": 255447,
+   "view": "DJI_20241217103509_0044_D.JPG",
+   "view_rule": "모임 전체",
+   "section_cyl_points_before": 204,
+   "section_cyl_points_after": 126,
+   "section_survive_pct": 61.76470588235294,
+   "group_survive_pct": 61.80844735276621,
+   "judgment_before": "영상 깊이 사용",
+   "judgment_after": "영상 깊이 사용",
+   "group_judgment_area_m2": {
+    "영상 깊이 사용→영상 깊이 사용": 0.7256735298877632
+   },
+   "section_mvs_points_drawn": 4000,
+   "section_survived_drawn": 3317,
+   "section_drawn_by_c": {
+    "c 1~2": 369,
+    "c 3~4": 314,
+    "c 5 이상": 3317
+   },
+   "place": "건물 가장자리",
+   "d_abs_m": 0.24753619856151843,
+   "L_m": 0.12377213689626144,
+   "photo_result": "조각 부족",
+   "gt_mvs_dist_median_m": -0.18797156161782913,
+   "c_ge5_frac": 0.6176470588235294,
+   "group_d_abs_median_areaweighted": 0.6006840158516606
+  },
+  {
+   "rank": 5,
+   "building": "DEBY_LOD2_4907514",
+   "group_patches": 7,
+   "group_area_m2": 0.45709169525400917,
+   "section_patch_gid": 55216,
+   "view": "DJI_20241217084629_0118_D.JPG",
+   "view_rule": "모임 전체",
+   "section_cyl_points_before": 33,
+   "section_cyl_points_after": 9,
+   "section_survive_pct": 27.272727272727273,
+   "group_survive_pct": 64.24870466321244,
+   "judgment_before": "영상 깊이 사용",
+   "judgment_after": "영상 깊이 사용",
+   "group_judgment_area_m2": {
+    "영상 깊이 사용→일치": 0.0718307433070772,
+    "영상 깊이 사용→영상 깊이 사용": 0.385260951946932
+   },
+   "section_mvs_points_drawn": 1056,
+   "section_survived_drawn": 357,
+   "section_drawn_by_c": {
+    "c 1~2": 507,
+    "c 3~4": 192,
+    "c 5 이상": 357
+   },
+   "place": "건물 가장자리",
+   "d_abs_m": 0.7859078733991178,
+   "L_m": 0.3698715348866254,
+   "photo_result": "반박",
+   "gt_mvs_dist_median_m": 0.3786063752301038,
+   "c_ge5_frac": 0.2727272727272727,
+   "group_d_abs_median_areaweighted": 0.6463896913972954
+  },
+  {
+   "rank": 6,
+   "building": "DEBY_LOD2_4907176",
+   "group_patches": 7,
+   "group_area_m2": 0.44857392241973837,
+   "section_patch_gid": 112635,
+   "view": "DJI_20241217084837_0182_D.JPG",
+   "view_rule": "모임 전체",
+   "section_cyl_points_before": 10,
+   "section_cyl_points_after": 0,
+   "section_survive_pct": 0.0,
+   "group_survive_pct": 20.58823529411765,
+   "judgment_before": "영상 깊이 사용",
+   "judgment_after": "결측",
+   "group_judgment_area_m2": {
+    "영상 깊이 사용→영상 깊이 사용": 0.12815495283741218,
+    "영상 깊이 사용→결측": 0.3204189695823262
+   },
+   "section_mvs_points_drawn": 411,
+   "section_survived_drawn": 37,
+   "section_drawn_by_c": {
+    "c 1~2": 100,
+    "c 3~4": 274,
+    "c 5 이상": 37
+   },
+   "place": "건물 가장자리",
+   "d_abs_m": 0.21260715178609224,
+   "L_m": 0.16158428144012907,
+   "photo_result": "둘 다 높음",
+   "gt_mvs_dist_median_m": 0.032744700985078964,
+   "c_ge5_frac": 0.0,
+   "group_d_abs_median_areaweighted": 0.2481750227000649
+  }
+ ],
+ "at": "2026-11-22T00:42:59+09:00",
+ "scientific_verdict": null
+}

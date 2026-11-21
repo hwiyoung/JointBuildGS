@@ -188,7 +188,7 @@ def write_md(RM, DIST, SPL, BLD, MIXALL, CK):
 
 def figs_mode(prior):
     import mf8_figs as F8, mf16_addendum2 as M16
-    import matplotlib.pyplot as plt
+    import matplotlib, matplotlib.ticker, matplotlib.pyplot as plt
     T_ = Timer(); S, d0, sig, lo0, flipA2, pres, F, dabs, L, ratio, Tmix, MIX, x = base4(prior); A = S['A']; pc = S['pc']; meta_all = {}
     COLS = {0: '#1a9850', 1: '#d7301f', 2: '#2c7fb8', 4: '#999999'}
     # fig12_dist
@@ -214,7 +214,7 @@ def figs_mode(prior):
             ax.plot(rr.Tv, rr[yk], '-o', ms=3, color=col, label=f'처리 {treat}'); meta['lines'].setdefault(treat, {})[yk] = dict(T=rr.Tv.tolist(), value=rr[yk].tolist())
         for key, lab, col, ls in hl:
             v = float(R[R.key == key][yk].iloc[0]); ax.axhline(v, color=col, ls=ls, lw=.9, label=lab); meta.setdefault('hlines', {}).setdefault(key, {})[yk] = v
-        ax.set_xscale('log'); ax.set_xticks(FIXED); ax.set_xticklabels([f'{t:g}' for t in FIXED], fontsize=6); ax.set_xlabel('T (m)', fontsize=7); ax.set_title(f'{yn} 목표 맞음 % (점)', fontsize=7.5); ax.tick_params(labelsize=6)
+        ax.set_xscale('log'); ax.xaxis.set_minor_formatter(matplotlib.ticker.NullFormatter()); ax.set_xticks(FIXED); ax.set_xticklabels([f'{t:g}' for t in FIXED], fontsize=6); ax.set_xlabel('T (m)', fontsize=7); ax.set_title(f'{yn} 목표 맞음 % (점)', fontsize=7.5); ax.tick_params(labelsize=6)
     axs[0].legend(fontsize=5.5, frameon=False); fig.suptitle(f'{PN[prior]} {sn}: 고정 T 마다 판 둘(처리 P·W, 세션 판) — 가로선 = 본 방법·구조 하한·덧붙임 3 판 다 (T 를 고르지 않음)', fontsize=8); fig.tight_layout(rect=[0, 0, 1, .92])
     J3.save(fig, f'fig12_curve_{prior}', meta); meta_all['curve'] = 1
     # fig12_small_change
