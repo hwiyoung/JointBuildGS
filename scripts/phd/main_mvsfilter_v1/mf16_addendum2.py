@@ -104,13 +104,13 @@ def tables_mode():
             # 자리·지역
             for keyname, arr, levels in [('자리', plc, list(PLACE.values())), ('탐색 지역', reg, sorted(set(reg[ie])))]:
                 for lv in levels:
-                    r = dict(prior=PN[prior], surface=sn, split=keyname, level=lv, total_m2=float(A[ie & (arr == lv)].sum()))
-                    for gname, m in grp.items(): r[gname] = float(A[m & (arr == lv)].sum())
+                    r = dict(prior=PN[prior], surface=sn, split=keyname, level=lv, total_m2=float(A[ie & (arr == lv)].sum()), total_gt=int(gp[ie & (arr == lv)].sum()))
+                    for gname, m in grp.items(): r[gname] = float(A[m & (arr == lv)].sum()); r[gname + '_gt'] = int(gp[m & (arr == lv)].sum())
                     OUT.setdefault('miss_split', []).append(r)
             # 건물 스무 동
             miss = ie & ~flip; ub = np.unique(bld[miss]); rows = []
             for b_ in ub:
-                mb = bld == b_; rows.append(dict(prior=PN[prior], surface=sn, building=str(b_), missed_m2=float(A[miss & mb].sum()), missed_ge05_m2=float(A[grp['못 찾음 · ≥ 0.5'] & mb].sum()), imgerr_m2=float(A[ie & mb].sum())))
+                mb = bld == b_; rows.append(dict(prior=PN[prior], surface=sn, building=str(b_), missed_m2=float(A[miss & mb].sum()), missed_gt=int(gp[miss & mb].sum()), missed_ge05_m2=float(A[grp['못 찾음 · ≥ 0.5'] & mb].sum()), imgerr_m2=float(A[ie & mb].sum()), imgerr_gt=int(gp[ie & mb].sum())))
             OUT.setdefault('miss_bld', []).extend(sorted(rows, key=lambda r: -r['missed_m2'])[:20])
             # 2.2 나
             pe = km & (pc == 1); denp = A[pe].sum(); g2 = {'되돌림': pe & flip, '그대로': pe & ~flip}
@@ -125,13 +125,13 @@ def tables_mode():
                 mb = (mmed >= lo_) & (mmed <= hi_) if lo_ is not None else ~np.isfinite(mmed)
                 r = dict(prior=PN[prior], surface=sn, m_bin=f'{lo_}~{hi_}' if hi_ < 10**6 else f'{lo_} 이상') if lo_ is not None else dict(prior=PN[prior], surface=sn, m_bin='값 없음(원통 점 0)')
                 for s_, nm in [(1, '사전정보 오류'), (2, '영상 깊이 오류'), (0, '두 자료 모두 유효')]:
-                    mm = km & (pc == s_) & mb; a = A[mm].sum(); r[f'{nm}_m2'] = float(a); r[f'{nm}_returned_pct'] = 100*A[mm & flip].sum()/a if a else np.nan
+                    mm = km & (pc == s_) & mb; a = A[mm].sum(); r[f'{nm}_m2'] = float(a); r[f'{nm}_gt'] = int(gp[mm].sum()); r[f'{nm}_returned_pct'] = 100*A[mm & flip].sum()/a if a else np.nan
                 OUT.setdefault('mbin', []).append(r)
             for keyname, arr, levels in [('자리', plc, list(PLACE.values())), ('탐색 지역', reg, sorted(set(reg[pe])))]:
                 for lv in levels:
                     mm = pe & (arr == lv); a = A[mm].sum()
-                    OUT.setdefault('fr_split', []).append(dict(prior=PN[prior], surface=sn, split=keyname, level=lv, priorerr_m2=float(a), returned_m2=float(A[mm & flip].sum()), returned_pct=100*A[mm & flip].sum()/a if a else np.nan))
-            fr = pe & flip; rows = [dict(prior=PN[prior], surface=sn, building=str(b_), returned_m2=float(A[fr & (bld == b_)].sum()), priorerr_m2=float(A[pe & (bld == b_)].sum())) for b_ in np.unique(bld[fr])]
+                    OUT.setdefault('fr_split', []).append(dict(prior=PN[prior], surface=sn, split=keyname, level=lv, priorerr_m2=float(a), priorerr_gt=int(gp[mm].sum()), returned_m2=float(A[mm & flip].sum()), returned_gt=int(gp[mm & flip].sum()), returned_pct=100*A[mm & flip].sum()/a if a else np.nan))
+            fr = pe & flip; rows = [dict(prior=PN[prior], surface=sn, building=str(b_), returned_m2=float(A[fr & (bld == b_)].sum()), returned_gt=int(gp[fr & (bld == b_)].sum()), priorerr_m2=float(A[pe & (bld == b_)].sum()), priorerr_gt=int(gp[pe & (bld == b_)].sum())) for b_ in np.unique(bld[fr])]
             OUT.setdefault('fr_bld', []).extend(sorted(rows, key=lambda r: -r['returned_m2'])[:20])
             # 검산 2: 0절 표(c≥5 비율 0 / 0~0.2 / 0.2~0.5 / 0.5~0.8 / 0.8~1, 넓이 %) — 지붕·벽 모두(LoD2), 지붕(ALS)
             if sn in ('모두',) or prior == 'ALS':
@@ -176,10 +176,10 @@ def write_md(OUT, Lm, Lf):
     for r in Lm:
         L.append(f"| {r['prior']} | {r['surface']} | {r['group']} | {r['area_m2']:,.0f} ({r['area_pct']:.1f}) | {r['patches']:,} | {r['gt_points']:,} | {f3(r['dev_abs_q'])} | {r['up_pct']:.1f} / {r['down_pct']:.1f} / {r['dev_na_pct']:.1f} | " + ' | '.join(f3(r[f'{k}_q']) for k, _ in VK) + ' |')
     gn = [g for g, _ in GROUPS_MISS]
-    L += ['', '## 자리·탐색 지역마다 (넓이 m²)', '', '| 사전 정보 | 면 | 나눔 | 값 | 영상 깊이 오류 전체 | ' + ' | '.join(gn) + ' |', '|' + '---|'*(5 + len(gn))]
-    for r in OUT['miss_split']: L.append(f"| {r['prior']} | {r['surface']} | {r['split']} | {r['level']} | {r['total_m2']:,.1f} | " + ' | '.join(f"{r[g]:,.1f}" for g in gn) + ' |')
-    L += ['', '## 건물마다 — 못 찾은 넓이가 큰 차례 스무 동', '', '| 사전 정보 | 면 | 건물 | 못 찾은 m² | 그 가운데 ≥ 0.5 무리 m² | 그 건물의 영상 깊이 오류 m² |', '|---|---|---|---|---|---|']
-    for r in OUT['miss_bld']: L.append(f"| {r['prior']} | {r['surface']} | {r['building']} | {r['missed_m2']:,.1f} | {r['missed_ge05_m2']:,.1f} | {r['imgerr_m2']:,.1f} |")
+    L += ['', '## 자리·탐색 지역마다 (넓이 m² · 참값 점)', '', '| 사전 정보 | 면 | 나눔 | 값 | 영상 깊이 오류 전체 | ' + ' | '.join(gn) + ' |', '|' + '---|'*(5 + len(gn))]
+    for r in OUT['miss_split']: L.append(f"| {r['prior']} | {r['surface']} | {r['split']} | {r['level']} | {r['total_m2']:,.1f} · {r['total_gt']:,} | " + ' | '.join(f"{r[g]:,.1f} · {r[g + '_gt']:,}" for g in gn) + ' |')
+    L += ['', '## 건물마다 — 못 찾은 넓이가 큰 차례 스무 동', '', '| 사전 정보 | 면 | 건물 | 못 찾은 m² · 참값 점 | 그 가운데 ≥ 0.5 무리 m² | 그 건물의 영상 깊이 오류 m² · 참값 점 |', '|---|---|---|---|---|---|']
+    for r in OUT['miss_bld']: L.append(f"| {r['prior']} | {r['surface']} | {r['building']} | {r['missed_m2']:,.1f} · {r['missed_gt']:,} | {r['missed_ge05_m2']:,.1f} | {r['imgerr_m2']:,.1f} · {r['imgerr_gt']:,} |")
     L += ['', '## 검산 (덧붙임 2 4절 1·2)', '']
     for c in OUT['checks']: L.append(f"- {c['prior']} {c['surface']}: {c['check']} — {c['sum_m2']:,.2f} 대 {c['den_m2']:,.2f} m², {'같음' if c['passed'] else '다름'}")
     L += ['', '0절 표와 같은 나눔(c ≥ 5 비율 0 / 0~0.2 / 0.2~0.5 / 0.5~0.8 / 0.8~1, 넓이 %; LoD2 = 지붕·벽 모두, 항공 LiDAR = 지붕). 앞 = 구간 왼쪽 닫힘([0.2, 0.5), 이 표 2.1절 나눔과 같은 규약), 뒤 = 오른쪽 닫힘((0.2, 0.5]):', '']
@@ -190,13 +190,13 @@ def write_md(OUT, Lm, Lf):
     L = ['# t10_false_return — 나. 잘못 되돌린 사전정보 오류 (덧붙임 2 2.2절)', ''] + H
     L += ['## 무리마다 (처음 상태 사전정보 오류)', '', '| 사전 정보 | 면 | 무리 | 넓이 m² (%) | 패치 | 참값 점 | ' + ' | '.join(f'{v} 10/50/90' for _, v in VF) + ' |', '|' + '---|'*(6 + len(VF))]
     for r in Lf: L.append(f"| {r['prior']} | {r['surface']} | {r['group']} | {r['area_m2']:,.0f} ({r['area_pct']:.1f}) | {r['patches']:,} | {r['gt_points']:,} | " + ' | '.join(f3(r[f'{k}_q']) for k, _ in VF) + ' |')
-    L += ['', '## m 중앙값 구간마다 — 넓이 m², 되돌린 비율 %', '', '| 사전 정보 | 면 | m 구간 | 사전정보 오류 m² · 되돌림 % | 영상 깊이 오류 m² · 되돌림 % | 두 자료 모두 유효 m² · 되돌림 % |', '|---|---|---|---|---|---|']
-    fmt = lambda a, p: f"{a:,.1f} · {p:.1f}" if np.isfinite(p) else f"{a:,.1f} · —"
-    for r in OUT['mbin']: L.append(f"| {r['prior']} | {r['surface']} | {r['m_bin']} | {fmt(r['사전정보 오류_m2'], r['사전정보 오류_returned_pct'])} | {fmt(r['영상 깊이 오류_m2'], r['영상 깊이 오류_returned_pct'])} | {fmt(r['두 자료 모두 유효_m2'], r['두 자료 모두 유효_returned_pct'])} |")
-    L += ['', '## 자리·탐색 지역마다 되돌린 비율', '', '| 사전 정보 | 면 | 나눔 | 값 | 사전정보 오류 m² | 되돌린 m² | 되돌린 % |', '|---|---|---|---|---|---|---|']
-    for r in OUT['fr_split']: L.append(f"| {r['prior']} | {r['surface']} | {r['split']} | {r['level']} | {r['priorerr_m2']:,.1f} | {r['returned_m2']:,.1f} | {pf(r['returned_pct'])} |")
-    L += ['', '## 건물마다 — 되돌린 넓이가 큰 차례 스무 동', '', '| 사전 정보 | 면 | 건물 | 되돌린 m² | 그 건물의 사전정보 오류 m² |', '|---|---|---|---|---|']
-    for r in OUT['fr_bld']: L.append(f"| {r['prior']} | {r['surface']} | {r['building']} | {r['returned_m2']:,.1f} | {r['priorerr_m2']:,.1f} |")
+    L += ['', '## m 중앙값 구간마다 — 넓이 m² · 참값 점 · 되돌린 비율 %', '', '| 사전 정보 | 면 | m 구간 | 사전정보 오류 | 영상 깊이 오류 | 두 자료 모두 유효 |', '|---|---|---|---|---|---|']
+    fmt = lambda r, nm: f"{r[nm + '_m2']:,.1f} · {r[nm + '_gt']:,} · " + pf(r[nm + '_returned_pct'])
+    for r in OUT['mbin']: L.append(f"| {r['prior']} | {r['surface']} | {r['m_bin']} | {fmt(r, '사전정보 오류')} | {fmt(r, '영상 깊이 오류')} | {fmt(r, '두 자료 모두 유효')} |")
+    L += ['', '## 자리·탐색 지역마다 되돌린 비율', '', '| 사전 정보 | 면 | 나눔 | 값 | 사전정보 오류 m² · 참값 점 | 되돌린 m² · 참값 점 | 되돌린 % |', '|---|---|---|---|---|---|---|']
+    for r in OUT['fr_split']: L.append(f"| {r['prior']} | {r['surface']} | {r['split']} | {r['level']} | {r['priorerr_m2']:,.1f} · {r['priorerr_gt']:,} | {r['returned_m2']:,.1f} · {r['returned_gt']:,} | {pf(r['returned_pct'])} |")
+    L += ['', '## 건물마다 — 되돌린 넓이가 큰 차례 스무 동', '', '| 사전 정보 | 면 | 건물 | 되돌린 m² · 참값 점 | 그 건물의 사전정보 오류 m² · 참값 점 |', '|---|---|---|---|---|']
+    for r in OUT['fr_bld']: L.append(f"| {r['prior']} | {r['surface']} | {r['building']} | {r['returned_m2']:,.1f} · {r['returned_gt']:,} | {r['priorerr_m2']:,.1f} · {r['priorerr_gt']:,} |")
     (DOCT/'t10_false_return.md').write_text('\n'.join(L) + '\n')
     L = ['# t10_ratio — 본 영상 수로 나눈 값의 구별 정도와 곡선 (덧붙임 2 2.3절)', '', 'scientific_verdict: null', '',
          '이 절의 값·문턱은 세션이 정한 것이다(COLMAP 기본값 아님). 문턱을 고르지 않는다. 값 셋 = 원통 안 점의 c ÷ m 중앙값, c ≥ 5 인 점의 비율(덧붙임 1, 나란히), \'2c ≥ m 또는 c ≥ 5\'(일치 수가 본 영상 수의 절반 이상이거나 5장 이상) 인 점의 비율. '
@@ -204,10 +204,10 @@ def write_md(OUT, Lm, Lf):
          '## AUC', '', '| 사전 정보 | 면 | 값 | AUC 영상 오류 대 사전 오류 | AUC 영상 오류 대 유효 | 넓이 가중 중앙값 영상 오류 / 사전 오류 / 유효 | 패치 수 |', '|---|---|---|---|---|---|---|']
     for r in OUT['ratio_auc']: L.append(f"| {r['prior']} | {r['surface']} | {r['value']} | {r['auc_imgerr_vs_priorerr']:.3f} | {r['auc_imgerr_vs_bothvalid']:.3f} | {f3(r['med'])} | {' / '.join(f'{x:,}' for x in r['n'])} |")
     L += ['', '## 점검 판·곡선 (점 단위; 패치 단위는 csv)', '', '괄호 = (바뀐 넓이 m², 그 패치들의 참값 점 수). 분모 = t8_check_mode 의 분모 줄과 같음.', '',
-          '| 사전 정보 | 면 | 줄 | 문턱 | 네 경우 목표 맞음 유효/사전오류/영상오류/결측 · 전체 | 찾은 % | 잘못 되돌린 % | 유효 바뀜 % | F(JS) % |', '|---|---|---|---|---|---|---|---|---|']
+          '| 사전 정보 | 면 | 줄 | 문턱 | 네 경우 목표 맞음 유효/사전오류/영상오류/결측 · 전체 (점) | 네 경우 평균 (점) | 패치 단위 전체 | 찾은 % | 잘못 되돌린 % | 유효 바뀜 % | F(JS) % | 바뀐 넓이 m² |', '|---|---|---|---|---|---|---|---|---|---|---|---|']
     cell = lambda r, b: f"{r[b + '_pct']:.1f} ({r[b + '_area_m2']:,.0f}, {r[b + '_gt_points']:,})"
     for r in OUT['ratio_curve']:
-        L.append(f"| {r['prior']} | {r['surface']} | {r['line']} | {tf(r['threshold'])} | " + ' / '.join(f"{r[f'ok_{CASE[c]}']:.1f}" for c in CASES) + f" · {r['ok_전체']:.1f} | {cell(r, 'found_imgerr')} | {cell(r, 'wrong_priorerr')} | {cell(r, 'changed_bothvalid')} | {r['F_js_pct']:.1f} |")
+        L.append(f"| {r['prior']} | {r['surface']} | {r['line']} | {tf(r['threshold'])} | " + ' / '.join(f"{r[f'ok_{CASE[c]}']:.1f}" for c in CASES) + f" · {r['ok_전체']:.1f} | {r['ok_네 경우 평균']:.1f} | {r['patch_ok_전체']:.1f} | {cell(r, 'found_imgerr')} | {cell(r, 'wrong_priorerr')} | {cell(r, 'changed_bothvalid')} | {r['F_js_pct']:.1f} | {r['changed_area_m2']:,.0f} |")
     (DOCT/'t10_ratio.md').write_text('\n'.join(L) + '\n')
 
 
@@ -223,7 +223,7 @@ def figs_mode(prior):
     jd = MC.O/'judge'/prior; Pn = dict(np.load(jd/'patch_none.npz')); Pn['mean'] = d['mvs_mean_m']; Pm = dict(np.load(jd/'patch_A2.npz')); Pm['mean'] = F8.load_mean(prior, 'A2', d)
     def xlab(i, bname):
         dv = dev[i]; return (f"{bname} · {PLACE.get(int(d['place'][i]), '')} · c≥5 비율 {frac[i]:.2f} · m 중앙값 {a2['m_median'][i]:.0f} · 참값에서 벗어난 거리 "
-                             + ('—' if not np.isfinite(dv) else f"{dv:+.2f} m") + f" · 판정 {JUD.get(int(Pn['lo'][i]))} → {'사전정보 사용(되돌림)' if flip[i] else JUD.get(int(Pn['lo'][i]))}")
+                             + ('—' if not np.isfinite(dv) else f"{dv:+.2f} m") + f" · 점검 {'되돌림' if flip[i] else '그대로'}")
     F8.COLOR_C = True; meta_all = {}
     ie = sig & (pc == 2); miss = ie & ~flip
     p1 = F8.groups(miss & (frac >= .5), d, A, n=4); used = {str(d['building'][m[0]]) for _, m, _ in p1}
