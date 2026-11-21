@@ -1,0 +1,102 @@
+{
+ "note": "1-1: campus images by group. height = camera z - median gt151 ALS z of the original cell holding the camera centre (cells 0-3: -26.51, -23.31, -23.81, -27.25 m); tilt = angle of the viewing axis from straight down; boundaries at the valleys of the training-image distribution: height 45.0 m (no image between 40 and 55 m), tilt 15.0 deg (fewest images in 10-15 deg)",
+ "rows": [
+  {
+   "split": "train",
+   "group": "low_oblique",
+   "group_ko": "낮고 비스듬",
+   "images": 495,
+   "height_median_m": 22.170356959291652,
+   "tilt_median_deg": 46.87003615598025,
+   "centre_in_cell0": 152,
+   "centre_in_cell1": 142,
+   "centre_in_cell2": 131,
+   "centre_in_cell3": 70
+  },
+  {
+   "split": "train",
+   "group": "low_vertical",
+   "group_ko": "낮고 수직",
+   "images": 26,
+   "height_median_m": 24.950150809996682,
+   "tilt_median_deg": 6.642009137881912,
+   "centre_in_cell0": 11,
+   "centre_in_cell1": 7,
+   "centre_in_cell2": 8,
+   "centre_in_cell3": 0
+  },
+  {
+   "split": "train",
+   "group": "high_vertical",
+   "group_ko": "높고 수직",
+   "images": 298,
+   "height_median_m": 59.32905051842195,
+   "tilt_median_deg": 0.7348571948020964,
+   "centre_in_cell0": 42,
+   "centre_in_cell1": 56,
+   "centre_in_cell2": 66,
+   "centre_in_cell3": 134
+  },
+  {
+   "split": "train",
+   "group": "high_oblique",
+   "group_ko": "높고 비스듬",
+   "images": 0,
+   "height_median_m": null,
+   "tilt_median_deg": null,
+   "centre_in_cell0": 0,
+   "centre_in_cell1": 0,
+   "centre_in_cell2": 0,
+   "centre_in_cell3": 0
+  },
+  {
+   "split": "test",
+   "group": "low_oblique",
+   "group_ko": "낮고 비스듬",
+   "images": 71,
+   "height_median_m": 22.645169544549397,
+   "tilt_median_deg": 43.66328430031386,
+   "centre_in_cell0": 22,
+   "centre_in_cell1": 22,
+   "centre_in_cell2": 18,
+   "centre_in_cell3": 9
+  },
+  {
+   "split": "test",
+   "group": "low_vertical",
+   "group_ko": "낮고 수직",
+   "images": 4,
+   "height_median_m": 22.482296393144257,
+   "tilt_median_deg": 11.25671278859102,
+   "centre_in_cell0": 0,
+   "centre_in_cell1": 1,
+   "centre_in_cell2": 2,
+   "centre_in_cell3": 1
+  },
+  {
+   "split": "test",
+   "group": "high_vertical",
+   "group_ko": "높고 수직",
+   "images": 43,
+   "height_median_m": 59.308269173965506,
+   "tilt_median_deg": 0.7085374572687524,
+   "centre_in_cell0": 7,
+   "centre_in_cell1": 8,
+   "centre_in_cell2": 10,
+   "centre_in_cell3": 18
+  },
+  {
+   "split": "test",
+   "group": "high_oblique",
+   "group_ko": "높고 비스듬",
+   "images": 0,
+   "height_median_m": null,
+   "tilt_median_deg": null,
+   "centre_in_cell0": 0,
+   "centre_in_cell1": 0,
+   "centre_in_cell2": 0,
+   "centre_in_cell3": 0
+  }
+ ],
+ "scientific_verdict": null
+}

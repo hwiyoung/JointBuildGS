@@ -1,0 +1,78 @@
+{
+ "note": "1-4: campus images that see the roof of at least one cell-3 building (46 buildings; building cell = the cell of most of its GT rows; sees = half of up to 200 roof sample points inside the image in front, occlusion not checked); training images in / not in the cell-3 list; coverage = share of the image covered by the projected cell-3 box (the 25 % rule)",
+ "rows": [
+  {
+   "split": "train",
+   "group": "low_oblique",
+   "images": 495,
+   "see_cell3_roof": 82,
+   "in_cell3_list": 31,
+   "missing": 51,
+   "missing_coverage_median": 0.10774446065502358,
+   "missing_coverage_p90": 0.18712068943730156
+  },
+  {
+   "split": "train",
+   "group": "low_vertical",
+   "images": 26,
+   "see_cell3_roof": 0,
+   "in_cell3_list": 0,
+   "missing": 0,
+   "missing_coverage_median": null,
+   "missing_coverage_p90": null
+  },
+  {
+   "split": "train",
+   "group": "high_vertical",
+   "images": 298,
+   "see_cell3_roof": 142,
+   "in_cell3_list": 142,
+   "missing": 0,
+   "missing_coverage_median": null,
+   "missing_coverage_p90": null
+  },
+  {
+   "split": "train",
+   "group": "high_oblique",
+   "images": 0,
+   "see_cell3_roof": 0,
+   "in_cell3_list": 0,
+   "missing": 0,
+   "missing_coverage_median": null,
+   "missing_coverage_p90": null
+  },
+  {
+   "split": "test",
+   "group": "low_oblique",
+   "images": 71,
+   "see_cell3_roof": 12,
+   "in_cell3_list": null,
+   "missing": null
+  },
+  {
+   "split": "test",
+   "group": "low_vertical",
+   "images": 4,
+   "see_cell3_roof": 0,
+   "in_cell3_list": null,
+   "missing": null
+  },
+  {
+   "split": "test",
+   "group": "high_vertical",
+   "images": 43,
+   "see_cell3_roof": 21,
+   "in_cell3_list": null,
+   "missing": null
+  },
+  {
+   "split": "test",
+   "group": "high_oblique",
+   "images": 0,
+   "see_cell3_roof": 0,
+   "in_cell3_list": null,
+   "missing": null
+  }
+ ],
+ "scientific_verdict": null
+}
