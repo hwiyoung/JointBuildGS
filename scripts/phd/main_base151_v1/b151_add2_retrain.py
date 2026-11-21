@@ -122,6 +122,44 @@ def check(tag):
     H.dump(d / 'check.json', dict(at=H.now().isoformat(), tag=tag, stdout=r.stdout[-4000:], stderr=r.stderr[-4000:], rc=r.returncode, scientific_verdict=None))
 
 
+def train(tag, dry=False):
+    """one training attempt of cell 3 (b151_host.attempt: the b151 GPU share, host guard and pause rules; one rerun on a stop that is not a
+    code error, as in the order 1.9), then the cell-3 units of 4.2 (b151_post42.unit: render -> mesh -> score ALS and LoD2) and the gather.
+    --dry: resolve everything (command, units, render / score names) without starting a container."""
+    import b151_post42 as P42
+    from b151_post41 import render_cmd
+    s = spec(tag)
+    run = s['run']
+    assert (SC / tag / 'scene_receipt.json').exists(), f'no scene {tag}: run scene first'
+    units = [u['unit'] for u in json.loads((P42.M / 'units/layout.json').read_text())['units'] if u['cell'] == 3]
+    if dry:
+        name, c = cmd(tag)
+        print('DRY train', name, 'mounts /scene ->', SC / tag)
+        print('DRY units', len(units), units)
+        print('DRY priors', P42.priors_of(run), 'render', render_cmd('2DGS', f'{units[0]}__ALS__{run}')[-1])
+        print('DRY receipt', H.cell_dir(run, 3) / 'receipt.json', 'exists', (H.cell_dir(run, 3) / 'receipt.json').exists())
+        return
+    orig = H.cell_mounts
+    H.cell_mounts = lambda sp, k: mounts(tag)
+    try:
+        st = H.attempt(s, 3)
+        while st == 'PAUSED_SAVED':
+            H.wait_launch()
+            st = H.attempt(s, 3)
+        if st != 'TRAINING_COMPLETE':
+            st = H.attempt(s, 3)
+    finally:
+        H.cell_mounts = orig
+    if st != 'TRAINING_COMPLETE':
+        print('TRAIN_STOP', st, flush=True)
+        return
+    ok = {u: P42.unit(run, u) for u in units}
+    H.dump(OUT / 'add2' / f'{run}_units.json', dict(at=H.now().isoformat(), run=run, units=ok, scientific_verdict=None))
+    if all(ok.values()):
+        P42.gather(run)
+    print('TRAIN_DONE', run, ok, flush=True)
+
+
 if __name__ == '__main__':
     a = sys.argv[1:]
     if a[0] == 'scene':
@@ -132,4 +170,4 @@ if __name__ == '__main__':
         name, c = cmd(a[1])
         print(name); print(' '.join(c))
     elif a[0] == 'train':
-        raise SystemExit('addendum 2 section 2: training only after the user says so (not wired to run from here yet)')
+        train(a[1], dry='--dry' in a)

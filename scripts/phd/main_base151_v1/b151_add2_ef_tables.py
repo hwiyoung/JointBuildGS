@@ -3,7 +3,7 @@ Cell 3 only (GT rows with point_cell 3 = the rows scored on the cell-3 unit mesh
 the four cases + scene (b151_tables42.block, the 4.2 rule), flat roof s median for the cell and per building (flat roof >= 200 rows), for
 a2_JBGSef_ALS (TRAINUNIT-v2 cellsef_ALS_s0 cell 3, no new training) and b151_2DGS_s0, b151_GeoGS_ALS_s0, b151_LGDM_ALS.
 
-  python b151_add2_ef_tables.py
+  python b151_add2_ef_tables.py [a2_2DGS_<tag> ...]   # section 2 retrained runs are added as rows when given
 scientific_verdict: null
 """
 import sys
@@ -28,7 +28,7 @@ def main():
     r3 = g['point_cell'] == 3
     flat = (~g['wall']) & (g['normal'][:, 2] >= .985) & (g['case'] == 0)
     rows, blds, maps = [], {}, {}
-    for label, run in RUNS:
+    for label, run in RUNS + [(f'2DGS 다시 학습 {r}', r) for r in sys.argv[1:]]:   # section 2 runs, when given
         z = T42.load(run, 'ALS', g)
         if z is None:
             rows.append(dict(method=label, run=run, status='결과 없음')); continue
