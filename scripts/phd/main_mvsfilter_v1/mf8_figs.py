@@ -46,21 +46,21 @@ def c_of(tile, idx):
     for v in np.unique(V): m = V == v; out[m] = np.asarray(CMAP_[int(v)])[pix[m]]
     return out
 
-def groups(mask, d, A):
+def groups(mask, d, A, n=6, exclude=()):   # 덧붙임 2: n·exclude(이미 쓴 건물) 더함, 기본값은 앞과 같음
     ie = np.flatnonzero(mask); X0 = d['centre'][ie] + np.nan_to_num(d['prior_height_m'][ie])[:, None]*np.nan_to_num(d['normal'][ie])
     pr = cKDTree(X0).query_pairs(.36, output_type='ndarray'); pr = pr[d['building'][ie[pr[:, 0]]] == d['building'][ie[pr[:, 1]]]]
     ncomp, lab = connected_components(coo_matrix((np.ones(len(pr)), (pr[:, 0], pr[:, 1])), shape=(len(ie), len(ie))), directed=False)
-    ca = np.bincount(lab, weights=A[ie]); order = np.argsort(-ca, kind='stable'); pick = []; seen = set()
+    ca = np.bincount(lab, weights=A[ie]); order = np.argsort(-ca, kind='stable'); pick = []; seen = set(exclude)
     for cc in order:
         mem = ie[lab == cc]; b = d['building'][mem[0]]
         if b in seen: continue
         seen.add(b); pick.append((cc, mem, float(ca[cc])))
-        if len(pick) == 6: break
+        if len(pick) == n: break
     return pick
 
-def examples(prior, method, kind_, d, g, Z, Pn, Pm, title):
+def examples(prior, method, kind_, d, g, Z, Pn, Pm, title, pick=None, xlab=None):   # 덧붙임 2: pick(고른 모임)·xlab(칸 아래 한 줄 함수) 을 줄 수 있음
     A = d['area']; sig, pc, E = Z['sig'], Z['pc'], Z['E']; sel = E if kind_ == 'image' else (sig & (pc == 1))
-    pick = groups(sel, d, A); gtree = cKDTree(g['xyz'][:, :2]); ts = list(d['tiles']); cnts = np.bincount(g['gid'][g['paired']], minlength=len(A))
+    pick = groups(sel, d, A) if pick is None else pick; gtree = cKDTree(g['xyz'][:, :2]); ts = list(d['tiles']); cnts = np.bincount(g['gid'][g['paired']], minlength=len(A))
     fig, axs = plt.subplots(len(pick), 2, figsize=(9.5, 3.4*len(pick)), squeeze=False); meta = []
     sq = np.array([[-1, -1], [1, -1], [1, 1], [-1, 1]])*.125
     for r, (cc, mem, area) in enumerate(pick):
@@ -105,7 +105,7 @@ def examples(prior, method, kind_, d, g, Z, Pn, Pm, title):
         B.set_xlim(-1.5, 1.5); B.set_ylim(ylo, yhi); B.tick_params(labelsize=5); B.set_title('단면 ±0.15 m (세로 = 법선 방향 m)', fontsize=6.5)
         rn0, rn1 = int(Pn['raw_n'][i]), int(Pm['raw_n'][i]); sr = 100*rn1/rn0 if rn0 > 0 else np.nan
         pm_ = mem; a0 = A[pm_]; sr_g = 100*Pm['raw_n'][pm_].sum()/max(Pn['raw_n'][pm_].sum(), 1)
-        B.set_xlabel(f"{bname} · 살아남은 비율 {sr:.0f} % (모임 {sr_g:.0f} %) · 판정 {JUD.get(int(Pn['lo'][i]))} → {JUD.get(int(Pm['lo'][i]))}", fontsize=6.5)
+        B.set_xlabel(f"{bname} · 살아남은 비율 {sr:.0f} % (모임 {sr_g:.0f} %) · 판정 {JUD.get(int(Pn['lo'][i]))} → {JUD.get(int(Pm['lo'][i]))}" if xlab is None else xlab(i, bname), fontsize=6.5)
         if r == 0: B.legend(fontsize=4.3, loc='lower left', markerscale=3, frameon=False)
         moved = {f'{JUD.get(int(a))}→{JUD.get(int(b))}': float(a0[(Pn['lo'][pm_] == a) & (Pm['lo'][pm_] == b)].sum()) for a in np.unique(Pn['lo'][pm_]) for b in np.unique(Pm['lo'][pm_]) if ((Pn['lo'][pm_] == a) & (Pm['lo'][pm_] == b)).any()}
         meta.append(dict(rank=r + 1, building=str(d['building'][i]), group_patches=int(len(mem)), group_area_m2=area, section_patch_gid=i, view=None if j is None else P7.cam().names[j], view_rule=view_rule,
