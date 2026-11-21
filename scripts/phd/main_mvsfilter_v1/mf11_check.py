@@ -167,11 +167,15 @@ def main(methods):
     (DOC/'t8_check_mode.md').write_text('\n'.join(L) + '\n')
     tab(RF, 't8_check_curve', '살아남은 비율(raw_n 비) ≤ 문턱이면 사전정보 사용으로 바꿈. 문턱을 고르지 않음.')
     L = ['# t8_check_curve', '', '덧붙임 1 3절 곡선: 차이가 유의한 패치 가운데 그 방법의 살아남은 비율(원통 안 모든 점 raw_n 의 비) ≤ 문턱이면 사전정보 사용으로 바꿈(문턱 0 = 하나도 살아남지 않은 패치). 문턱을 고르지 않음. 점 단위 전체 목표 맞음.', '', 'scientific_verdict: null', '',
-         '괄호 = (바뀐 넓이 m², 그 패치들의 참값 점 수). 분모는 t8_check_mode 의 분모 줄.', '',
+         '괄호 = (바뀐 넓이 m², 그 패치들의 참값 점 수). 분모 줄 = 처음 상태마다 차이가 유의한 패치의 넓이와 참값 점 수(t8_check_mode 와 같음).', '',
          '| 사전 정보 | 면 | 방법 | 문턱 | 찾은 % (m², 점) | 잘못 되돌린 % (m², 점) | 유효 바뀜 % (m², 점) | F(JS) % | 바뀐 넓이 m² | 전체 목표 맞음(점) | 네 경우 평균(점) |', '|---|---|---|---|---|---|---|---|---|---|---|']
+    seen_cden = set()
     for r in RF:
         if not ((r['prior'] == 'LoD2' and r['surface'] == '모두') or (r['prior'] == '항공 LiDAR' and r['surface'] == '지붕')): continue
         cell = lambda b: f"{f1(r[b + '_pct'])} ({r[b + '_area_m2']:,.0f}, {r[b + '_gt_points']:,})"
+        if (r['prior'], r['surface']) not in seen_cden:   # 회신 1 2절: 곡선 표에도 분모 줄
+            seen_cden.add((r['prior'], r['surface']))
+            L.append(f"| {r['prior']} | {r['surface']} | 분모 (차이가 유의한 패치) | | 영상 깊이 오류 {r['den_found_imgerr_area_m2']:,.0f} m², {r['den_found_imgerr_gt_points']:,} 점 | 사전정보 오류 {r['den_wrong_priorerr_area_m2']:,.0f} m², {r['den_wrong_priorerr_gt_points']:,} 점 | 두 자료 모두 유효 {r['den_changed_bothvalid_area_m2']:,.0f} m², {r['den_changed_bothvalid_gt_points']:,} 점 | | | | |")
         L.append(f"| {r['prior']} | {r['surface']} | {MC.MNAME[r['method']]} | {r['threshold']:g} | {cell('found_imgerr')} | {cell('wrong_priorerr')} | {cell('changed_bothvalid')} | {f1(r['F_js_pct'])} | {r['changed_area_m2']:.0f} | {f1(r['ok_전체'])} | {f1(r['ok_네 경우 평균'])} |")
     (DOC/'t8_check_curve.md').write_text('\n'.join(L) + '\n')
     if AUC:

@@ -23,7 +23,7 @@ nice -n 19 docker run --rm --read-only --network none --runtime runc -e CUDA_VIS
   --name "jbgs-mvsfilter1-$tag" --user "$(id -u):$(id -g)" \
   --cpus "$cpus" --memory "${mem}g" --memory-swap "${mem}g" --shm-size 2g --tmpfs /fast:rw,exec,size=8g \
   -e PYTHONDONTWRITEBYTECODE=1 -e PYTHONUNBUFFERED=1 -e NUMPY_MADVISE_HUGEPAGE=0 \
-  -e OMP_NUM_THREADS=1 -e OPENBLAS_NUM_THREADS=1 -e MKL_NUM_THREADS=1 -e JC2_CPUS="$cpus" -e MF_CPUS="$cpus" -e MF_RING_REPRO="${MF_RING_REPRO:-1}" -e MF_CYL_ONLY="${MF_CYL_ONLY:-0}" -e MF_A2DIR="${MF_A2DIR:-a2}" -e MF_A2OUT="${MF_A2OUT:-a2_patch}" \
+  -e OMP_NUM_THREADS=1 -e OPENBLAS_NUM_THREADS=1 -e MKL_NUM_THREADS=1 -e JC2_CPUS="$cpus" -e MF_CPUS="$cpus" -e MF_RING_REPRO="${MF_RING_REPRO:-1}" -e MF_CYL_ONLY="${MF_CYL_ONLY:-0}" -e MF_A2DIR="${MF_A2DIR:-a2}" -e MF_A2OUT="${MF_A2OUT:-a2_patch}" -e MF_MAPS_ONLY="${MF_MAPS_ONLY:-0}" \
   -e TMPDIR=/out/tmp -e MPLCONFIGDIR=/out/tmp/mpl -e XDG_CACHE_HOME=/out/tmp/cache -e TZ=Asia/Seoul \
   -e MF_COMMIT="$(GIT_OPTIONAL_LOCKS=0 git -C "$REPO" rev-parse HEAD)" \
   -v "$REPO:/repo:ro" -v "$ART:/art:ro" -v "$OUT:/out:rw" -v "$CFG:/cfg:ro" -v "$DOC:/docs:rw" \

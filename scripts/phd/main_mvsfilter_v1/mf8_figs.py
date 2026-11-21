@@ -4,7 +4,7 @@
  fig7_maps_<prior>                   : 세 실험 지역, 지금 점군과 방법 A 의 차이가 유의한 패치를 처음 상태로 칠함
  fig6_bars_<prior>                   : 6절 줄들의 네 경우 목표 맞음 막대
 사용: mf8_figs.py <prior> <method> [<method> ...]"""
-import sys
+import sys, os
 sys.path.insert(0, '/repo/scripts/phd/main_judgestruct_v1'); sys.path.append('/repo/scripts/phd/main_judgeprobe_v1')
 from jscommon import *
 import js3_figs as J3
@@ -120,7 +120,7 @@ def main(prior, methods):
     d = loadz(JP/f'patch_{prior}.npz', ['tile', 'tiles', 'centre', 'normal', 'tangent1', 'prior_height_m', 'mvs_mean_m', 'building', 'place', 'kind', 'area'])
     g = loadz(JC/'analysis'/f'gt_{prior}.npz', ['xyz', 'gid', 'case', 'paired', 'gt_kind'])
     jd = MC.O/'judge'/prior; Pn = dict(np.load(jd/'patch_none.npz')); Pn['mean'] = d['mvs_mean_m']
-    for method in methods:
+    for method in ([] if os.environ.get('MF_MAPS_ONLY') == '1' else methods):   # MF_MAPS_ONLY=1: 지도만 (덧붙임 1 2절 대조 뒤 A2 지도)
         Pm = dict(np.load(jd/f'patch_{method}.npz')); Pm['mean'] = load_mean(prior, method, d)
         for kind_, nm, tt in [('image', 'examples', '영상 오류 패치(처음 상태 영상 깊이 오류) 본보기 — JUDGESTRUCT 그림 13 과 같은 자리'), ('prior', 'prior_error', '사전정보 오류 패치 본보기 — 같은 고르기 규칙')]:
             fig, meta = examples(prior, method, kind_, d, g, Z, Pn, Pm, f'{PN[prior]} · {MC.MNAME[method]}: {tt}')
@@ -132,12 +132,12 @@ def main(prior, methods):
             COLOR_C = False
             J3.save(fig, f'fig7_examples_{prior}_A2_c', dict(prior=prior, method=method, colors={lab: col_ for _, col_, lab in C_COL}, rule='fig7_examples_<prior>_A2 와 같은 자리·같은 영상', groups=meta))
     # 지도: 세 실험 지역
-    if 'A' in methods:
-        O_ = J3.ortho(); SC = J3.scenes(prior)[:3]; A_ = d['area']; kind = d['kind']; PA = dict(np.load(jd/'patch_A.npz'))
+    for mm in [m_ for m_ in ('A', 'A2') if m_ in methods]:   # A = 발주 7절, A2 = 덧붙임 1 2절('7절을 A2 로 똑같이')
+        O_ = J3.ortho(); SC = J3.scenes(prior)[:3]; A_ = d['area']; kind = d['kind']; PA = dict(np.load(jd/f'patch_{mm}.npz')); mlab = '방법 A' if mm == 'A' else '방법 A2(세션 판)'
         fig, axs = plt.subplots(len(SC), 2, figsize=(9, 4.3*len(SC)), squeeze=False); meta = []
         for r, (name, ext, full) in enumerate(SC):
             pm = (d['centre'][:, 0] >= ext[0]) & (d['centre'][:, 0] <= ext[1]) & (d['centre'][:, 1] >= ext[2]) & (d['centre'][:, 1] <= ext[3])
-            for c, (lab, P_) in enumerate([('지금 점군', Pn), ('방법 A', PA)]):
+            for c, (lab, P_) in enumerate([('지금 점군', Pn), (mlab, PA)]):
                 ax = axs[r, c]; J3.background(ax, ext, O_); sg = P_['sig']; roof = pm & (kind == 1)
                 J3.paint(ax, d['centre'][roof & ~sg, :2], np.zeros((roof & ~sg).sum()), {0: '#dddddd'}, ext, alpha=.45); J3.paint(ax, d['centre'][roof & sg, :2], Z['pc'][roof & sg], ST_C, ext)
                 sm = pm & sg; a_st = A_[sm & np.isin(Z['pc'], STATE_ORDER)].sum(); sh = {s_: 100*A_[sm & (Z['pc'] == s_)].sum()/a_st if a_st else np.nan for s_ in STATE_ORDER}
@@ -145,8 +145,9 @@ def main(prior, methods):
                 meta.append(dict(scene=name, line=lab, sig_area_m2=float(A_[sm].sum()), state_area_pct={STATE[s_]: sh[s_] for s_ in STATE_ORDER}))
         h = [Patch(color=ST_C[s_], label=STATE[s_]) for s_ in STATE_ORDER] + [Patch(color='#ffff33', label='처음 상태 없음'), Patch(color='#dddddd', label='차이가 유의하지 않은 지붕 패치')]
         fig.legend(handles=h, ncol=4, fontsize=6.5, loc='lower center', bbox_to_anchor=(.5, -.01), frameon=False)
-        fig.suptitle(f'{PN[prior]}: 차이가 유의한(변화가 탐지된) 지붕 패치의 처음 상태 — 지금 점군 대 방법 A (칸 아래 비율은 지붕+벽)', fontsize=8.5, y=1.0); fig.tight_layout(rect=[0, .03, 1, .99])
-        J3.save(fig, f'fig7_maps_{prior}', dict(prior=prior, scenes=meta))
+        fig.suptitle(f'{PN[prior]}: 차이가 유의한(변화가 탐지된) 지붕 패치의 처음 상태 — 지금 점군 대 {mlab} (칸 아래 비율은 지붕+벽)', fontsize=8.5, y=1.0); fig.tight_layout(rect=[0, .03, 1, .99])
+        J3.save(fig, f'fig7_maps_{prior}' + ('' if mm == 'A' else '_A2'), dict(prior=prior, method=mm, scenes=meta))
+    if os.environ.get('MF_MAPS_ONLY') == '1': return
     # 막대
     R6 = pd.read_csv(MC.D/'tables/t6_rejudge.csv'); q = R6[(R6.prior == PN[prior]) & (R6.surface == ('모두' if prior == 'LoD2' else '지붕'))]
     fig, axs = plt.subplots(1, 2, figsize=(11, 3.6))
