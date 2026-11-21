@@ -151,18 +151,22 @@ def write_md(RM, DIST, SPL, BLD, MIXALL, CK):
     L = ['# t12_magnitude', '', '덧붙임 4 2.1절. 대상 = 차이가 유의한 패치(지금 점군), 그 밖은 구조 하한 그대로. 큰 차이(|d| ≥ T) = 영상 깊이 사용, 덧붙임 3 판 다가 되돌리는 패치만 사전정보 사용. 작은 차이(|d| < T) = 처리 P 사전정보 사용 / 처리 W 일치와 같은 목표(정밀도 가중 평균, 본값의 무게).', '',
          '- **판 스무 가지(T 열 가지 × 처리 둘)는 모두 세션이 정한 판이다. T 를 고르지 않는다.** 혼합 경계의 맞춘 값은 아래 끝 절과 t12_mixture.json.',
          '- 바뀐 비율 = 차이가 유의한 패치 가운데 사전정보 사용 또는 가중 평균(일치 목표)이 된 넓이 %, 처음 상태마다. 본 방법 줄 = JUDGECHECK-v2 본값 판정이 사전정보 사용·일치인 넓이(목표 맞음은 t6_rejudge), 구조 상한 줄 = fig_arrays up 이 사전정보 사용·일치인 넓이.',
+         '- F(JS) = JUDGESTRUCT 셈 1-4 분모(차이가 유의한 패치 가운데 영상 깊이 오류가 아닌 넓이)에서 바뀐 %. 바뀐 넓이 = 차이가 유의한 패치 가운데 바뀐 넓이 m²(t11_combo 와 같은 열).',
          '- ▲ = 전체 목표 맞음이 본 방법보다 높음(점 단위 ▲점, 패치 단위 ▲패치). 값만 표시하며 고르지 않음.', '', 'scientific_verdict: null', '',
          '네 경우 차례 = 두 자료 모두 유효 / 사전정보 오류 / 영상 깊이 오류 / 영상 깊이 결측. 괄호 = (바뀐 넓이 m², 그 패치들의 네 경우 참값 점 수).', '',
-         '| 사전 정보 | 면 | 줄 | 점: 네 경우 · 전체 | 점: 평균·최솟값·격차 | 패치: 네 경우 · 전체 | 패치: 평균·최솟값·격차 | 영상 깊이 오류 바뀜 % (m², 점) | 사전정보 오류 바뀜 % (m², 점) | 두 자료 모두 유효 바뀜 % (m², 점) | 본 방법보다 높음 |', '|---|---|---|---|---|---|---|---|---|---|---|']
+         '| 사전 정보 | 면 | 줄 | 점: 네 경우 · 전체 | 점: 평균·최솟값·격차 | 패치: 네 경우 · 전체 | 패치: 평균·최솟값·격차 | 영상 깊이 오류 바뀜 % (m², 점) | 사전정보 오류 바뀜 % (m², 점) | 두 자료 모두 유효 바뀜 % (m², 점) | F(JS) % | 바뀐 넓이 m² | 본 방법보다 높음 |', '|---|---|---|---|---|---|---|---|---|---|---|---|---|']
     seen = set()
     for r in RM:
         if not show(r): continue
         if (r['prior'], r['surface']) not in seen:
             seen.add((r['prior'], r['surface']))
-            L.append(f"| {r['prior']} | {r['surface']} | 분모 (차이가 유의한 패치) | | | | | {r['den_found_imgerr_area_m2']:,.0f} m², {int(r['den_found_imgerr_gt_points']):,} 점 | {r['den_wrong_priorerr_area_m2']:,.0f} m², {int(r['den_wrong_priorerr_gt_points']):,} 점 | {r['den_changed_bothvalid_area_m2']:,.0f} m², {int(r['den_changed_bothvalid_gt_points']):,} 점 | |")
+            L.append(f"| {r['prior']} | {r['surface']} | 분모 (차이가 유의한 패치) | | | | | {r['den_found_imgerr_area_m2']:,.0f} m², {int(r['den_found_imgerr_gt_points']):,} 점 | {r['den_wrong_priorerr_area_m2']:,.0f} m², {int(r['den_wrong_priorerr_gt_points']):,} 점 | {r['den_changed_bothvalid_area_m2']:,.0f} m², {int(r['den_changed_bothvalid_gt_points']):,} 점 | | | |")
         mk = ' '.join(x for x, f in [('▲점', r.get('above_method_point')), ('▲패치', r.get('above_method_patch'))] if f)
         L.append(f"| {r['prior']} | {r['surface']} | {r['line']} | " + ' / '.join(f1(r[f'ok_{CASE[c]}']) for c in CASES) + f" · {f1(r['ok_전체'])} | {f1(r['ok_네 경우 평균'])} · {f1(r['ok_최솟값'])} · {f1(r['ok_최대 격차'])} | "
-                 + ' / '.join(f1(r[f'patch_ok_{CASE[c]}']) for c in CASES) + f" · {f1(r['patch_ok_전체'])} | {f1(r['patch_ok_네 경우 평균'])} · {f1(r['patch_ok_최솟값'])} · {f1(r['patch_ok_최대 격차'])} | {cell(r, 'found_imgerr')} | {cell(r, 'wrong_priorerr')} | {cell(r, 'changed_bothvalid')} | {mk} |")
+                 + ' / '.join(f1(r[f'patch_ok_{CASE[c]}']) for c in CASES) + f" · {f1(r['patch_ok_전체'])} | {f1(r['patch_ok_네 경우 평균'])} · {f1(r['patch_ok_최솟값'])} · {f1(r['patch_ok_최대 격차'])} | {cell(r, 'found_imgerr')} | {cell(r, 'wrong_priorerr')} | {cell(r, 'changed_bothvalid')} | {f1(r['F_js_pct'])} | {r['changed_area_m2']:,.0f} | {mk} |")
+    up = {(r['prior'], r['surface']): r for r in RM if r.get('key') == 'upper'}; ov = [r for r in RM if r.get('key') not in ('upper', 'method') and (r['ok_전체'] > up[(r['prior'], r['surface'])]['ok_전체'] + 1e-9 or r['patch_ok_전체'] > up[(r['prior'], r['surface'])]['patch_ok_전체'] + 1e-9)]
+    L += ['', '## 구조 상한(지금, 참값으로)을 넘는 줄 (값만)', '']
+    L += (['| 사전 정보 | 면 | 줄 | 점: 그 줄 · 상한 | 패치: 그 줄 · 상한 |', '|---|---|---|---|---|'] + [f"| {r['prior']} | {r['surface']} | {r['line']} | {r['ok_전체']:.2f} · {up[(r['prior'], r['surface'])]['ok_전체']:.2f} | {r['patch_ok_전체']:.2f} · {up[(r['prior'], r['surface'])]['patch_ok_전체']:.2f} |" for r in ov]) if ov else ['없음.']
     L += ['', '## 혼합 경계 (log|d| 에 정규 분포 둘, 넓이 가중 EM; 참값 쓰지 않음)', '', '| 사전 정보 | 면 | 패치 · 넓이 m² | 두 평균 (m) | 두 표준 편차 (log) | 무게 | 경계 m (작은 무리 평균 위 첫 교차) | 자료 최솟값부터 첫 교차 m | 반복 |', '|---|---|---|---|---|---|---|---|---|']
     for p, M in MIXALL.items():
         for sn, m in M.items(): L.append(f"| {PN[p]} | {sn} | {m['patches']:,} · {m['area_m2']:,.0f} | {m['mu_m'][0]:.3f} / {m['mu_m'][1]:.3f} | {m['sd_log'][0]:.3f} / {m['sd_log'][1]:.3f} | {m['weight'][0]:.3f} / {m['weight'][1]:.3f} | {m['boundary_m']:.3f} | {m['boundary_from_min_m']:.3f} | {m['iters']} |")
@@ -234,6 +238,18 @@ def figs_mode(prior):
     F8.COLOR_C = False
     print('FIGS4', prior, json.dumps(meta_all), round(T_.s()), flush=True); MC.progress(f'mf19 figs {prior}(덧붙임 4 3절) 끝, {round(T_.s())} 초')
 
+def md_mode():
+    """대조 뒤: 저장된 t12 표(json)에서 md 만 다시 씀. 새 셈 없음."""
+    ld = lambda n: json.loads((DOCT/f'{n}.json').read_text())
+    RM = ld('t12_magnitude')['rows']; DIST = ld('t12_magnitude_dist')['rows']; SPL = ld('t12_small_priorerr_place')['rows']; BLD = ld('t12_small_priorerr_bld')['rows']
+    MIXALL = ld('t12_mixture')['mixture']; CK = ld('t12_checks')['checks']
+    for r in DIST:
+        for k in ('d_q', 'ratio_q'): r[k] = [np.nan if v is None else v for v in r[k]]
+    for r in RM:
+        for k, v in list(r.items()):
+            if v is None and k not in ('T', 'treat', 'key'): r[k] = np.nan
+    write_md(RM, DIST, SPL, BLD, MIXALL, CK); MC.progress('mf19 md(덧붙임 4 대조 뒤 열 둘·상한 줄) 끝')
+
 if __name__ == '__main__':
     MC.cfg()
-    {'tables': lambda: tables_mode(), 'figs': lambda: figs_mode(sys.argv[2])}[sys.argv[1]]()
+    {'tables': lambda: tables_mode(), 'md': lambda: md_mode(), 'figs': lambda: figs_mode(sys.argv[2])}[sys.argv[1]]()
