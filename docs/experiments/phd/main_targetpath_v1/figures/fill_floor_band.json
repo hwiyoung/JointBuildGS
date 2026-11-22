@@ -1,0 +1,33 @@
+{
+ "figure": "fill_floor_band.png",
+ "scene": "R1 × 항공 LiDAR",
+ "place": "R1 바닥 띠",
+ "view": "DJI_20241217084545_0096_D",
+ "rows": {
+  "채우기 앞": {},
+  "채움 1": {
+   "filled_in_place": 1397,
+   "wrong_in_place": 38,
+   "area_in_place_m2": 90.50637191192503
+  },
+  "채움 2": {
+   "filled_in_place": 10381,
+   "wrong_in_place": 709,
+   "area_in_place_m2": 698.8963902229995
+  },
+  "채움 3": {
+   "filled_in_place": 1581,
+   "wrong_in_place": 80,
+   "area_in_place_m2": 102.79365242967555
+  }
+ },
+ "colours": {
+  "목표 맞음": "#2CA02C",
+  "목표 틀림": "#D62728",
+  "결과 면": "#1F77B4",
+  "참값": "k",
+  "자리 점": "yellow"
+ },
+ "note": "채운 원반은 규칙(가우시안 없음·그려지지 않음)으로 골랐고, 맞음/틀림 색만 참값으로 칠했다(채점).",
+ "scientific_verdict": null
+}
