@@ -1,0 +1,38 @@
+{
+ "note": "2-3: B173nb flat roof site rows of addendum 1 (|n_z| >= 0.985, case 0, cell 3: 55,619 rows); first two rows = the addendum 1 values (4.1 site meshes); the before / after rows read the 4.2 score rows (cell-3 unit meshes) of the matched gt151 rows; tau = the site row tau",
+ "rows": [
+  {
+   "row": "2DGS 건물 단위(덧붙임 1 d_prev 2DGS_30000)",
+   "flat_rows": 55619,
+   "s_median": 0.23203551769256592,
+   "within_tau_pct": 44.472212733058846,
+   "no_surface": 29,
+   "source": "d_prev (4.1 site distances)"
+  },
+  {
+   "row": "b151_2DGS_s0 (덧붙임 1 d_prev, 4.1 자리 메시)",
+   "flat_rows": 55619,
+   "s_median": 0.34848344326019287,
+   "within_tau_pct": 12.249411172441073,
+   "no_surface": 254,
+   "source": "d_prev (4.1 site distances)"
+  },
+  {
+   "row": "전: b151_2DGS_s0 (4.2 채점 줄)",
+   "flat_rows": 55619,
+   "s_median": 0.3410118669271469,
+   "within_tau_pct": 14.164224455671622,
+   "no_surface": 83,
+   "source": "4.2 score rows (gt151 rows matched to the site rows by equal coordinates)"
+  },
+  {
+   "row": "후: a2_2DGS_add51 (4.2 채점 줄)",
+   "flat_rows": 55619,
+   "s_median": 0.25968268513679504,
+   "within_tau_pct": 37.643610996242295,
+   "no_surface": 4,
+   "source": "4.2 score rows (gt151 rows matched to the site rows by equal coordinates)"
+  }
+ ],
+ "scientific_verdict": null
+}

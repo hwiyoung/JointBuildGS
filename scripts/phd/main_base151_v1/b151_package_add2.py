@@ -31,8 +31,8 @@ def main():
     t = dt.datetime.now(KST)
     dest = PH / 'delivery' / f'PHD-MAIN-BASE151-v1_덧붙임2_{t:%m%d}-{t:%H%M}_light.zip'
     files = [DOC / '보고_덧붙임2.md', DOC / 'progress.md']
-    files += sorted(p for p in (DOC / 'add2').rglob('*') if p.suffix in ('.md', '.json', '.png'))
-    files += [W / 'scripts/phd/main_base151_v1' / n for n in ('b151_add2.py', 'b151_add2_ef.py', 'b151_add2_render.py', 'b151_add2_retrain.py', 'b151_add2_ef_tables.py')]
+    files += sorted(p for p in (DOC / 'add2').rglob('*') if p.suffix in ('.md', '.json', '.png', '.txt'))
+    files += [W / 'scripts/phd/main_base151_v1' / n for n in ('b151_add2.py', 'b151_add2_ef.py', 'b151_add2_render.py', 'b151_add2_retrain.py', 'b151_add2_ef_tables.py', 'b151_add2_s2.py')]
     missing = [str(p) for p in files if not p.exists()]
     assert not missing, missing
     man = []

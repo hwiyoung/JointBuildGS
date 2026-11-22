@@ -65,8 +65,16 @@ def scene(listfile, tag):
         f.write(struct.pack('<Q', len(keep)))
         for i, k in enumerate(keep):   # image ids renumbered 1..N in name order, as in the TRAINUNIT cell scenes (only the id differs)
             f.write(struct.pack('<i', i + 1) + camp[k][4:])
-    for n in ['sparse/0/cameras.bin', 'sparse/0/points3D.ply', 'jbgs_calibration.json']:
+    for n in ['sparse/0/cameras.bin', 'sparse/0/points3D.ply']:
         shutil.copyfile(CELL3 / n, d / n)
+    # calibration manifest: the campus entries of the kept images (the cell-3 copy lists only the cell-3 images; the first add51 attempts
+    # stopped at iteration 0 on that). Entries of images also in the cell-3 manifest must be equal there.
+    cc = json.loads((TU1 / 'scenes/campus/scene_ALS/jbgs_calibration.json').read_text())
+    c3 = json.loads((CELL3 / 'jbgs_calibration.json').read_text())
+    sk = [stem(k) for k in keep]
+    assert all(k in cc['images'] for k in sk), 'kept image missing from the campus calibration'
+    assert all(cc['images'][k] == v for k, v in c3['images'].items() if k in sk), 'campus and cell-3 calibration differ'
+    H.dump(d / 'jbgs_calibration.json', {**{k: v for k, v in c3.items() if k != 'images'}, 'images': {k: cc['images'][k] for k in sk}})
     H.dump(d / 'split.json', dict(train=[stem(n) for n in names], test=test))
     (d / 'images').mkdir(exist_ok=True)
     # check: the records of images that are also in the cell-3 scene are byte-equal there
@@ -77,8 +85,8 @@ def scene(listfile, tag):
     rec = dict(at=H.now().isoformat(), tag=tag, list=str(listfile), list_sha256=H.sha(listfile), train=len(names), test=len(test), images_bin_records=len(keep),
                also_in_cell3_scene=len(same), byte_equal_to_cell3_scene_records=len(same) - len(diff), differ=diff[:10],
                added_vs_cell3_train=sorted(set(map(stem, names)) - set(split3['train'])), removed_vs_cell3_train=sorted(set(split3['train']) - set(map(stem, names))),
-               copied_from_cell3_scene=['cameras.bin', 'points3D.ply (same initial points)', 'jbgs_calibration.json'],
-               files={n: H.sha(d / n) for n in ['sparse/0/images.bin', 'sparse/0/cameras.bin', 'sparse/0/points3D.ply', 'split.json']}, scientific_verdict=None)
+               copied_from_cell3_scene=['cameras.bin', 'points3D.ply (same initial points)'], calibration='campus jbgs_calibration.json entries of the kept images (equal to the cell-3 entries where both have them)',
+               files={n: H.sha(d / n) for n in ['sparse/0/images.bin', 'sparse/0/cameras.bin', 'sparse/0/points3D.ply', 'jbgs_calibration.json', 'split.json']}, scientific_verdict=None)
     H.dump(d / 'scene_receipt.json', rec)
     print('SCENE', tag, rec['train'], rec['test'], rec['images_bin_records'], 'byte_equal', rec['byte_equal_to_cell3_scene_records'], '/', len(same),
           'added', len(rec['added_vs_cell3_train']), 'removed', len(rec['removed_vs_cell3_train']), flush=True)
@@ -160,6 +168,42 @@ def train(tag, dry=False):
     print('TRAIN_DONE', run, ok, flush=True)
 
 
+def post(tag):
+    """the cell-3 units of a trained run (b151_post42.unit) and the gather, with the GPU rule changed by the user (2026-11-22 01:1x): a render may
+    start while another process is on GPU 1 when GPU 1 has >= 8 GiB free (the render cap stays fraction .25 = 6 GiB, no retry with a larger cap)."""
+    import b151_post41 as P41
+    import b151_post42 as P42
+    run = spec(tag)['run']
+    rule = lambda: P41.gpu_free_mib() >= 8 * 1024
+    P42.gpu_ready = rule
+    units = [u['unit'] for u in json.loads((P42.M / 'units/layout.json').read_text())['units'] if u['cell'] == 3]
+    H.dump(OUT / 'add2' / f'{run}_gpu_share.json', dict(at=H.now().isoformat(), run=run, rule='render starts when GPU 1 free >= 8 GiB, other processes allowed',
+                                                      render_fraction='.25', decided_by='user 2026-11-22', gpu_apps_at_start=H.gpu_apps(), scientific_verdict=None))
+    ok = {u: P42.unit(run, u) for u in units}
+    H.dump(OUT / 'add2' / f'{run}_units.json', dict(at=H.now().isoformat(), run=run, units=ok, scientific_verdict=None))
+    if all(ok.values()):
+        P42.gather(run)
+    print('TRAIN_DONE', run, ok, flush=True)
+
+
+def post_als(tag):
+    """2026-11-22: the LoD2 scores stalled twice under the memory pressure of the shared docker slice (see add2/stuck_score_*); the report
+    items use ALS only, so: the cell-3 units with the ALS score only (render / mesh / ALS score unchanged), then the ALS gather. The LoD2 unit scores
+    and their gather are run afterwards with 'post' (it skips what exists)."""
+    import b151_post41 as P41
+    import b151_post42 as P42
+    run = spec(tag)['run']
+    P42.gpu_ready = lambda: P41.gpu_free_mib() >= 8 * 1024
+    P42.priors_of = lambda r: ('ALS', ['ALS'])
+    units = [u['unit'] for u in json.loads((P42.M / 'units/layout.json').read_text())['units'] if u['cell'] == 3]
+    ok = {u: P42.unit(run, u) for u in units}
+    H.dump(OUT / 'add2' / f'{run}_units_ALS.json', dict(at=H.now().isoformat(), run=run, units=ok, scientific_verdict=None))
+    if all(ok.values()):
+        P41.sh(P41.gt_cpu(f'gather-{run}-ALS'.replace('_', '-').lower(), '/b151s/b151_score151.py', 'gather', run, 'ALS', cpus='4', mem='32g'),
+               OUT / 'logs' / 'post42' / f'gather_{run}_ALS.log')
+    print('ALS_DONE', run, ok, flush=True)
+
+
 if __name__ == '__main__':
     a = sys.argv[1:]
     if a[0] == 'scene':
@@ -171,3 +215,7 @@ if __name__ == '__main__':
         print(name); print(' '.join(c))
     elif a[0] == 'train':
         train(a[1], dry='--dry' in a)
+    elif a[0] == 'post_als':
+        post_als(a[1])
+    elif a[0] == 'post':
+        post(a[1])

@@ -1,0 +1,32 @@
+{
+ "at": "2026-11-22T08:58:48.631064+09:00",
+ "container": "jbgs-b151-post-c3-6910-53363--als--a2-2dgs-add51-s-lod2",
+ "command": "b151_score151.py unit a2_2DGS_add51 LoD2 c3_6910_53363",
+ "started": "2026-11-22T01:40 KST",
+ "elapsed": "~7 h 20 min",
+ "cpu_time": "~7 h 10 min (one core ~100 %)",
+ "rss_GiB": 4.0,
+ "read_bytes_TB": 3.76556034048,
+ "rchar_GB": 1.164961869,
+ "open_files": [
+  "/b151/gt/gt151_LoD2.npz"
+ ],
+ "stage": "before the prism step (no tmp/prism_a2_2DGS_add51_LoD2_c3_6910_53363 folder)",
+ "host": {
+  "io_pressure_full_avg300": 32.9,
+  "memory_pressure_full_avg300": 18.4,
+  "available_GiB": 27,
+  "note": "other tasks (PRESCRIBE trainings) running on the host"
+ },
+ "same_unit_b151_2DGS_s0_score_seconds_ALS_plus_LoD2": 313.5,
+ "action": "container stopped by this session; the LoD2 score of this unit is run again after units 7-9",
+ "scientific_verdict": null,
+ "rerun": {
+  "attempt": 2,
+  "started": "2026-11-22T08:58:59 KST",
+  "score_file_written": "2026-11-22T09:04 KST",
+  "seconds_about": 330,
+  "host_io_pressure_some_avg10_after": "6.74 (09:04; was ~37 before the stop)",
+  "note": "same command and inputs; cause of the first stall not identified (no stack-dump tool in the container)"
+ }
+}
