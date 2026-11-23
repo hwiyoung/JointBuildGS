@@ -1,0 +1,614 @@
+{
+ "at": "2026-11-23T13:20:40.775759+09:00",
+ "title": "목표 전달 셈(PHD-MAIN-TARGETPATH-v1)",
+ "checks": [
+  {
+   "section": "1",
+   "item": "점 무리 크기·조건 R1 × 항공 LiDAR",
+   "ok": true,
+   "detail": "{'가: 잃음': 7558, '가: 지킴': 5000, '나: 고침': 585, '나: 고치지 못함': 529, '대조: 잃음': 1641, '대조: 지킴': 5000}"
+  },
+  {
+   "section": "1",
+   "item": "점 무리 크기·조건 B173 주변 × 항공 LiDAR",
+   "ok": true,
+   "detail": "{'가: 잃음': 826, '가: 지킴': 5000, '나: 고침': 5000, '나: 고치지 못함': 1031, '대조: 잃음': 144, '대조: 지킴': 5000}"
+  },
+  {
+   "section": "1",
+   "item": "점 무리 크기·조건 B0 × 항공 LiDAR",
+   "ok": true,
+   "detail": "{'가: 잃음': 130, '가: 지킴': 910, '나: 고침': 272, '나: 고치지 못함': 286, '대조: 잃음': 745, '대조: 지킴': 5000}"
+  },
+  {
+   "section": "1",
+   "item": "점 무리 크기·조건 R1 × LoD2",
+   "ok": true,
+   "detail": "{'가: 잃음': 1186, '가: 지킴': 1105, '나: 고침': 5000, '나: 고치지 못함': 2018, '대조: 잃음': 5000, '대조: 지킴': 5000}"
+  },
+  {
+   "section": "1",
+   "item": "점 무리 크기·조건 B173 주변 × LoD2",
+   "ok": true,
+   "detail": "{'가: 잃음': 1299, '가: 지킴': 3165, '나: 고침': 5000, '나: 고치지 못함': 1268, '대조: 잃음': 2024, '대조: 지킴': 5000}"
+  },
+  {
+   "section": "1",
+   "item": "점 무리 크기·조건 B0 × LoD2",
+   "ok": true,
+   "detail": "{'가: 잃음': 365, '가: 지킴': 2046, '나: 고침': 4327, '나: 고치지 못함': 2770, '대조: 잃음': 5000, '대조: 지킴': 5000}"
+  },
+  {
+   "section": "1",
+   "item": "참값 목표 판 다섯 장면",
+   "ok": true,
+   "detail": "B173 주변 × LoD2만 없음"
+  },
+  {
+   "section": "2",
+   "item": "다섯 종류 다시 셈 R1 × 항공 LiDAR ft 바깥쪽 모든 영상",
+   "ok": true,
+   "detail": "points·k1half·중앙값 같음, 종류 합 = 본 영상 수, (점, 영상) 겹침 없음"
+  },
+  {
+   "section": "2",
+   "item": "다섯 종류 다시 셈 R1 × 항공 LiDAR ft 가려지지 않은 영상(10 m 규칙)",
+   "ok": true,
+   "detail": "points·k1half·중앙값 같음, 종류 합 = 본 영상 수, (점, 영상) 겹침 없음"
+  },
+  {
+   "section": "2",
+   "item": "다섯 종류 다시 셈 R1 × 항공 LiDAR gtt 바깥쪽 모든 영상",
+   "ok": true,
+   "detail": "points·k1half·중앙값 같음, 종류 합 = 본 영상 수, (점, 영상) 겹침 없음"
+  },
+  {
+   "section": "2",
+   "item": "다섯 종류 다시 셈 R1 × 항공 LiDAR gtt 가려지지 않은 영상(10 m 규칙)",
+   "ok": true,
+   "detail": "points·k1half·중앙값 같음, 종류 합 = 본 영상 수, (점, 영상) 겹침 없음"
+  },
+  {
+   "section": "2",
+   "item": "다섯 종류 다시 셈 B173 주변 × 항공 LiDAR ft 바깥쪽 모든 영상",
+   "ok": true,
+   "detail": "points·k1half·중앙값 같음, 종류 합 = 본 영상 수, (점, 영상) 겹침 없음"
+  },
+  {
+   "section": "2",
+   "item": "다섯 종류 다시 셈 B173 주변 × 항공 LiDAR ft 가려지지 않은 영상(10 m 규칙)",
+   "ok": true,
+   "detail": "points·k1half·중앙값 같음, 종류 합 = 본 영상 수, (점, 영상) 겹침 없음"
+  },
+  {
+   "section": "2",
+   "item": "다섯 종류 다시 셈 B173 주변 × 항공 LiDAR gtt 바깥쪽 모든 영상",
+   "ok": true,
+   "detail": "points·k1half·중앙값 같음, 종류 합 = 본 영상 수, (점, 영상) 겹침 없음"
+  },
+  {
+   "section": "2",
+   "item": "다섯 종류 다시 셈 B173 주변 × 항공 LiDAR gtt 가려지지 않은 영상(10 m 규칙)",
+   "ok": true,
+   "detail": "points·k1half·중앙값 같음, 종류 합 = 본 영상 수, (점, 영상) 겹침 없음"
+  },
+  {
+   "section": "2",
+   "item": "다섯 종류 다시 셈 B0 × 항공 LiDAR ft 바깥쪽 모든 영상",
+   "ok": true,
+   "detail": "points·k1half·중앙값 같음, 종류 합 = 본 영상 수, (점, 영상) 겹침 없음"
+  },
+  {
+   "section": "2",
+   "item": "다섯 종류 다시 셈 B0 × 항공 LiDAR ft 가려지지 않은 영상(10 m 규칙)",
+   "ok": true,
+   "detail": "points·k1half·중앙값 같음, 종류 합 = 본 영상 수, (점, 영상) 겹침 없음"
+  },
+  {
+   "section": "2",
+   "item": "다섯 종류 다시 셈 B0 × 항공 LiDAR gtt 바깥쪽 모든 영상",
+   "ok": true,
+   "detail": "points·k1half·중앙값 같음, 종류 합 = 본 영상 수, (점, 영상) 겹침 없음"
+  },
+  {
+   "section": "2",
+   "item": "다섯 종류 다시 셈 B0 × 항공 LiDAR gtt 가려지지 않은 영상(10 m 규칙)",
+   "ok": true,
+   "detail": "points·k1half·중앙값 같음, 종류 합 = 본 영상 수, (점, 영상) 겹침 없음"
+  },
+  {
+   "section": "2",
+   "item": "다섯 종류 다시 셈 R1 × LoD2 ft 바깥쪽 모든 영상",
+   "ok": true,
+   "detail": "points·k1half·중앙값 같음, 종류 합 = 본 영상 수, (점, 영상) 겹침 없음"
+  },
+  {
+   "section": "2",
+   "item": "다섯 종류 다시 셈 R1 × LoD2 ft 가려지지 않은 영상(10 m 규칙)",
+   "ok": true,
+   "detail": "points·k1half·중앙값 같음, 종류 합 = 본 영상 수, (점, 영상) 겹침 없음"
+  },
+  {
+   "section": "2",
+   "item": "다섯 종류 다시 셈 R1 × LoD2 gtt 바깥쪽 모든 영상",
+   "ok": true,
+   "detail": "points·k1half·중앙값 같음, 종류 합 = 본 영상 수, (점, 영상) 겹침 없음"
+  },
+  {
+   "section": "2",
+   "item": "다섯 종류 다시 셈 R1 × LoD2 gtt 가려지지 않은 영상(10 m 규칙)",
+   "ok": true,
+   "detail": "points·k1half·중앙값 같음, 종류 합 = 본 영상 수, (점, 영상) 겹침 없음"
+  },
+  {
+   "section": "2",
+   "item": "다섯 종류 다시 셈 B173 주변 × LoD2 ft 바깥쪽 모든 영상",
+   "ok": true,
+   "detail": "points·k1half·중앙값 같음, 종류 합 = 본 영상 수, (점, 영상) 겹침 없음"
+  },
+  {
+   "section": "2",
+   "item": "다섯 종류 다시 셈 B173 주변 × LoD2 ft 가려지지 않은 영상(10 m 규칙)",
+   "ok": true,
+   "detail": "points·k1half·중앙값 같음, 종류 합 = 본 영상 수, (점, 영상) 겹침 없음"
+  },
+  {
+   "section": "2",
+   "item": "다섯 종류 다시 셈 B0 × LoD2 ft 바깥쪽 모든 영상",
+   "ok": true,
+   "detail": "points·k1half·중앙값 같음, 종류 합 = 본 영상 수, (점, 영상) 겹침 없음"
+  },
+  {
+   "section": "2",
+   "item": "다섯 종류 다시 셈 B0 × LoD2 ft 가려지지 않은 영상(10 m 규칙)",
+   "ok": true,
+   "detail": "points·k1half·중앙값 같음, 종류 합 = 본 영상 수, (점, 영상) 겹침 없음"
+  },
+  {
+   "section": "2",
+   "item": "다섯 종류 다시 셈 B0 × LoD2 gtt 바깥쪽 모든 영상",
+   "ok": true,
+   "detail": "points·k1half·중앙값 같음, 종류 합 = 본 영상 수, (점, 영상) 겹침 없음"
+  },
+  {
+   "section": "2",
+   "item": "다섯 종류 다시 셈 B0 × LoD2 gtt 가려지지 않은 영상(10 m 규칙)",
+   "ok": true,
+   "detail": "points·k1half·중앙값 같음, 종류 합 = 본 영상 수, (점, 영상) 겹침 없음"
+  },
+  {
+   "section": "2",
+   "item": "두 판 같은 (점, 영상, 화소) R1 × 항공 LiDAR",
+   "ok": true,
+   "detail": "2742786"
+  },
+  {
+   "section": "2",
+   "item": "두 판 같은 (점, 영상, 화소) B173 주변 × 항공 LiDAR",
+   "ok": true,
+   "detail": "1050409"
+  },
+  {
+   "section": "2",
+   "item": "두 판 같은 (점, 영상, 화소) B0 × 항공 LiDAR",
+   "ok": true,
+   "detail": "526857"
+  },
+  {
+   "section": "2",
+   "item": "두 판 같은 (점, 영상, 화소) R1 × LoD2",
+   "ok": true,
+   "detail": "1960245"
+  },
+  {
+   "section": "2",
+   "item": "두 판 같은 (점, 영상, 화소) B0 × LoD2",
+   "ok": true,
+   "detail": "1495221"
+  },
+  {
+   "section": "2",
+   "item": "2절 열(사분위, 절반 넘는 점, 가린 감독, w, 종류 2 판단 영역·맞음, 종류 3 앞·안·뒤, 종류 4 영역, 그린 깊이)",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+   "section": "2",
+   "item": "판단 영역으로도 나눔",
+   "ok": true,
+   "detail": "['결측', '그 밖', '보정', '보존', '일치', '전체']"
+  },
+  {
+   "section": "2",
+   "item": "가려진 화소의 감독 값 있음(바깥쪽 모든 영상, 1,000점 이상 칸)",
+   "ok": true,
+   "detail": "46"
+  },
+  {
+   "section": "2",
+   "item": "교차표 합 = 무리 점 수, 참값 목표 판 네 칸 합 = 점 수",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+   "section": "2",
+   "item": "무리 나 틀린 목표 w·벗어난 크기(τ 배수) 표",
+   "ok": true,
+   "detail": "12"
+  },
+  {
+   "section": "3",
+   "item": "본 방법 판 여섯 장면·참값 목표 판 다섯 장면",
+   "ok": true,
+   "detail": "(6, 5)"
+  },
+  {
+   "section": "3",
+   "item": "σ_ref 최소·중앙·최대, 영상별 평균 무게",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "section": "3",
+   "item": "10·0.1에 걸린 비율(일치·보존·보정·결측·영상 깊이 목표)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "section": "3",
+   "item": "참값 목표 판 무게 모두 1",
+   "ok": true,
+   "detail": "['True', 'True', 'True', 'True', 'True']"
+  },
+  {
+   "section": "3",
+   "item": "본 방법 판 무게 식 = clip(σ_ref/σ) (발주문 제곱 식과 다름, issues 1)",
+   "ok": true,
+   "detail": "{'R1 × 항공 LiDAR': 'clip(σ_ref/σ, 0.1, 10)', 'B173 주변 × 항공 LiDAR': 'clip(σ_ref/σ, 0.1, 10)', 'B0 × 항공 LiDAR': 'clip(σ_ref/σ, 0.1, 10)', 'R1 × LoD2': 'clip(σ_ref/σ, 0.1, 10)', 'B173 주변 × LoD2': 'clip(σ_ref/σ, 0.1, 10)', 'B0 × LoD2': 'clip(σ_ref/σ, 0.1, 10)'}"
+  },
+  {
+   "section": "3",
+   "item": "대상 점 종류 1의 w=10 비율 잃음·지킴",
+   "ok": true,
+   "detail": "36"
+  },
+  {
+   "section": "3",
+   "item": "고친 점 틀린 목표 w=10·0.1 비율, 고치지 못함과 나란히",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "section": "4",
+   "item": "1위~3위 가우시안 종류(top1·top3 무게 합)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "section": "4",
+   "item": "1~3위 가우시안의 거리(앞·뒤), 불투명도, 긴 축",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+   "section": "4",
+   "item": "본 방법 판 잃은 점·고친 점 여섯 장면",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+   "section": "4",
+   "item": "다른 목표 제약의 판단 영역·맞음",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "section": "4",
+   "item": "높이 비교 무리 가, 두 판",
+   "ok": true,
+   "detail": "[('B0 × LoD2', '가: 잃음'), ('B0 × LoD2', '가: 지킴'), ('B0 × 항공 LiDAR', '가: 잃음'), ('B0 × 항공 LiDAR', '가: 지킴'), ('B173 주변 × LoD2', '가: 잃음'), ('B173 주변 × LoD2', '가: 지킴'), ('B173 주변 × 항공 LiDAR', '가: 잃음'), ('B173 주변 × 항공 LiDAR', '가: 지킴'), ('R1 × LoD2', '가: 잃음'), ('R1 × LoD2', '가: 지킴'), ('R1 × 항공 LiDAR', '가: 잃음'), ('R1 × 항공 LiDAR', '가: 지킴')]"
+  },
+  {
+   "section": "4",
+   "item": "고친 점 틀린 목표 조각 씨앗의 자리(허용 구간 안·재할당·해제·제거)",
+   "ok": true,
+   "detail": "[('B0 × LoD2', '나: 고치지 못함'), ('B0 × LoD2', '나: 고침'), ('B0 × 항공 LiDAR', '나: 고치지 못함'), ('B0 × 항공 LiDAR', '나: 고침'), ('B173 주변 × LoD2', '나: 고치지 못함'), ('B173 주변 × LoD2', '나: 고침'), ('B173 주변 × 항공 LiDAR', '나: 고치지 못함'), ('B173 주변 × 항공 LiDAR', '나: 고침'), ('R1 × LoD2', '나: 고치지 못함'), ('R1 × LoD2', '나: 고침'), ('R1 × 항공 LiDAR', '나: 고치지 못함'), ('R1 × 항공 LiDAR', '나: 고침')]"
+  },
+  {
+   "section": "4",
+   "item": "R1 × 항공 LiDAR 나간 길(재할당·재설정 뒤 제거·그 밖, 때) 두 무리",
+   "ok": true,
+   "detail": "['가: 잃음', '가: 지킴', '나: 고침', '나: 고치지 못함']"
+  },
+  {
+   "section": "4",
+   "item": "기여 셈이 잃은 점·고친 점의 모든 쌍을 덮음 R1 × 항공 LiDAR",
+   "ok": true,
+   "detail": "(8143, 8143)"
+  },
+  {
+   "section": "4",
+   "item": "기여 셈이 잃은 점·고친 점의 모든 쌍을 덮음 B173 주변 × 항공 LiDAR",
+   "ok": true,
+   "detail": "(5826, 17001)"
+  },
+  {
+   "section": "4",
+   "item": "기여 셈이 잃은 점·고친 점의 모든 쌍을 덮음 B0 × 항공 LiDAR",
+   "ok": true,
+   "detail": "(402, 402)"
+  },
+  {
+   "section": "4",
+   "item": "기여 셈이 잃은 점·고친 점의 모든 쌍을 덮음 R1 × LoD2",
+   "ok": true,
+   "detail": "(6186, 6186)"
+  },
+  {
+   "section": "4",
+   "item": "기여 셈이 잃은 점·고친 점의 모든 쌍을 덮음 B173 주변 × LoD2",
+   "ok": true,
+   "detail": "(6299, 6299)"
+  },
+  {
+   "section": "4",
+   "item": "기여 셈이 잃은 점·고친 점의 모든 쌍을 덮음 B0 × LoD2",
+   "ok": true,
+   "detail": "(4692, 4692)"
+  },
+  {
+   "section": "5",
+   "item": "여섯 장면 × 추출 둘 × 채움 셋",
+   "ok": true,
+   "detail": "36"
+  },
+  {
+   "section": "5",
+   "item": "낼 값 열 모두 있음",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+   "section": "5",
+   "item": "채운 원반 표본에 NaN 없음(첫 실행의 번호 오류 재발 없음)",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+   "section": "5",
+   "item": "채우는 규칙에 참값 안 씀(정적 확인은 아래 수동 점검)",
+   "ok": null,
+   "detail": "수동 점검 항목"
+  },
+  {
+   "section": "5",
+   "item": "그림 fill_floor_band",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "section": "5",
+   "item": "그림 fill_r1_lod2_wall1",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "section": "5",
+   "item": "그림 fill_b0_visible_wall",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "section": "5",
+   "item": "그림 fill_b173_wing",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "section": "6",
+   "item": "그림 tp_A R1 × 항공 LiDAR",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "section": "6",
+   "item": "그림 tp_B R1 × 항공 LiDAR",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "section": "6",
+   "item": "그림 tp_C R1 × 항공 LiDAR",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "section": "6",
+   "item": "그림 tp_A B173 주변 × 항공 LiDAR",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "section": "6",
+   "item": "그림 tp_B B173 주변 × 항공 LiDAR",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "section": "6",
+   "item": "그림 tp_C B173 주변 × 항공 LiDAR",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "section": "6",
+   "item": "그림 tp_A B0 × 항공 LiDAR",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "section": "6",
+   "item": "그림 tp_B B0 × 항공 LiDAR",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "section": "6",
+   "item": "그림 tp_C B0 × 항공 LiDAR",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "section": "6",
+   "item": "그림 tp_A R1 × LoD2",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "section": "6",
+   "item": "그림 tp_B R1 × LoD2",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "section": "6",
+   "item": "그림 tp_C R1 × LoD2",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "section": "6",
+   "item": "그림 tp_A B173 주변 × LoD2",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "section": "6",
+   "item": "그림 tp_B B173 주변 × LoD2",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "section": "6",
+   "item": "그림 tp_C B173 주변 × LoD2",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "section": "6",
+   "item": "그림 tp_A B0 × LoD2",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "section": "6",
+   "item": "그림 tp_B B0 × LoD2",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "section": "6",
+   "item": "그림 tp_C B0 × LoD2",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "section": "6",
+   "item": "그림 바닥 띠 두 판",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "section": "8",
+   "item": "points/tp_R1rep_b10__ALS.npz 열",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+   "section": "8",
+   "item": "points/tp_B173nb_b10__ALS.npz 열",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+   "section": "8",
+   "item": "points/tp_B0_b10__ALS.npz 열",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+   "section": "8",
+   "item": "points/tp_R1rep_b10__LoD2.npz 열",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+   "section": "8",
+   "item": "points/tp_B173nb_b10__LoD2.npz 열",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+   "section": "8",
+   "item": "points/tp_B0_b10__LoD2.npz 열",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+   "section": "8",
+   "item": "요약 맨 앞이 2절 표와 교차표",
+   "ok": true,
+   "detail": "(502, 13368)"
+  },
+  {
+   "section": "8",
+   "item": "tables/tp_supervision.csv",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "section": "8",
+   "item": "tables/tp_weight.csv",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "section": "8",
+   "item": "tables/tp_front.csv",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "section": "8",
+   "item": "tables/tp_fill.csv",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "section": "8",
+   "item": "묶음 PHD-MAIN-TARGETPATH-v1_1123-1320_light.zip = 지금 파일",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+   "section": "8",
+   "item": "묶음 PHD-MAIN-TARGETPATH-v1_채움_1123-1320.zip = 지금 파일",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+   "section": "7",
+   "item": "모든 실행 GPU 없음 (87회)",
+   "ok": true,
+   "detail": "[]"
+  },
+  {
+   "section": "7",
+   "item": "원자료·저장소는 읽기 전용으로만 붙임",
+   "ok": true,
+   "detail": "[]"
+  }
+ ],
+ "ng": [],
+ "scientific_verdict": null
+}

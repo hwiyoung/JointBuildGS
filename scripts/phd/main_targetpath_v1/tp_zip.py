@@ -10,7 +10,7 @@ def main(kind):
     name = f'PHD-MAIN-TARGETPATH-v1_{stamp}_light.zip' if kind == 'light' else f'PHD-MAIN-TARGETPATH-v1_채움_{stamp}.zip'
     files = []
     if kind == 'light':
-        for p in ['목표전달셈_요약.md', '관찰.md', '발주문_v1.md', 'issues.md', 'progress.md', 'checks.json']:
+        for p in ['목표전달셈_요약.md', '관찰.md', '발주문_v1.md', 'issues.md', 'progress.md', 'checks.json', '검증_v1.md', '검증_v1.json']:
             if (D/p).exists(): files.append((D/p, p))
         for sub in ['tables', 'figures', 'points']:
             for p in sorted((D/sub).glob('*')):

@@ -26,7 +26,7 @@ def main():
             '종류 1 = 소유 조각이 있고 목표가 점의 τ 안, 2 = 소유 조각이 있고 τ 넘게 앞, 3 = 소유 조각 없이 영상 깊이 목표, 4 = 소유 조각이 있고 τ 넘게 뒤, 5 = 무게 0. '
             '"1>½" = 종류 1이 본 영상의 절반 넘는 점의 비율(%), "2+3>½" 같은 뜻. "가린 감독" = 가려진 화소(10 m 규칙)에서 종류 1~4의 감독을 받은 쌍의 비율(%). w는 무게 중앙값.', '']
     for vs in VS:
-        out += [f'### 1.{VS.index(vs)+1} {vs}', '']
+        out += [f'### 1.{VS.index(vs)+1} {vs}', ''] + (['이 무리는 가려진 쌍(10 m 규칙)을 뺀 것이라 "가린 감독" 칸이 비어 있다. 그 값은 1.2에 있다.', ''] if vs.startswith('가려') else [])
         rows = []
         for r in S:
             if r['view_set'] != vs or r['point_region'] != '전체': continue
@@ -54,6 +54,10 @@ def main():
     out += ['## 3. 면을 누가 그리나 (4절)', '', '점을 바깥쪽에서 보는 영상의 그 화소에서 무게가 가장 큰 가우시안(1위)의 종류·자리. CPU에서 2DGS 합성을 다시 셌다(저장된 렌더 깊이와 중앙 차 1 mm 안, `checks.json`).', '',
             md(['영상', '장면', '판', '무리', '점', '쌍', '같은 목표 %', '다른 목표 %', '해제 %', '제약 없음 %', '앞 %', 'τ 안 %', '뒤 %', '불투명도', '긴 축 (m)'],
                [[r['view_set'][:6], r['stem'], RUNS[r['run']], r['group'], r['points'], r['pairs']]+[f(r[f'top1_{k}_pct']) for k in GKIND+POS3]+[f(r['top1_opacity_median'], 2), f(r['top1_size_median_m'], 2)] for r in F]), '',
+            '1·2·3위 가우시안을 나란히(본 방법 판, 가려지지 않은 영상): 종류·자리 비율과 점에서의 거리(τ배, 음수 = 앞)·불투명도·긴 축·화소 무게의 중앙. 1,000점 미만 무리는 비율을 비운다.', '',
+            md(['장면', '무리', '점', '순위', '다른 목표 %', '해제 %', '제약 없음 %', '앞 %', 'τ 안 %', '거리(τ배)', '불투명도', '긴 축 (m)', '무게'],
+               [[r['stem'], r['group'], r['points'], f'{rk}위']+[f(r[f'top{rk}_{k}_pct']) for k in ['다른 목표에 위치 제약', '제약 해제', '제약 없음', '앞', 'τ 안']]+[f(r[f'top{rk}_offset_tau_median'], 2), f(r[f'top{rk}_opacity_median'], 2), f(r[f'top{rk}_size_median_m'], 2), f(r[f'top{rk}_weight_median'], 2)]
+                for r in F if r['run'] == RUN_KO['ft'] and r['view_set'].startswith('가려') and r['group'] in ('가: 잃음', '나: 고침') for rk in (1, 2, 3)]), '',
             '1위가 다른 목표에 위치 제약된 가우시안일 때, 그 목표의 판단 영역과 목표가 맞는지(본 방법 판):', '',
             md(['영상', '장면', '무리', '점', '가우시안 수(쌍×3 안)', '그 목표가 맞음 %', '일치 %', '보존 %', '보정 %', '결측 %'],
                [[r['view_set'][:6], r['stem'], r['group'], r['points'], r['other_target_splats'], f(r['other_target_right_pct']), f(r.get('other_region_일치_pct')), f(r.get('other_region_보존_pct')), f(r.get('other_region_보정_pct')), f(r.get('other_region_결측_pct'))] for r in FO if r['run'] == RUN_KO['ft']]), '',

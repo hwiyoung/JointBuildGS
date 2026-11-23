@@ -77,6 +77,13 @@ def main():
                 r['top1_offset_tau_median'] = float(np.nanmedian((dist[m, 0]/tau[m]))) if m.any() else None
                 r['top1_opacity_median'] = float(np.nanmedian(op[m, 0])) if m.any() else None; r['top1_size_median_m'] = float(np.nanmedian(size[m, 0])) if m.any() else None
                 r['top1_weight_median'] = float(np.median(w1[:, 0])) if m.any() else None
+                for rk in (1, 2):   # 2nd and 3rd largest-weight splat: same columns as the 1st (verification addendum, order 4 first bullet)
+                    kr = kind[m, rk]; hr = has[m, rk]; t = f'top{rk+1}'; r[f'{t}_pairs_with_splat'] = int(hr.sum())
+                    for i, nm in enumerate(GKIND): r[f'{t}_{nm}_pct'] = share(int((kr == i).sum()), int((kr >= 0).sum())) if big else None
+                    for i, nm in enumerate(POS3): r[f'{t}_{nm}_pct'] = share(int((dpos[m, rk] == i).sum()), int((dpos[m, rk] >= 0).sum())) if big else None
+                    r[f'{t}_offset_tau_median'] = float(np.nanmedian(dist[m, rk][hr]/tau[m][hr])) if hr.any() else None
+                    r[f'{t}_opacity_median'] = float(np.nanmedian(op[m, rk][hr])) if hr.any() else None; r[f'{t}_size_median_m'] = float(np.nanmedian(size[m, rk][hr])) if hr.any() else None
+                    r[f'{t}_weight_median'] = float(np.median(w1[hr, rk])) if hr.any() else None
                 front.append(r)
                 k1o = m[:, None] & (kind == 1)
                 ro = dict(title=TITLE, stem=STEM_KO[stem], run=RUN_KO[run], view_set=vs, group=GRP[g], points=npts, other_target_splats=int(k1o.sum()),
