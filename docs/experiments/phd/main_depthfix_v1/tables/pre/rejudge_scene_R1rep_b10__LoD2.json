@@ -1,0 +1,81 @@
+{
+ "title": "깊이 지시 판",
+ "rows": [
+  {
+   "stem": "R1 × LoD2",
+   "type_campus": "가중 평균",
+   "type_scene": "가중 평균",
+   "patches": 76756,
+   "area_m2": 4797.25
+  },
+  {
+   "stem": "R1 × LoD2",
+   "type_campus": "가중 평균",
+   "type_scene": "영상 깊이",
+   "patches": 1083,
+   "area_m2": 67.6875
+  },
+  {
+   "stem": "R1 × LoD2",
+   "type_campus": "가중 평균",
+   "type_scene": "되돌림",
+   "patches": 0,
+   "area_m2": 0.0
+  },
+  {
+   "stem": "R1 × LoD2",
+   "type_campus": "영상 깊이",
+   "type_scene": "가중 평균",
+   "patches": 815,
+   "area_m2": 50.9375
+  },
+  {
+   "stem": "R1 × LoD2",
+   "type_campus": "영상 깊이",
+   "type_scene": "영상 깊이",
+   "patches": 8960,
+   "area_m2": 560.0
+  },
+  {
+   "stem": "R1 × LoD2",
+   "type_campus": "영상 깊이",
+   "type_scene": "되돌림",
+   "patches": 0,
+   "area_m2": 0.0
+  },
+  {
+   "stem": "R1 × LoD2",
+   "type_campus": "되돌림",
+   "type_scene": "가중 평균",
+   "patches": 623,
+   "area_m2": 38.9375
+  },
+  {
+   "stem": "R1 × LoD2",
+   "type_campus": "되돌림",
+   "type_scene": "영상 깊이",
+   "patches": 0,
+   "area_m2": 0.0
+  },
+  {
+   "stem": "R1 × LoD2",
+   "type_campus": "되돌림",
+   "type_scene": "되돌림",
+   "patches": 2888,
+   "area_m2": 180.5
+  },
+  {
+   "stem": "R1 × LoD2",
+   "type_campus": "바뀜 합",
+   "type_scene": "",
+   "patches": 2521,
+   "area_m2": 157.5625,
+   "share_of_rejudged_area_pct": 2.7665294924554185,
+   "not_rejudged_no_scene_height": 1720,
+   "check_campus_sig_rule_agree_pct": 100.0,
+   "check_campus_big_rule_agree_pct": 100.0,
+   "rule": "유의 = n≥4 · |d + (d_for_check − d_campus)| > L_m(캠퍼스 값), 큼 = |d| ≥ 혼합 경계(지붕/벽); 장면 d = 장면 영상 높이 − 장면 사전 정보 높이; 점검(combo_D)은 캠퍼스 값 그대로; 유의하지 않게 된 패치 = 가중 평균"
+  }
+ ],
+ "scientific_verdict": null
+}

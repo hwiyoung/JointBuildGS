@@ -1,0 +1,11 @@
+{
+ "stem": "R1rep_b10__ALS",
+ "view": "DJI_20241217103609_0074_D",
+ "place": "바닥 띠",
+ "place_owner_pixels": 10240,
+ "back_removed_pixels": 15,
+ "front10_pixels": 5,
+ "target_pixels_p0": 146560,
+ "rule": "영상 = 판 0 목표 지도에서 자리의 패치(둥근 벽: 설정 places R1_round_wall 상자의 LoD2 벽 패치, 바닥 띠: TRAINERR 덧붙임 4 floor_band 점에서 0.5 m 안의 패치)가 가진 화소가 가장 많은 학습 영상",
+ "scientific_verdict": null
+}

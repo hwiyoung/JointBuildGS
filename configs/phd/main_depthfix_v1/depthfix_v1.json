@@ -1,0 +1,338 @@
+{
+ "task": "PHD-MAIN-DEPTHFIX-v1",
+ "title": "깊이 지시 판",
+ "training_unit": "건물 단위 장면(FINALTRAIN-v1과 같음, 2×2 칸 아님); σ_ref는 장면마다 하나",
+ "base": "FINALTRAIN-v1 학습 설정(fork r23, train_entry 인자 그대로); 이 설정에 적지 않은 것은 그 판과 같다",
+ "stems": [
+  "R1rep_b10__LoD2",
+  "R1rep_b10__ALS",
+  "B173nb_b10__ALS",
+  "B173nb_b10__LoD2"
+ ],
+ "kappa": {
+  "LoD2": 0.25,
+  "ALS": 0.65
+ },
+ "kappa_note": "참값이 있는 건물에서 구한 고정 값(발주문 3절); 판 7은 κ 1",
+ "targets": {
+  "type_source": "나5 patches_{prior}.csv.gz (zip sha256 53e908878153a6aab2c78053553dfbda255149eeb13cb20e57d8cde11c851e51): combo_D_judgment, none_significant, mix_large, combo_D_returned, A2_c_ge5_frac",
+  "type_rule": "mf19 panel_lo, T = 혼합 경계, 처리 W: lo = combo_D_judgment; 유의 & ~mix_large -> 0. 가중 평균 = lo 0, 영상 깊이 = lo 2, 되돌림 = 유의 & mix_large & combo_D_returned, 결측 = lo 4 또는 그 밖 lo 1, lo 3 목표 없음, lo 9 FINALTRAIN 미판정 규칙",
+  "height_source": "학습 장면 패치(FINALTRAIN targets npz의 prior_height_m, mvs_mean_m, u_mvs, sigma_P_m), FINALTRAIN targets.calculate 그대로(가중 평균 분산 u², σ_W·r 없음)",
+  "join": "LoD2 중심 1 mm 안, 항공 LiDAR 가장 가까운 중심 0.125 m 안·같은 kind·캠퍼스 패치 하나에 장면 패치 하나(가까운 쪽)",
+  "unjoined": "본 방법 판의 판단·목표 그대로",
+  "no_scene_image_height": "가중 평균·영상 깊이인데 장면 영상 높이(n≥4, 유한) 또는 가중 평균에 u가 없으면 결측(사전 정보)"
+ },
+ "switches": {
+  "ga_backface": "영상마다 원반 중심에서 카메라로 가는 방향과 법선의 내적이 0 이상이 아닌(카메라 반대쪽) 원반을 그리지 않는다",
+  "ga_front_m": 10.0,
+  "ga_front_rule": "목표 화소의 영상 깊이(STAGE0 s61 maps/mvs, 유한·>0, conf 거르지 않음 = GTTARGET g1_maps)가 목표 깊이보다 10 m 넘게 가까우면 무게 0; 영상 깊이 없는 화소는 그대로",
+  "na_weight": "clip((σ_ref/σ)^0.5, √0.1, √10) (회신 1 §1, '무게 차이 줄이기')",
+  "da_normalize": "장면마다 모든 학습 영상의 목표 화소(원반 있음, 무게>0)에서 목표 종류마다 무게 평균으로 나눔; 가·나 적용 뒤 무게로; 배경 영상 깊이 화소(무게 1) 그대로",
+  "ra_score": "A2_c_ge5_frac",
+  "ra_c": "κ × (1 − s)",
+  "ra_loss": "λ × [ c·w_P·|D̂−D_P| + (1−c)·w_M·|D̂−D_M| ]; D_P·D_M = 소유 패치 원반을 사전 정보 높이·영상 깊이 높이에 그린 깊이(광선-원반 교차, 원반 반지름 sqrt(area/π)); 소유 = 판 1(가만) 지도; 덮지 않는 항은 뺌",
+  "ra_weights": "w_P = clip(σ_ref/σ_P, .1, 10), w_M = clip(σ_ref/u_M, .1, 10)(u 없으면 correction_u_median); 판 8은 나·다를 같은 식으로(다의 몫은 판 4 지도에서 종류 되돌림·영상 깊이의 평균)",
+  "ra_seed": "c ≥ 0.5 사전 정보 면, 아니면 영상 깊이 면(목표 파일의 판정 1/2)",
+  "ma": "라 대상 패치 두 항에 max(c, 1−c)"
+ },
+ "arms": {
+  "p0": {
+   "maps": "base",
+   "family": "base",
+   "two": false
+  },
+  "p1": {
+   "maps": "ga",
+   "family": "base",
+   "two": false
+  },
+  "p2": {
+   "maps": "ga_na",
+   "family": "base",
+   "two": false
+  },
+  "p3": {
+   "maps": "ga_da",
+   "family": "base",
+   "two": false
+  },
+  "p4": {
+   "maps": "ga_na_da",
+   "family": "base",
+   "two": false
+  },
+  "p5": {
+   "maps": "ga_ra_kA",
+   "family": "kA",
+   "two": true
+  },
+  "p6": {
+   "maps": "ga_ra_ma_kA",
+   "family": "kA",
+   "two": true
+  },
+  "p7": {
+   "maps": "ga_ra_k1",
+   "family": "k1",
+   "two": true
+  },
+  "p8": {
+   "maps": "ga_na_da_ra_ma_kA",
+   "family": "kA",
+   "two": true
+  }
+ },
+ "runs": [
+  [
+   "p0",
+   "R1rep_b10__LoD2",
+   0
+  ],
+  [
+   "p0",
+   "R1rep_b10__ALS",
+   0
+  ],
+  [
+   "p0",
+   "B173nb_b10__ALS",
+   0
+  ],
+  [
+   "p0",
+   "B173nb_b10__LoD2",
+   0
+  ],
+  [
+   "p1",
+   "R1rep_b10__LoD2",
+   0
+  ],
+  [
+   "p1",
+   "R1rep_b10__ALS",
+   0
+  ],
+  [
+   "p1",
+   "B173nb_b10__ALS",
+   0
+  ],
+  [
+   "p1",
+   "B173nb_b10__LoD2",
+   0
+  ],
+  [
+   "p5",
+   "R1rep_b10__LoD2",
+   0
+  ],
+  [
+   "p5",
+   "R1rep_b10__ALS",
+   0
+  ],
+  [
+   "p5",
+   "B173nb_b10__LoD2",
+   0
+  ],
+  [
+   "p2",
+   "R1rep_b10__LoD2",
+   0
+  ],
+  [
+   "p2",
+   "R1rep_b10__ALS",
+   0
+  ],
+  [
+   "p3",
+   "R1rep_b10__LoD2",
+   0
+  ],
+  [
+   "p3",
+   "R1rep_b10__ALS",
+   0
+  ],
+  [
+   "p4",
+   "R1rep_b10__LoD2",
+   0
+  ],
+  [
+   "p4",
+   "R1rep_b10__ALS",
+   0
+  ],
+  [
+   "p4",
+   "B173nb_b10__ALS",
+   0
+  ],
+  [
+   "p6",
+   "R1rep_b10__LoD2",
+   0
+  ],
+  [
+   "p6",
+   "B173nb_b10__LoD2",
+   0
+  ],
+  [
+   "p7",
+   "R1rep_b10__LoD2",
+   0
+  ],
+  [
+   "p7",
+   "B173nb_b10__LoD2",
+   0
+  ],
+  [
+   "p8",
+   "R1rep_b10__LoD2",
+   0
+  ],
+  [
+   "p8",
+   "R1rep_b10__ALS",
+   0
+  ],
+  [
+   "p8",
+   "B173nb_b10__LoD2",
+   0
+  ],
+  [
+   "p0",
+   "R1rep_b10__LoD2",
+   1
+  ],
+  [
+   "p0",
+   "R1rep_b10__ALS",
+   1
+  ],
+  [
+   "p0",
+   "B173nb_b10__ALS",
+   1
+  ],
+  [
+   "p0",
+   "B173nb_b10__LoD2",
+   1
+  ]
+ ],
+ "concurrency": {
+  "gpu": 0,
+  "max_trainings": 3
+ },
+ "criteria": {
+  "compare": {
+   "p1": [
+    "p0"
+   ],
+   "p2": [
+    "p1"
+   ],
+   "p3": [
+    "p1"
+   ],
+   "p4": [
+    "p1"
+   ],
+   "p5": [
+    "p1"
+   ],
+   "p6": [
+    "p1"
+   ],
+   "p7": [
+    "p1"
+   ],
+   "p8": [
+    "p0",
+    "p1"
+   ]
+  },
+  "better": "그 판을 돌린 모든 장면에서 주 지표 상대 감소 > 20 % 이고 감소량 > 판 0 두 씨앗 차이; 그리고 지킬 값 1 하락 ≤ 2 %p, 정확성 하락 ≤ 1 %p",
+  "better_p5_7_extra": "'함께 볼 값' 상승 > 5 %p 이고 > 판 0 두 씨앗 차이면 주 지표가 줄지 않아도 '낫다'",
+  "worse": "어느 장면에서든 정확성 하락 > 2 %p, 지킬 값 1 하락 > 5 %p, 완전성 하락 > 1 %p, 부유 표면 또는 가우시안 수 > 비교 판의 1.5배",
+  "same": "그 밖",
+  "report": "판정은 보고서에 적지 않는다. 표에 조건마다의 값만"
+ },
+ "min_points": 1000,
+ "scientific_verdict": null,
+ "places": {
+  "R1_floor_band": {
+   "stems": [
+    "R1rep_b10__ALS",
+    "R1rep_b10__LoD2"
+   ],
+   "source": "TRAINERR addendum4 places/floor_band.npz (기존 정의 그대로)"
+  },
+  "B173_wing": {
+   "stems": [
+    "B173nb_b10__ALS",
+    "B173nb_b10__LoD2"
+   ],
+   "source": "configs/phd/main_uncert_v1/places_v1.json b173_wing (LoD2 면 33·38), 단면 = main_rescore_v1 representatives_v1.json 행 A"
+  },
+  "R1_sawtooth_valley": {
+   "stems": [
+    "R1rep_b10__ALS",
+    "R1rep_b10__LoD2"
+   ],
+   "building": "DEBY_LOD2_4906968",
+   "rule": "그 건물 LoD2 지붕 패치(평가 범위)의 긴 축(주성분, 방향 (0.355, 0.935)) 위에서 s_min+17 ~ s_min+27 m, 짧은 축 전폭; 단면 = 긴 축 선(중심 (-13.73, 35.93))",
+   "why": "LoD2 지붕 형태 3900(활 모양)인 좁고 긴 지붕(53 m × 2.9 m). 장면 영상 깊이 높이의 긴 축 단면이 약 5 m 간격으로 0.6~1 m 내려가는 골을 보인다; 그 가운데 골 두 개가 든 10 m 구간. 참값·결과를 보지 않고 정함"
+  },
+  "R1_round_wall": {
+   "stems": [
+    "R1rep_b10__LoD2"
+   ],
+   "building": "DEBY_LOD2_4906975",
+   "centre_xy": [
+    20.8,
+    13.1
+   ],
+   "half_m": 4.0,
+   "section_dir_deg": -53.1,
+   "why": "LoD2 벽 법선 방향이 −111°~−15°로 면 89개에 걸쳐 고르게 바뀌는 굽은 벽(30방향). 그 호의 가운데(면 518, 방향 −53°) 둘레 8 m; 단면은 벽 법선 방향. 참값·결과를 보지 않고 정함"
+  },
+  "B173_rooftop_structure": {
+   "stems": [
+    "B173nb_b10__ALS",
+    "B173nb_b10__LoD2"
+   ],
+   "building": "DEBY_LOD2_108580335",
+   "box_xy": [
+    [
+     140.8,
+     140.5
+    ],
+    [
+     165.9,
+     151.6
+    ]
+   ],
+   "section": [
+    [
+     150.0,
+     136.0
+    ],
+    [
+     150.0,
+     153.0
+    ]
+   ],
+   "why": "주 건물(4959326) 지붕(z −30.5 m, 면 856) 위에 3~4 m 솟은 작은 LoD2 건물(25 m × 11 m, 지붕 z −26.5~−27). 그 둘레와 단면(아래 지붕 → 구조물 → 가장자리)을 본다. 참값·결과를 보지 않고 정함"
+  }
+ }
+}

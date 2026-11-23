@@ -1,0 +1,28 @@
+{
+ "title": "깊이 지시 판",
+ "rows": [
+  {
+   "stem": "B173 주변 × LoD2",
+   "kappa": "κ 가정",
+   "gt_points": 99097,
+   "gt_patches": 22005,
+   "larger_c_face_right_pct": 91.51942036590411,
+   "p0_target_face_right_pct": 89.21359879713816,
+   "prior_right_pct": 15.054946163859654,
+   "image_right_pct": 91.51942036590411,
+   "rule": "맞음 = 그 면(사전 정보 면 / 영상 깊이 면)까지 참값 점의 법선 거리(addendum11 s_prior / s_mvs) ≤ τ"
+  },
+  {
+   "stem": "B173 주변 × LoD2",
+   "kappa": "κ 1",
+   "gt_points": 99097,
+   "gt_patches": 22005,
+   "larger_c_face_right_pct": 74.52092394320717,
+   "p0_target_face_right_pct": 89.21359879713816,
+   "prior_right_pct": 15.054946163859654,
+   "image_right_pct": 91.51942036590411,
+   "rule": "맞음 = 그 면(사전 정보 면 / 영상 깊이 면)까지 참값 점의 법선 거리(addendum11 s_prior / s_mvs) ≤ τ"
+  }
+ ],
+ "scientific_verdict": null
+}

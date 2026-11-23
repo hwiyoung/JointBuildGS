@@ -1,0 +1,81 @@
+{
+ "title": "깊이 지시 판",
+ "rows": [
+  {
+   "stem": "R1 × 항공 LiDAR",
+   "type_campus": "가중 평균",
+   "type_scene": "가중 평균",
+   "patches": 31682,
+   "area_m2": 2110.2910709341777
+  },
+  {
+   "stem": "R1 × 항공 LiDAR",
+   "type_campus": "가중 평균",
+   "type_scene": "영상 깊이",
+   "patches": 224,
+   "area_m2": 15.557725290090406
+  },
+  {
+   "stem": "R1 × 항공 LiDAR",
+   "type_campus": "가중 평균",
+   "type_scene": "되돌림",
+   "patches": 0,
+   "area_m2": 0.0
+  },
+  {
+   "stem": "R1 × 항공 LiDAR",
+   "type_campus": "영상 깊이",
+   "type_scene": "가중 평균",
+   "patches": 172,
+   "area_m2": 13.649574028724114
+  },
+  {
+   "stem": "R1 × 항공 LiDAR",
+   "type_campus": "영상 깊이",
+   "type_scene": "영상 깊이",
+   "patches": 295,
+   "area_m2": 19.770697600682222
+  },
+  {
+   "stem": "R1 × 항공 LiDAR",
+   "type_campus": "영상 깊이",
+   "type_scene": "되돌림",
+   "patches": 0,
+   "area_m2": 0.0
+  },
+  {
+   "stem": "R1 × 항공 LiDAR",
+   "type_campus": "되돌림",
+   "type_scene": "가중 평균",
+   "patches": 129,
+   "area_m2": 8.910524214771232
+  },
+  {
+   "stem": "R1 × 항공 LiDAR",
+   "type_campus": "되돌림",
+   "type_scene": "영상 깊이",
+   "patches": 0,
+   "area_m2": 0.0
+  },
+  {
+   "stem": "R1 × 항공 LiDAR",
+   "type_campus": "되돌림",
+   "type_scene": "되돌림",
+   "patches": 521,
+   "area_m2": 33.80715158583358
+  },
+  {
+   "stem": "R1 × 항공 LiDAR",
+   "type_campus": "바뀜 합",
+   "type_scene": "",
+   "patches": 525,
+   "area_m2": 38.11782353358576,
+   "share_of_rejudged_area_pct": 1.7310650776365626,
+   "not_rejudged_no_scene_height": 117,
+   "check_campus_sig_rule_agree_pct": 100.0,
+   "check_campus_big_rule_agree_pct": 100.0,
+   "rule": "유의 = n≥4 · |d + (d_for_check − d_campus)| > L_m(캠퍼스 값), 큼 = |d| ≥ 혼합 경계(지붕/벽); 장면 d = 장면 영상 높이 − 장면 사전 정보 높이; 점검(combo_D)은 캠퍼스 값 그대로; 유의하지 않게 된 패치 = 가중 평균"
+  }
+ ],
+ "scientific_verdict": null
+}

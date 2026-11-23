@@ -1,0 +1,28 @@
+{
+ "title": "깊이 지시 판",
+ "rows": [
+  {
+   "stem": "R1 × 항공 LiDAR",
+   "kappa": "κ 가정",
+   "gt_points": 5434,
+   "gt_patches": 884,
+   "larger_c_face_right_pct": 67.64814133235187,
+   "p0_target_face_right_pct": 68.51306588148694,
+   "prior_right_pct": 91.27714390872286,
+   "image_right_pct": 14.464482885535517,
+   "rule": "맞음 = 그 면(사전 정보 면 / 영상 깊이 면)까지 참값 점의 법선 거리(addendum11 s_prior / s_mvs) ≤ τ"
+  },
+  {
+   "stem": "R1 × 항공 LiDAR",
+   "kappa": "κ 1",
+   "gt_points": 5434,
+   "gt_patches": 884,
+   "larger_c_face_right_pct": 86.0875966139124,
+   "p0_target_face_right_pct": 68.51306588148694,
+   "prior_right_pct": 91.27714390872286,
+   "image_right_pct": 14.464482885535517,
+   "rule": "맞음 = 그 면(사전 정보 면 / 영상 깊이 면)까지 참값 점의 법선 거리(addendum11 s_prior / s_mvs) ≤ τ"
+  }
+ ],
+ "scientific_verdict": null
+}
