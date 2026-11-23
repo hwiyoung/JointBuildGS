@@ -1,15 +1,23 @@
-"""Pack the delivery zip (CPU). usage: tp_zip.py light | fill
+"""Pack the delivery zip (CPU). usage: tp_zip.py light | fill | all
 light: 목표전달셈_요약.md, 관찰.md, 발주문_v1.md, issues.md, progress.md, checks.json, tables/, points/tp_*.npz, figures/ (orders 2-4, 6), scripts.
-fill : the order-5 files (tables/tp_fill*, figures/fill_*, 채움_요약.md) + scripts. Writes /tp/zips/PHD-MAIN-TARGETPATH-v1_<MMDD-HHMM>_<kind>.zip."""
+fill : the order-5 files (tables/tp_fill*, figures/fill_*, 채움_요약.md) + scripts.
+all  : light + fill in one zip (everything delivered). Writes /tp/zips/PHD-MAIN-TARGETPATH-v1_<MMDD-HHMM>_<kind>.zip."""
 import sys, zipfile
 sys.path.insert(0, '/repo/scripts/phd/main_targetpath_v1')
 from tp_common import *
 
 def main(kind):
     stamp = dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).strftime('%m%d-%H%M')
-    name = f'PHD-MAIN-TARGETPATH-v1_{stamp}_light.zip' if kind == 'light' else f'PHD-MAIN-TARGETPATH-v1_채움_{stamp}.zip'
+    name = {'light': f'PHD-MAIN-TARGETPATH-v1_{stamp}_light.zip', 'fill': f'PHD-MAIN-TARGETPATH-v1_채움_{stamp}.zip',
+            'all': f'PHD-MAIN-TARGETPATH-v1_{stamp}_전체.zip'}[kind]
     files = []
-    if kind == 'light':
+    if kind == 'all':
+        for p in ['목표전달셈_요약.md', '채움_요약.md', '관찰.md', '발주문_v1.md', 'issues.md', 'progress.md', 'checks.json', '검증_v1.md', '검증_v1.json']:
+            if (D/p).exists(): files.append((D/p, p))
+        for sub in ['tables', 'figures', 'points']:
+            for p in sorted((D/sub).glob('*')):
+                if p.is_file(): files.append((p, f'{sub}/{p.name}'))
+    elif kind == 'light':
         for p in ['목표전달셈_요약.md', '관찰.md', '발주문_v1.md', 'issues.md', 'progress.md', 'checks.json', '검증_v1.md', '검증_v1.json']:
             if (D/p).exists(): files.append((D/p, p))
         for sub in ['tables', 'figures', 'points']:
