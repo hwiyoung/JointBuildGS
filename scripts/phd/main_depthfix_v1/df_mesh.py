@@ -1,6 +1,6 @@
 """Host driver: surface extraction + scoring of DEPTHFIX runs with the unchanged GTTARGET-v1 mesh chain (g_mesh.py -> render -> TRAINERR te_mesh.py
 prepare/plan/tiles/merge/finish/score), redirected as PRESCRIBE-v1 p3_mesh.py does: O (/te) = this payload, shadow O/gtj, work folder O/fastwork.
-Only change: the render step runs df_render.py (= GTTARGET g3_render_model.py with variants base | occl10 | occlga).
+Render GPU = env DF_MESH_GPU (default 0). Only change: the render step runs df_render.py (= GTTARGET g3_render_model.py with variants base | occl10 | occlga).
 usage: python3 df_mesh.py <workers> <stem>:<run>:<variant> ...     writes O/meshes/<stem>__df_<run>_<variant>/{points.npz,score.json}"""
 import importlib.util, os, shutil, sys
 from pathlib import Path
@@ -25,7 +25,7 @@ def main(workers, *specs):
         dst = PO/'stage1'/stem/'maps'
         if not (dst/'index.json').exists(): dst.mkdir(parents=True, exist_ok=True); shutil.copy2(PO/'maps/base/base'/stem/'index.json', dst/'index.json')
         assert (PO/'runs'/stem/run/'model/point_cloud/iteration_30000/point_cloud.ply').is_file(), s
-        jobs.append(f'{stem}:df_{run}_{variant}:model:0:/te/runs/{stem}/{run}/model/point_cloud/iteration_30000/point_cloud.ply:{variant}')
+        jobs.append(f'{stem}:df_{run}_{variant}:model:{os.environ.get("DF_MESH_GPU", "0")}:/te/runs/{stem}/{run}/model/point_cloud/iteration_30000/point_cloud.ply:{variant}')
     gm.main(workers, *jobs)
 
 if __name__ == '__main__': main(*sys.argv[1:])

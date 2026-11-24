@@ -1,0 +1,26 @@
+{
+ "place": "B173_rooftop_structure",
+ "label": "B173 주변 옥상 구조물 둘레",
+ "stem": "B173nb_b10__LoD2",
+ "view": "DJI_20241217091243_0144_D",
+ "view_place_pixels": 858,
+ "line_A": [
+  150.0,
+  136.0
+ ],
+ "line_B": [
+  150.0,
+  153.0
+ ],
+ "slab_half_m": 0.25,
+ "patches_in_section": 179,
+ "rows": [
+  {
+   "run": "B173nb_b10__LoD2:p0_s0",
+   "mesh": "/df/gtj/meshes/B173nb_b10__LoD2__df_p0_s0_base/final.ply",
+   "mesh_exists": true
+  }
+ ],
+ "rule": "Order 7 site figures (CPU): per place, one row per arm run in that scene, three panels — photo crop, same-view render of the result surface (base extraction mesh),\nsection. Section: vertical plane through the place line A→B, slab ±0.25 m; GT points (gray), per patch in the slab: prior face disc (blue), image-depth face disc (orange),\n판 0 target disc (green) with its ±τ band (light green), result mesh vertices in the slab (red). View = among training views where both section ends project inside the frame, the one whose 판 0 target map has the most pixels of the\nplace patches (no GT, no result). Places from config 'places' (lines below); same place and view for every arm.\nusage: df15_case.py <place> <run>[,<run>...] [tag]   writes /docs/figures/case_<place>_<tag>.png/.pdf/.json",
+ "scientific_verdict": null
+}

@@ -33,26 +33,29 @@ def named(P, W, sel):
     return r
 
 def main(stem, *runs):
-    P = loadz(O/'points'/f'pts_{stem}.npz'); el = loadz(GT/'addendum11/final_data'/f'{stem}.npz', ['reference__eligible'])['reference__eligible'].astype(bool)
-    if not runs: runs = sorted({p.name.split('__df_')[1].rsplit('_', 1)[0] for p in (O/'meshes').glob(f'{stem}__df_*') if (p/'score.json').exists()})
+    P = loadz(O/'points'/f'pts_{stem}.npz'); a11 = loadz(GT/'addendum11/final_data'/f'{stem}.npz', ['reference__eligible', 'reference__case_id']); el = a11['reference__eligible'].astype(bool); case_all = a11['reference__case_id']
+    if not runs: runs = sorted({p.name.split('__df_')[1].rsplit('_', 1)[0] for p in (O/'meshes').glob(f'{stem}__df_*_base') if (p/'score.json').exists()})
+    pix = O/'points'/f'pix_{stem}.npz'; occh = loadz(pix, ['occluded_instr_half_p0'])['occluded_instr_half_p0'] if pix.exists() else None
     resp = O/'points_out'/f'res_{stem}.npz'; res = loadz(resp) if resp.exists() else {}
     for run in runs:
         Mz = {v: O/'meshes'/f'{stem}__df_{run}_{v}' for v in VARS}
-        if not all((Mz[v]/'points.npz').exists() for v in VARS): print('SKIP', stem, run, flush=True); continue
-        model = O/'runs'/stem/run/'model'; out = dict(stem=stem, scene=STEM_KO[stem], run=run, arm=run.rsplit('_s', 1)[0], seed=int(run.rsplit('_s', 1)[1]), gaussians=gauss(model), extractions={})
+        have = [v for v in VARS if (Mz[v]/'points.npz').exists()]
+        if 'base' not in have: print('SKIP', stem, run, flush=True); continue
+        model = O/'runs'/stem/run/'model'; out = dict(extractions_present=have, stem=stem, scene=STEM_KO[stem], run=run, arm=run.rsplit('_s', 1)[0], seed=int(run.rsplit('_s', 1)[1]), gaussians=gauss(model), extractions={})
         bits = np.zeros(len(P['point_id']), 'u1')
         for i, v in enumerate(VARS):
-            Z = loadz(Mz[v]/'points.npz', ['reference__within_tau1', 'result__eligible_new', 'result__within_tau1', 'reference__case_id'])
+            if v not in have: continue
+            Z = loadz(Mz[v]/'points.npz', ['reference__within_tau1', 'result__eligible_new', 'result__within_tau1'])
             Wall = Z['reference__within_tau1'].astype(bool); W = Wall[P['point_id']]; bits |= (W.astype('u1') << i)
             e = Z['result__eligible_new'].astype(bool); acc = 100*float(Z['result__within_tau1'].astype(bool)[e].mean())
-            comp = 100*float(Wall[el].mean()); compc = {CASES[c]: 100*float(Wall[el & (Z['reference__case_id'] == c)].mean()) for c in CASES}
+            comp = 100*float(Wall[el].mean()); compc = {CASES[c]: 100*float(Wall[el & (case_all == c)].mean()) for c in CASES}
             cells = []
             for c in CASES:
                 for t in (True, False):
                     m = (P['case_id'] == c) & (P['target_ok'] == t); n, w = rate(m, W); cells.append(dict(case=CASES[c], target_ok=t, points=n, within_pct=w))
             allp = np.ones(len(W), bool)
             ex = dict(completeness_pct=comp, accuracy_pct=acc, completeness_by_case_pct=compc, cells=cells, named=named(P, W, allp),
-                      named_without_type_changed=named(P, W, ~P['type_changed']), named_split_points=named(P, W, P['split']),
+                      named_without_type_changed=named(P, W, ~P['type_changed']), named_split_points=named(P, W, P['split']), named_split_p0_return=named(P, W, P['split'] & (P['type'] == 2)), named_split_p0_image=named(P, W, P['split'] & (P['type'] == 1)), named_occl_half_points=(named(P, W, occh) if occh is not None else None),
                       main_lost_by_type={TYPE_KO[k]: dict(zip(['n', 'pct'], rate((P['case_id'] == 2) & P['target_ok'] & (P['type'] == k), ~W))) for k in [0, 1, 2, 3, -1]},
                       fixed_also_by_type={TYPE_KO[k]: dict(zip(['n', 'pct'], rate((P['case_id'] == 2) & ~P['target_ok'] & (P['type'] == k), W))) for k in [0, 1, 2, 3, -1]})
             out['extractions'][v] = ex

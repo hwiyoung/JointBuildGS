@@ -1,0 +1,14 @@
+{
+ "stem": "B173nb_b10__ALS",
+ "panels": [
+  {
+   "arm": "p1",
+   "잃음 → 지킴": 81,
+   "지킴 → 잃음": 51,
+   "고침(이 판만)": 264,
+   "고침(판 0만)": 303
+  }
+ ],
+ "rule": "Order 7 point maps (CPU): top view per scene, one panel per arm compared with 판 0 (seed 0, base extraction).\nMain-metric points (image depth wrong, 판 0 target right): lost at 판 0 & kept at the arm (green), kept at 판 0 & lost at the arm (red).\nKeep-value-1 points (prior wrong, 판 0 target wrong): fixed at the arm only (blue), fixed at 판 0 only (orange). Other points light gray.\nusage: df20_pointmap.py <stem> <arm>[,<arm>...]   writes /docs/figures/pointmap_<stem>.png/.pdf/.json",
+ "scientific_verdict": null
+}

@@ -1,0 +1,80 @@
+{
+ "stem": "R1rep_b10__LoD2",
+ "examples": [
+  {
+   "view": "DJI_20241217100309_0009_D",
+   "crop_xy": [
+    319,
+    0,
+    220,
+    160
+   ],
+   "removed_right_pixels_view": 21196,
+   "removed_right_pixels_crop": 13768
+  },
+  {
+   "view": "DJI_20241217100040_0026_D",
+   "crop_xy": [
+    787,
+    224,
+    220,
+    160
+   ],
+   "removed_right_pixels_view": 20370,
+   "removed_right_pixels_crop": 14923
+  },
+  {
+   "view": "DJI_20241217101118_0008_D",
+   "crop_xy": [
+    735,
+    7,
+    220,
+    160
+   ],
+   "removed_right_pixels_view": 20252,
+   "removed_right_pixels_crop": 14288
+  },
+  {
+   "view": "DJI_20241217101108_0003_D",
+   "crop_xy": [
+    708,
+    581,
+    220,
+    160
+   ],
+   "removed_right_pixels_view": 19465,
+   "removed_right_pixels_crop": 13888
+  }
+ ],
+ "stats": {
+  "stem": "R1 × LoD2",
+  "pixels": 936130,
+  "views_with_pixels": 241,
+  "sampled": 362988,
+  "target_minus_image_depth_m_q10_q50_q90": [
+   12.74506072998047,
+   37.07244873046875,
+   85.83066787719726
+  ],
+  "image_point_above_target_m_q10_q50_q90": [
+   4.497675975625713,
+   12.778642930779164,
+   19.587733809861675
+  ],
+  "image_point_to_nearest_gt_m_q10_q50_q90": [
+   9.033084414206753,
+   33.08559731961481,
+   66.10604674088039
+  ],
+  "image_point_within_0p5m_of_gt_pct": 0.26309409677454904,
+  "image_point_within_2m_of_gt_pct": 0.729225208546839,
+  "confidence_q10_q50_q90": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "rule": "Pixel set = 판 1 map 10 m rule (image depth nearer than the target depth by > 10 m) & 판 0 disc target & |target depth − GT depth buffer| <= τ (owner kind)."
+ },
+ "rule": "Question ② (11-24): R1 × LoD2 pixels removed by the 10 m rule although their 판 0 target was right — what the image depth sees there.\nPixel set = 판 1 map 10 m rule (image depth nearer than the target depth by > 10 m) & 판 0 disc target & |target depth − GT depth buffer| <= τ (owner kind).\nExamples = the four training views with the most such pixels; crop = 220 × 160 px window with the most such pixels. Panels: photo, image depth, target depth (removed pixels outlined).\nStats over all such pixels of the scene: target − image depth, image-depth 3D point height above the target point, distance from the image-depth 3D point to the nearest GT point\n(GTJUDGE dense, view box), and image-depth confidence. GT used only to pick 'target right' and for these checks.\nusage: df18_front10_fig.py [stem]   writes /docs/figures/front10_examples_<stem>.png/.pdf/.json, /docs/tables/front10_pixels_<stem>.csv/json",
+ "scientific_verdict": null
+}

@@ -8,9 +8,10 @@ kind = sys.argv[1]; stamp = dt.datetime.now().strftime('%m%d-%H%M'); out = O/'zi
 files = []
 for base in [R/'docs/experiments/phd/main_depthfix_v1', R/'configs/phd/main_depthfix_v1']: files += [p for p in base.rglob('*') if p.is_file()]
 files += sorted(p for p in (R/'scripts/phd/main_depthfix_v1').glob('*') if p.suffix in ('.py', '.sh'))
-pay = [O/'checks', O/'families/targets_receipt'] + ([O/'points_out'] if kind != '학습전셈' else [])
+pay = [O/'checks', O/'families/targets_receipt'] + sorted((O/'points').glob('pts_*.npz')) + ([O/'points_out'] if kind != '학습전셈' else [])
 for b in pay:
-    if b.exists(): files += [p for p in b.rglob('*') if p.is_file()]
+    if b.is_file(): files.append(b)
+    elif b.exists(): files += [p for p in b.rglob('*') if p.is_file()]
 files += sorted((O/'maps/base').glob('*receipt*.json'))
 for p in (O/'runs').rglob('receipt.json') if kind != '학습전셈' else []:
     if p.parent.parent.parent == O/'runs': files.append(p)

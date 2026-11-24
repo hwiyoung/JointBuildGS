@@ -1,0 +1,35 @@
+{
+ "title": "깊이 지시 판",
+ "rows": [
+  {
+   "stem": "R1 × LoD2",
+   "pixels": 936130,
+   "views_with_pixels": 241,
+   "sampled": 362988,
+   "target_minus_image_depth_m_q10_q50_q90": [
+    12.74506072998047,
+    37.07244873046875,
+    85.83066787719726
+   ],
+   "image_point_above_target_m_q10_q50_q90": [
+    4.497675975625713,
+    12.778642930779164,
+    19.587733809861675
+   ],
+   "image_point_to_nearest_gt_m_q10_q50_q90": [
+    9.033084414206753,
+    33.08559731961481,
+    66.10604674088039
+   ],
+   "image_point_within_0p5m_of_gt_pct": 0.26309409677454904,
+   "image_point_within_2m_of_gt_pct": 0.729225208546839,
+   "confidence_q10_q50_q90": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rule": "Pixel set = 판 1 map 10 m rule (image depth nearer than the target depth by > 10 m) & 판 0 disc target & |target depth − GT depth buffer| <= τ (owner kind)."
+  }
+ ],
+ "scientific_verdict": null
+}
