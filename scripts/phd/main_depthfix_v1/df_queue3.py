@@ -14,7 +14,7 @@ SLICE = Path('/sys/fs/cgroup/docker.slice/docker-workloads.slice'); CAP = 56 << 
 cfg = json.loads((C/'depthfix_v1.json').read_text()); RUNS = cfg['runs']; GPUS = cfg['concurrency']['gpus']; MAXT = cfg['concurrency']['max_trainings']
 Q = O/'queue'; LOCK = threading.Lock(); ACTIVE = {}; MESHING = []; VARS = ['base', 'occl10', 'occlga']
 def note(**k):
-    with LOCK, (Q/'status.jsonl').open('a') as f: f.write(json.dumps(dict(at=now(), queue='v3.1', **k), ensure_ascii=False)+'\n')
+    with LOCK, (Q/'status.jsonl').open('a') as f: f.write(json.dumps(dict(at=now(), queue='v3.6', **k), ensure_ascii=False)+'\n')
 def used():
     st = dict(l.split() for l in (SLICE/'memory.stat').read_text().splitlines()); return int(st['anon']) + int(st['shmem'])
 def avail():
@@ -46,9 +46,13 @@ def do_train(arm, stem, seed, gpu):
     rec = O/'runs'/stem/f'{arm}_s{seed}'/'receipt.json'; st = json.loads(rec.read_text())['status'] if rec.exists() else 'NO_RECEIPT'
     note(step='train_end', arm=arm, stem=stem, seed=seed, rc=rc, status=st, gpu=gpu)
     with LOCK: ACTIVE.pop(f'{arm}_s{seed}'+stem, None); GPU_OF.pop(f'{arm}_s{seed}'+stem, None)
+TRAIN_LEFT = {'n': 1}
 def mesh_todo():
     out = []
-    for v in VARS:   # base extraction of every finished run first (user 11-24 09:30), then occl10, occlga
+    # v3.2 (user 11-24 14:00): base extraction only while any training is queued or running; occl10 / occlga after every training and base extraction
+    vars_now = ['base']   # v3.6: no occlusion-excluded extractions (user 11-24 22h)
+    for v in VARS:
+        if v not in vars_now: continue
         for arm, stem, seed in RUNS:
             run = f'{arm}_s{seed}'; rec = O/'runs'/stem/run/'receipt.json'
             if rec.exists() and json.loads(rec.read_text())['status'] == 'COMPLETED' and not (O/'meshes'/f'{stem}__df_{run}_{v}'/'score.json').exists(): out.append(f'{stem}:{run}:{v}')
@@ -80,16 +84,27 @@ def main():
         MESHING.append(spec); threading.Thread(target=wait_mesh, args=(spec,)).start()
     note(step='queue_start', adopted=list(ACTIVE), adopted_gpu=GPU_OF, adopted_meshes=list(MESHING), todo=todo, pid=os.getpid()); last = time.time(); failed = {}
     while todo or ACTIVE or mesh_todo() or MESHING:
-        with LOCK: nact = len(ACTIVE); mt = mesh_todo(); waiting = [s for s in mt if failed.get(s, 0) < 2]
+        with LOCK:
+            nact = len(ACTIVE); TRAIN_LEFT['n'] = len(todo) + nact
+            if TRAIN_LEFT['n'] == 0 and any(x.endswith(':base') for x in mesh_todo()): TRAIN_LEFT['n'] = 0
+            mt = mesh_todo(); base_left = any(x.endswith(':base') for x in mt)
+            if TRAIN_LEFT['n'] == 0 and base_left: mt = [x for x in mt if x.endswith(':base')]
+            waiting = [s for s in mt if failed.get(s, 0) < 2]
         if waiting and len(MESHING) < (2 if nact <= 1 else 1) and ok_mesh():   # v3.1: one extraction lane while 2+ trainings run (issues 22)
             spec = waiting[0]; failed[spec] = failed.get(spec, 0) + 1; g = pick_gpu(4*G)
             with LOCK: MESHING.append(spec)
             threading.Thread(target=do_mesh, args=(spec, g)).start(); time.sleep(60); continue
-        if todo and nact < MAXT and time.time() - last >= 240 and ok_train():
+        def startable(x): return x[0] not in ('p9', 'p10', 'p11') or ((Q/'gate_cells_sent').exists() and (O/'arms'/x[0]/'stage1'/x[1]/'ready.json').exists() and (x[0] != 'p10' or (Q/'gate_p10_ok').exists()))
+        # v3.4: 판 10 waits for the user's answer (issues 28); meanwhile the next startable run in order (판 11) may go first
+        if todo and not startable(todo[0]):
+            j_ = next((j for j, x in enumerate(todo) if x[0] in ('p2', 'p3', 'p4') and startable(x)), None) if todo[0][0] == 'p10' else None   # v3.5: while 판 10 waits, remaining 판 2·3·4 (user 11-24 16h)
+            if j_ is not None: todo.insert(0, todo.pop(j_))
+        nxt_ok = bool(todo) and startable(todo[0])
+        if todo and nxt_ok and nact < MAXT and time.time() - last >= 240 and ok_train():
             arm, stem, seed = todo.pop(0); g = pick_gpu(7*G)
             with LOCK: ACTIVE[f'{arm}_s{seed}'+stem] = True; GPU_OF[f'{arm}_s{seed}'+stem] = g
             threading.Thread(target=do_train, args=(arm, stem, seed, g)).start(); last = time.time(); continue
-        (Q/'running.json').write_text(json.dumps(dict(at=now(), queue='v3.1', active=list(ACTIVE), todo=todo, meshq=mt, meshing=MESHING, used_gib=used()/G,
+        (Q/'running.json').write_text(json.dumps(dict(at=now(), queue='v3.6', active=list(ACTIVE), todo=todo, meshq=mt, meshing=MESHING, used_gib=used()/G,
                                                   disk_gib=shutil.disk_usage(O).free/G), ensure_ascii=False))
         time.sleep(30)
     note(step='queue_done')

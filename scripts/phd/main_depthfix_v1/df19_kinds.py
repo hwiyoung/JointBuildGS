@@ -5,43 +5,51 @@ Kinds (TARGETPATH-v1 tp2, unchanged): 1 right target (disc owner, weight > 0, |t
 3 image-depth instruction (no disc, weight > 0; sub-split: within τ / in front / behind the point), 4 target behind (disc, weight > 0, target > point + τ), 5 no instruction (weight 0).
 Per point: share of visible views of each kind -> median over points; share of points with kind 1 > 1/2; share of points with kind 3 > 1/2 and, among kind-3 instructions,
 the share outside τ (pooled over pairs, and per-point median); pixel weight median per kind (pooled over pairs, zeros excluded).
-usage: df19_kinds.py <stem>   writes docs/tables/kinds_visible_<stem>.csv/json"""
+usage: df19_kinds.py <stem> [maps=p0,p1] [tag]   maps from p0 base, p1 ga, p9 cell_ga, p10 cell_ga_diag, p11 cell_ga_na_da; writes docs/tables/kinds_visible_<stem>[_tag].csv/json
+Also: share of points whose right-target views exceed half of ALL outward views; and, when p1 and p9 are both counted, the p1 -> p9 kind transitions of the visible views."""
 import sys
 sys.path.insert(0, '/repo/scripts/phd/main_depthfix_v1')
 from df_common import *
 KN = ['맞는 목표', '앞의 다른 목표', '영상 깊이 지시', '뒤의 목표', '지시 없음']
 
-def main(stem):
+MAPV = {'p0': 'base', 'p1': 'ga', 'p9': 'cell_ga', 'p10': 'cell_diag_owner', 'p11': 'cell_ga_na_da'}
+def main(stem, maps='p0,p1', tag=''):
+    MS = maps.split(',')
     site = stem.split('__')[0]; P = loadz(O/'points'/f'pts_{stem}.npz', ['xyz', 'normal', 'tau', 'case_id', 'target_ok']); R = loadz(O/'points_out'/f'res_{stem}.npz', ['p0_s0'])
     tgt = np.flatnonzero((P['case_id'] == 2) & P['target_ok']); kept = (R['p0_s0'][tgt] & 1).astype(bool)
     X = P['xyz'][tgt].astype('f8'); N = P['normal'][tgt].astype('f8'); tau = P['tau'][tgt]; n = len(tgt)
     idx = json.loads((O/'maps/base/base'/stem/'index.json').read_text())['views']
-    cnt = {m: np.zeros((n, 5), 'i4') for m in ['p0', 'p1']}; sub3 = {m: np.zeros((n, 3), 'i4') for m in ['p0', 'p1']}; vis = np.zeros(n, 'i4')
-    W = {m: {k: [] for k in range(5)} for m in ['p0', 'p1']}; Wk = {m: {k: [] for k in range(5)} for m in ['p0', 'p1']}
+    cnt = {m: np.zeros((n, 5), 'i4') for m in MS}; sub3 = {m: np.zeros((n, 3), 'i4') for m in MS}; vis = np.zeros(n, 'i4'); outw = np.zeros(n, 'i4'); rall = {m: np.zeros(n, 'i4') for m in MS}; trans = np.zeros((2, 5, 5), 'i8')
+    W = {m: {k: [] for k in range(5)} for m in MS}; Wk = {m: {k: [] for k in range(5)} for m in MS}
     for name, meta in idx.items():
         K = np.asarray(meta['K']); M = np.asarray(meta['W2C']); Cc = cam_centre(M); Pc = X@M[:3, :3].T + M[:3, 3]; z = Pc[:, 2]
         with np.errstate(divide='ignore', invalid='ignore'): u = np.floor(K[0, 0]*Pc[:, 0]/z + K[0, 2] + .5); v = np.floor(K[1, 1]*Pc[:, 1]/z + K[1, 2] + .5)
         ok = (z > .1) & (u >= 0) & (u < 1024) & (v >= 0) & (v < 741) & (((Cc[None] - X)*N).sum(1) > 0); ii = np.flatnonzero(ok)
         if not len(ii): continue
-        uu, vv, zz = u[ii].astype(int), v[ii].astype(int), z[ii]
+        uu, vv, zz = u[ii].astype(int), v[ii].astype(int), z[ii]; outw[ii] += 1
+        for m in MS:
+            a0 = loadz(O/'maps/base'/MAPV[m]/stem/f'{name}.npz', ['depth', 'weight', 'owner']); rall[m][ii] += ((a0['owner'][vv, uu] >= 0) & (a0['weight'][vv, uu] > 0) & (np.abs(a0['depth'][vv, uu] - zz) <= tau[ii]))
         mv = np.load(S0/'fork_inputs/s61'/site/'maps/mvs'/f'{name}.npy')[vv, uu]; vs = ~(np.isfinite(mv) & (mv > 0) & (mv < zz - 10.)); ii, uu, vv, zz = ii[vs], uu[vs], vv[vs], zz[vs]
         vis[ii] += 1; t = tau[ii]
-        for m, var in [('p0', 'base'), ('p1', 'ga')]:
+        KK = {}
+        for m, var in [(m_, MAPV[m_]) for m_ in MS]:
             a = loadz(O/'maps/base'/var/stem/f'{name}.npz', ['depth', 'weight', 'owner']); o = a['owner'][vv, uu]; w = a['weight'][vv, uu]; d = a['depth'][vv, uu]
             k = np.full(len(ii), 4); disc = (o >= 0) & (w > 0); img = (o < 0) & (w > 0)
             k[disc & (np.abs(d - zz) <= t)] = 0; k[disc & (d < zz - t)] = 1; k[img] = 2; k[disc & (d > zz + t)] = 3
-            np.add.at(cnt[m], (ii, k), 1)
+            np.add.at(cnt[m], (ii, k), 1); KK[m] = k
             s3 = np.where(np.abs(d - zz) <= t, 0, np.where(d < zz, 1, 2)); np.add.at(sub3[m], (ii[img], s3[img]), 1)
             for kk in range(5):
                 mk = (k == kk) & (w > 0)
                 if mk.any(): W[m][kk].append(w[mk]); Wk[m][kk].append(kept[ii[mk]])
+        if 'p1' in KK and 'p9' in KK: np.add.at(trans, (kept[ii].astype(int), KK['p1'], KK['p9']), 1)
     rows = []
     for g, gm in [('잃은 점(판 0)', ~kept), ('지킨 점(판 0)', kept)]:
-        for m, lab in [('p0', '판 0'), ('p1', '판 1')]:
+        for m, lab in [(m_, f'판 {m_[1:]}' + (' (진단)' if m_ == 'p10' else '')) for m_ in MS]:
             c = cnt[m][gm]; vv_ = vis[gm]; has = vv_ > 0; share = c[has]/vv_[has, None]
             r = dict(stem=STEM_KO[stem], group=g, map=lab, points=int(gm.sum()), points_with_visible_views=int(has.sum()), visible_views_median=float(np.median(vv_)) if len(vv_) else None)
             for kk in range(5): r[f'{KN[kk]}_비율_중앙값_pct'] = 100*float(np.median(share[:, kk])) if has.any() else None
             r['맞는 목표_절반_넘는_점_pct'] = 100*float((share[:, 0] > .5).mean()) if has.any() else None
+            ow = outw[gm]; r['맞는 목표_절반_넘는_점_pct(모든 바깥 영상)'] = 100*float((rall[m][gm]*2 > ow).mean()) if len(ow) else None
             r['영상 깊이 지시_절반_넘는_점_pct'] = 100*float((share[:, 2] > .5).mean()) if has.any() else None
             s3 = sub3[m][gm]; tot3 = s3.sum()
             r['영상 깊이 지시_허용 밖_pct(모음)'] = 100*float((s3[:, 1] + s3[:, 2]).sum()/tot3) if tot3 else None
@@ -52,6 +60,13 @@ def main(stem):
                     w_ = np.concatenate(W[m][kk]); kp = np.concatenate(Wk[m][kk]); sel = kp if g.startswith('지킨') else ~kp
                     r[f'{KN[kk]}_무게_중앙값(0 뺌)'] = float(np.median(w_[sel])) if sel.any() else None
             rows.append(r)
-    table(f'kinds_visible_{stem}', rows); print('KINDS', stem, json.dumps(rows[1], ensure_ascii=False)[:500], flush=True)
+    table(f'kinds_visible_{stem}' + (f'_{tag}' if tag else ''), rows)
+    if trans.sum():
+        tr = []
+        for gi, g in [(0, '잃은 점(판 0)'), (1, '지킨 점(판 0)')]:
+            for k1 in range(5):
+                tot = int(trans[gi, k1].sum()); tr.append(dict(stem=STEM_KO[stem], group=g, kind_p1=KN[k1], pairs=tot, **{f'판 9: {KN[k9]} %': (100*float(trans[gi, k1, k9]/tot) if tot else None) for k9 in range(5)}))
+        table(f'kinds_transition_p1_p9_{stem}', tr)
+    print('KINDS', stem, json.dumps(rows[1], ensure_ascii=False)[:500], flush=True)
 
-if __name__ == '__main__': main(sys.argv[1])
+if __name__ == '__main__': main(*sys.argv[1:])

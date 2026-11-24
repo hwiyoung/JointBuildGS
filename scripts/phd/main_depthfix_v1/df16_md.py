@@ -64,7 +64,7 @@ if pix:
           '| 장면 | 지도 | 무리 | 점 | 맞는 목표 절반 넘는 점 %: 모든 바깥 영상 | 가려지지 않은 영상 | 화소 무게 중앙값: 0 포함 | 0 뺌 | 판 0에서 가린 화소 지시를 절반 넘게 받던 점 % |', '|---|---|---|---|---|---|---|---|---|']
     for r in pix: L.append(f"| {r['scene']} | {r['map']} | {r['group']} | {i(r['points'])} | {f(r['right_target_half_pct'])} | {f(r.get('right_target_half_visible_pct'))} | {f(r['w_median'], 2)} | {f(r.get('w_median_nonzero'), 2)} | {f(r['occluded_instr_half_p0_pct'])} |")
     L.append('')
-sf = [r for r in m53 if r['group'] == '라 대상 패치 결과 면' and r['p0_type'] == '모두']
+sf = [r for r in m53 if r['group'] == '라 대상 패치 결과 면' and r['p0_type'] == '모두' and r.get('run', '').endswith('_s0')]
 if sf:
     L += ['## 5.3 라 대상 패치에서 결과 면의 자리 (넓이 %; 발주문 5.3대로 판 5~8의 값, 판 0~4 줄은 같은 패치의 참고 값)\n', '| 장면 | 판 | c 구간 | 패치 | 사전 정보 면 | 영상 깊이 면 | 두 면 사이 | 두 면 바깥 | 면 없음 |', '|---|---|---|---|---|---|---|---|---|']
     for r in sf: L.append(f"| {r['scene']} | {r['map']} | {r['c_bin']} | {i(r['patches'])} | {f(r['사전 정보 면_area_pct'])} | {f(r['영상 깊이 면_area_pct'])} | {f(r['두 면 사이_area_pct'])} | {f(r['두 면 바깥_area_pct'])} | {f(r['면 없음_area_pct'])} |")
