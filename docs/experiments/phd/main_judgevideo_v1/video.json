@@ -1,16 +1,16 @@
 {
-  "at": "2026-11-25T11:15:42.931974+09:00",
-  "rule": "PHD-MAIN-JUDGEVIDEO-v1 encode (video image: imageio_ffmpeg's ffmpeg). No new drawing.\n  1 B173_판단과정_v1.mp4      the judgment frames (jv_frames.py, frames_all.json order and repeats) at 25 fps: per step 4 fade frames x 3 + hold 38 = 2.0 s, result 2.0 s\n  2 B173_판단학습과정_v1.mp4  the r6 'input' frame (1.2 s, as in the r6 video) -> the judgment section -> the r6 frames 0 ... 30,000 (1.2 s each, the last 3.0 s)\n  both H.264 libx264 -preset veryfast, yuv420p, crf 18, 25 fps constant (the r6 encode rule), via the ffmpeg concat demuxer (durations).\n  stills: the last (alpha 1) frame of each step -> stills/B173_판단_<n>_<step>.png (5). scientific_verdict: null",
+  "at": "2026-11-25T11:53:43.394514+09:00",
+  "rule": "PHD-MAIN-JUDGEVIDEO-v1 encode (video image: imageio_ffmpeg's ffmpeg). No new drawing.\n  1 B173_판단과정_v1.mp4      the judgment frames (jv_frames.py, frames_all.json order and repeats) at 25 fps: v1: per step 4 fade x 3 + hold 38 = 2.0 s; v2: patches move to their target height in 7 x 3 frames + hold 38 = 2.36 s; result 2.0 s\n  2 B173_판단학습과정_v1.mp4  the r6 'input' frame (1.2 s, as in the r6 video) -> the judgment section -> the r6 frames 0 ... 30,000 (1.2 s each, the last 3.0 s)\n  both H.264 libx264 -preset veryfast, yuv420p, crf 18, 25 fps constant (the r6 encode rule), via the ffmpeg concat demuxer (durations).\n  stills: the last (alpha 1) frame of each step -> stills/B173_판단_<n>_<step>.png (5). scientific_verdict: null",
   "ffmpeg": "/out/tmp/pylib/imageio_ffmpeg/binaries/ffmpeg-linux64-v4.2.2",
   "scientific_verdict": null,
   "judgment": {
     "path": "/out/B173_판단과정_v1.mp4",
-    "sha256": "2e86ae7464d539197f49de08c58cd75163624fb242dfa95f90500ad977e9e8df",
-    "bytes": 810766,
-    "expected_seconds": 10.0,
+    "sha256": "b88ad907aed6de39a62ee024e8781a59721984173720fcf7ab8649960f99392a",
+    "bytes": 1468736,
+    "expected_seconds": 11.44,
     "probe": [
-      "Duration: 00:00:10.04, start: 0.000000, bitrate: 646 kb/s",
-      "Stream #0:0(und): Video: h264 (High) (avc1 / 0x31637661), yuv420p, 1920x1080 [SAR 1:1 DAR 16:9], 642 kb/s, 25 fps, 25 tbr, 12800 tbn, 50 tbc (default)"
+      "Duration: 00:00:11.48, start: 0.000000, bitrate: 1023 kb/s",
+      "Stream #0:0(und): Video: h264 (High) (avc1 / 0x31637661), yuv420p, 1920x1080 [SAR 1:1 DAR 16:9], 1020 kb/s, 25 fps, 25 tbr, 12800 tbn, 50 tbc (default)"
     ],
     "command": [
       "/out/tmp/pylib/imageio_ffmpeg/binaries/ffmpeg-linux64-v4.2.2",
@@ -39,12 +39,12 @@
   },
   "combined": {
     "path": "/out/B173_판단학습과정_v1.mp4",
-    "sha256": "d6bf186822aa8dde6217593fecfc68689cca0cdc65f0a92888f1ab8ec0bc0c96",
-    "bytes": 3044174,
-    "expected_seconds": 26.2,
+    "sha256": "a6151236b8202cec2649a5d5138ecfc2e3f1d6b6e944de47e1e605288ef9c77a",
+    "bytes": 3652638,
+    "expected_seconds": 27.64,
     "probe": [
-      "Duration: 00:00:26.24, start: 0.000000, bitrate: 928 kb/s",
-      "Stream #0:0(und): Video: h264 (High) (avc1 / 0x31637661), yuv420p, 1920x1080 [SAR 1:1 DAR 16:9], 925 kb/s, 25 fps, 25 tbr, 12800 tbn, 50 tbc (default)"
+      "Duration: 00:00:27.68, start: 0.000000, bitrate: 1055 kb/s",
+      "Stream #0:0(und): Video: h264 (High) (avc1 / 0x31637661), yuv420p, 1920x1080 [SAR 1:1 DAR 16:9], 1053 kb/s, 25 fps, 25 tbr, 12800 tbn, 50 tbc (default)"
     ],
     "command": [
       "/out/tmp/pylib/imageio_ffmpeg/binaries/ffmpeg-linux64-v4.2.2",
@@ -124,27 +124,27 @@
   "stills": [
     {
       "png": "/out/stills/B173_판단_1_영상깊이유무.png",
-      "sha256": "8448a06596546dc32cf5929baab5ca737d6ee038eeb57ba03fc65e6d9ffa1a3f",
-      "from_": "/out/frames/j1_4.png"
+      "sha256": "935ca44c9a11ddb11d5ba35b706c790121d7035acbc0a73b02e3b3927827a5f4",
+      "from_": "/out/frames/j1_7.png"
     },
     {
       "png": "/out/stills/B173_판단_2_변화탐지.png",
-      "sha256": "9e2457e32b137f33082ab2ac31e498538249a0725a85066b54f8d23757a91c3b",
-      "from_": "/out/frames/j2_4.png"
+      "sha256": "b53ecd0e2450194b95fab2628ca93fab8804820fcd7f6b813c18470765078bfc",
+      "from_": "/out/frames/j2_7.png"
     },
     {
       "png": "/out/stills/B173_판단_3_영상따름.png",
-      "sha256": "8a66666a889817bf99394a93af5b2faec6b1a7b61d47f0d519b143e30a572fa8",
-      "from_": "/out/frames/j3_4.png"
+      "sha256": "982058650866bfa8547db860827ec6d8878c8a2aa7392d39a30e2668d3512107",
+      "from_": "/out/frames/j3_7.png"
     },
     {
       "png": "/out/stills/B173_판단_4_영상점검.png",
-      "sha256": "c63904517eaff5d8b5457173ff60153556b124333b815683bdfc0c057733a0cc",
-      "from_": "/out/frames/j4_4.png"
+      "sha256": "275d2c11c2a65cdcd2071b6f29ba548e03531e8177d8bd4da76e687a34be5e5a",
+      "from_": "/out/frames/j4_7.png"
     },
     {
       "png": "/out/stills/B173_판단_5_판단결과.png",
-      "sha256": "ed88f9258e7aa3116f23fbe2ff4a1e006ea3fba46c4be7d16155bd7625d5bb2d",
+      "sha256": "7ae7f8b49168f190cf787161b21d915194e7f0918877e88d3a3c37f25849f111",
       "from_": "/out/frames/res_0.png"
     }
   ]

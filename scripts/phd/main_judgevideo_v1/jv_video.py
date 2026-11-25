@@ -1,5 +1,5 @@
 """PHD-MAIN-JUDGEVIDEO-v1 encode (video image: imageio_ffmpeg's ffmpeg). No new drawing.
-  1 B173_판단과정_v1.mp4      the judgment frames (jv_frames.py, frames_all.json order and repeats) at 25 fps: per step 4 fade frames x 3 + hold 38 = 2.0 s, result 2.0 s
+  1 B173_판단과정_v1.mp4      the judgment frames (jv_frames.py, frames_all.json order and repeats) at 25 fps: v1: per step 4 fade x 3 + hold 38 = 2.0 s; v2: patches move to their target height in 7 x 3 frames + hold 38 = 2.36 s; result 2.0 s
   2 B173_판단학습과정_v1.mp4  the r6 'input' frame (1.2 s, as in the r6 video) -> the judgment section -> the r6 frames 0 ... 30,000 (1.2 s each, the last 3.0 s)
   both H.264 libx264 -preset veryfast, yuv420p, crf 18, 25 fps constant (the r6 encode rule), via the ffmpeg concat demuxer (durations).
   stills: the last (alpha 1) frame of each step -> stills/B173_판단_<n>_<step>.png (5). scientific_verdict: null"""

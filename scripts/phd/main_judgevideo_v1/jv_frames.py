@@ -44,6 +44,35 @@ def quads(p):
     n = p['normal']; t1 = p['tangent1']; t2 = np.cross(n, t1); h = np.sqrt(p['area'])[:, None]/2; c = p['centre']+n*p['prior_h'][:, None]
     return np.stack([c-h*t1-h*t2, c+h*t1-h*t2, c+h*t1+h*t2, c-h*t1+h*t2], 1)
 
+def quads_h(p, h):
+    n = p['normal']; t1 = p['tangent1']; t2 = np.cross(n, t1); w = np.sqrt(p['area'])[:, None]/2; c = p['centre']+n*h[:, None]
+    return np.stack([c-w*t1-w*t2, c+w*t1-w*t2, c+w*t1+w*t2, c-w*t1+w*t2], 1)
+
+def shown_h(p, stage):
+    """v2 (user 11-25: 'which target each step selects must show, e.g. the gable disappears and the flat roof is chosen'): the height each patch stands at
+    after this stage. Not decided yet = prior height (so the first picture is the old prior roof). Decided = the target of its stored judgment
+    (jv_prep target_h: agree / small difference = precision-weighted mean, image depth = mvs mean, prior = prior); at j3 the patches returned at j4 stand
+    at the image depth, at j4 they go back to the prior height."""
+    hP = p['prior_h']; hM = np.where(np.isfinite(p['mvs_h']), p['mvs_h'], hP); tg = np.where(np.isfinite(p['target_h']), p['target_h'], hP); step = p['step']
+    k = -1 if stage == 'start' else STAGES.index(stage); h = hP.copy()
+    if k >= 1: h[step == 2] = tg[step == 2]
+    if k >= 2: m = step == 3; h[m] = tg[m]; m = np.isin(step, [31, 4]); h[m] = hM[m]
+    if k >= 3: h[step == 4] = tg[step == 4]
+    if k >= 4: h[step == 0] = tg[step == 0]
+    return h
+
+UNDEC_3D = '#F2B872'
+def paint(ax, Q2, d, cat, new, alpha, lw_new=.35, zorder=9):
+    """One painter-sorted collection (far first): not decided = prior colour at alpha .55, decided = its judgment colour, new = fading in with a darker edge;
+    hatched categories get a hatch overlay."""
+    o = np.argsort(-d); Q2, cat, new = Q2[o], cat[o], new[o]; ok = np.isfinite(Q2).all((1, 2)); Q2, cat, new = Q2[ok], cat[ok], new[ok]
+    fc = np.array([to_rgb(UNDEC_3D) if c == 0 else to_rgb(SC[c]) for c in cat]); al = np.where(cat == 0, .55, np.where(new, .35+.65*alpha, 1.))
+    ec = np.where(new[:, None], .62*fc, fc); lw = np.where(new, lw_new, .1)
+    ax.add_collection(PolyCollection(Q2, facecolors=np.c_[fc, al], edgecolors=np.c_[ec, np.maximum(al, .5)], linewidths=lw, zorder=zorder))
+    for k, hp in HATCH.items():
+        m = cat == k
+        if m.any(): ax.add_collection(PolyCollection(Q2[m], facecolors='none', edgecolors='#5F5E5A' if k == 11 else '#1F3F6F', linewidths=0, hatch=hp, zorder=zorder+.1))
+
 def put(ax, Q2, cat, new, alpha, vis=None, lw_new=.5, dark=False):
     """Q2: (N, 4, 2) screen quads; draw each category, new ones with alpha and a dark edge."""
     for k in BAR_ORDER[:-1]:
@@ -64,7 +93,8 @@ def visible(F, P, dep, ext, view=None):
 
 def draw(F, stage, alpha, png, cache, p):
     S = F.S; st = F.st; t0 = time.monotonic(); fig = F.fig = plt.figure(figsize=(W_/100, H_/100), dpi=100, facecolor='white')
-    cat = stage_colours(p['step'], stage); new = np.isin(cat, NEW[stage]); Q = cache['Q']
+    cat = stage_colours(p['step'], stage); new = np.isin(cat, NEW[stage])
+    prev = 'start' if stage == 'j1' else STAGES[STAGES.index(stage)-1]; h0, h1 = shown_h(p, prev), shown_h(p, stage); hh = h0+alpha*(h1-h0); Q = quads_h(p, hh)
     fig.text(16/W_, 1-24/H_, f'{BNAME} · {STITLE[stage]}', fontsize=19, color=NAVY, va='center', fontweight='bold')
     # progress row: 입력, ①-④, 0 ... 30,000 (the r6 row with four dots inserted)
     labs = ['input', 'j1', 'j2', 'j3', 'j4']+cf.STATES; xs = np.linspace(1000, 1890, len(labs)); cur = labs.index('j4' if stage == 'res' else stage)
@@ -81,8 +111,9 @@ def draw(F, stage, alpha, png, cache, p):
     u0, v0, u1, v1 = st['crop']; ph = 250; pw = int(round(ph*(u1-u0)/(v1-v0))); X0, Y0 = 16, 66; gap = 8
     a = F.axes(X0, Y0, pw, ph, '① 사진'); F.cam(a, cache['photo'])
     a = F.axes(X0, Y0+ph+24, pw, ph, '① 깊이 목표'); F.cam(a, cache['grey'], zones=False)
-    u, v, zc = S.pix(Q.reshape(-1, 3)); Qc = np.stack([u, v], 1).reshape(-1, 4, 2); okc = (zc.reshape(-1, 4) > 0).all(1)
-    put(a, Qc, np.where(okc, cat, 0), new, alpha, lw_new=.3)
+    u, v, zc = S.pix(Q.reshape(-1, 3)); Qc = np.stack([u, v], 1).reshape(-1, 4, 2); zc = zc.reshape(-1, 4).mean(1); hz = Q.mean(1)[:, 2]-S.ground
+    bi = np.clip(np.searchsorted(F.bins, hz, side='right')-1, 0, cf.NBIN-1); o = np.argsort(-zc); ok = np.isfinite(Qc).all((1, 2))[o]
+    a.add_collection(PolyCollection(Qc[o][ok], facecolors=F.hcol[bi[o][ok]], edgecolors=F.hcol[bi[o][ok]], linewidths=.2, zorder=8))
     for k_, z in S.zones.items():
         ring = np.asarray(F.sj['zones'][str(k_)]['box_polygon_xy']); P_ = np.c_[ring, np.full(len(ring), F.sj['zones'][str(k_)]['outline_z'])]; uu, vv, _ = S.pix(P_)
         a.plot(np.r_[uu, uu[:1]], np.r_[vv, vv[:1]], color='white', lw=2.2, zorder=15); a.plot(np.r_[uu, uu[:1]], np.r_[vv, vv[:1]], color=NAVY, lw=1.0, zorder=16)
@@ -92,12 +123,13 @@ def draw(F, stage, alpha, png, cache, p):
     ar = FancyArrowPatch(((X0+2*pw+gap+6)/W_, 1-(Y0+ph+12)/H_), ((X0+2*pw+gap+46)/W_, 1-(Y0+ph+12)/H_), transform=fig.transFigure, arrowstyle='-|>', mutation_scale=22, color=NAVY, lw=2); fig.patches.append(ar)
     # ② input 3D
     X2 = X0+2*pw+gap+56; w2 = (W_-16-X2-12)//2; h2 = 2*ph+24; ext = cache['ext']
-    ag = F.axes(X2, Y0, w2, h2, '② 입력 3D: 사전 정보 면 · 영상 깊이 점 · 패치 판정')
-    img, dep = cache['prior_overview']; F.show_prior(ag, img, dep, ext); F.mvs_points(ag, dep, ext, w2, h2, 2, 1.2)
-    x, y, d = S.proj(Q.reshape(-1, 3)); Q2 = np.stack([x, y], 1).reshape(-1, 4, 2); dd = d.reshape(-1, 4).mean(1); o = np.argsort(-dd)
-    put(ag, Q2[o], cat[o], new[o], alpha, vis=cache['vis_ov'][o], lw_new=.35); F.zone_outline(ag, 1); F.zone_outline(ag, 2)
+    ag = F.axes(X2, Y0, w2, h2, '② 입력 3D: 패치가 고른 목표 높이 · 영상 깊이 점(초록) · 사전 정보 면(옅게)')
+    img, dep = cache['prior_overview']; ag.imshow(np.dstack([img, np.where(np.isfinite(dep), .22, 0.)]), extent=ext, zorder=1); ag.set_xlim(ext[0], ext[1]); ag.set_ylim(ext[2], ext[3]); ag.set_aspect('equal')
+    F.mvs_points(ag, np.full_like(dep, np.inf), ext, w2, h2, 2, 1.2)
+    x, y, d = S.proj(Q.reshape(-1, 3)); Q2 = np.stack([x, y], 1).reshape(-1, 4, 2); dd = d.reshape(-1, 4).mean(1)
+    paint(ag, Q2, dd, cat, new, alpha); F.zone_outline(ag, 1); F.zone_outline(ag, 2)
     if stage == 'j1':
-        m = new & cache['vis_ov']; ag.scatter(Q2[m].mean(1)[:, 0], Q2[m].mean(1)[:, 1], s=60, facecolors='none', edgecolors=[SC[c_] for c_ in cat[m]], linewidths=1.1, alpha=alpha, zorder=12)
+        m = new.copy(); ag.scatter(Q2[m].mean(1)[:, 0], Q2[m].mean(1)[:, 1], s=60, facecolors='none', edgecolors=[SC[c_] for c_ in cat[m]], linewidths=1.1, alpha=alpha, zorder=12)
     # ② map (top view) + bar
     hm = h2-92; am = F.axes(X2+w2+12, Y0, w2, hm, '② 판정 지도 · 위에서 본 패치')
     M2 = Q[:, :, :2]; am.add_collection(PolyCollection(M2[cat == 0], facecolors=UNDEC, edgecolors=UNDEC, linewidths=.1, zorder=2))
@@ -129,24 +161,22 @@ def draw(F, stage, alpha, png, cache, p):
         xg = 16; xm = xg+wz+gz; xs1 = xm+wz+gz; xs2 = xs1+ws+gz; xc = xs2+ws+gz
         a_g = F.axes(xg, Y, wz, hz, f'②-{k} 입력 확대 · {cf.ZNAME[k]}'); F.blank(F.axes(xm, Y, wz, hz, f'②-{k} 메시 확대'))
         a_s = F.axes(xs1, Y, ws, hz, f'③-{k} 본 방법 단면'); a_c = F.axes(xs2, Y, ws, hz, f'③-{k} 비교 단면 · {cn} · 판단 구간'); F.blank(a_c); F.blank(F.axes(xc, Y, wz, hz, f'③-{k} 비교 메시 확대 · {cn}'))
-        zimg, zdep = cache[f'prior_zoom{k}']; F.show_prior(a_g, zimg, zdep, zext); F.mvs_points(a_g, zdep, zext, wz, hz, 3, 5, zone=k, view=zv)
-        zsel = cache[f'zsel{k}']; x, y, d = S.proj(Q[zsel].reshape(-1, 3), *zv); Qz = np.stack([x, y], 1).reshape(-1, 4, 2); dz = d.reshape(-1, 4).mean(1); o = np.argsort(-dz)
-        put(a_g, Qz[o], cat[zsel][o], new[zsel][o], alpha, vis=cache[f'vis_z{k}'][o], lw_new=.6, dark=True)
+        zimg, zdep = cache[f'prior_zoom{k}']; a_g.imshow(np.dstack([zimg, np.where(np.isfinite(zdep), .22, 0.)]), extent=zext, zorder=1); F.mvs_points(a_g, np.full_like(zdep, np.inf), zext, wz, hz, 3, 5, zone=k, view=zv)
+        zsel = cache[f'zsel{k}']; x, y, d = S.proj(Q[zsel].reshape(-1, 3), *zv); Qz = np.stack([x, y], 1).reshape(-1, 4, 2); dz = d.reshape(-1, 4).mean(1)
+        paint(a_g, Qz, dz, cat[zsel], new[zsel], alpha, lw_new=.6); a_g.set_xlim(zext[0], zext[1]); a_g.set_ylim(zext[2], zext[3]); a_g.set_aspect('equal')
         F.section(a_s, k, layers=('gt', 'prior', 'mvs'))
         b = cache[f'band{k}']; Yf = lambda h: F.ymap(k, h); cb = cat[b['i']]
         if STAGES.index(stage) >= 1:   # +-L band of every patch in the band (grey)
             ok = np.isfinite(b['L']); a_s.add_collection(PolyCollection([[(s0-b['w'][j], Yf(h-l)), (s0+b['w'][j], Yf(h-l)), (s0+b['w'][j], Yf(h+l)), (s0-b['w'][j], Yf(h+l))]
                                                                          for j, (s0, h, l) in enumerate(zip(b['s'], b['hp'], b['L']*b['nz'])) if ok[j]], facecolors='#9C9A92', edgecolors='none', alpha=.18, zorder=3.5))
-        segs, cols, lws = [], [], []
-        for j in np.flatnonzero(cb > 0):
-            segs.append([(b['s'][j]-b['w'][j], Yf(b['ht'][j])), (b['s'][j]+b['w'][j], Yf(b['ht'][j]))]); cols.append(SC[cb[j]] + ('' if not new[b['i'][j]] else '')); lws.append(2.4 if new[b['i'][j]] else 1.6)
-        if segs:
-            al = np.where(new[b['i']][cb > 0], alpha, 1.); rgba = [(*to_rgb(c_), a_) for c_, a_ in zip(cols, al)]
-            a_s.add_collection(LineCollection(segs, colors=rgba, linewidths=lws, zorder=6, capstyle='butt'))
+        hb = Q[b['i']].mean(1)[:, 2]-S.ground; ok = np.isfinite(hb)
+        segs = [[(b['s'][j]-b['w'][j], Yf(hb[j])), (b['s'][j]+b['w'][j], Yf(hb[j]))] for j in np.flatnonzero(ok)]
+        rgba = [(*to_rgb(UNDEC_3D if cb[j] == 0 else SC[cb[j]]), .8 if cb[j] == 0 else 1.) for j in np.flatnonzero(ok)]; lws = [1.4 if cb[j] == 0 else (3. if new[b['i'][j]] else 2.2) for j in np.flatnonzero(ok)]
+        if segs: a_s.add_collection(LineCollection(segs, colors=rgba, linewidths=lws, zorder=6, capstyle='butt'))
     # legend
     lax = fig.add_axes([0, 0, 1, 34/H_]); lax.axis('off'); lax.set_xlim(0, W_); lax.set_ylim(0, 34); x = 16
     items = [('pt', GTC, '참값'), ('dash', PRC, '사전 정보'), ('pt', MVC, '영상 깊이'), ('box', SC[1], '결측'), ('hbox', 11, '제거(시선 검사)'), ('box', SC[2], '일치'), ('hbox', 3, '작은 차이(일치 목표)'),
-             ('box', SC[31], '영상 따름(보정)'), ('box', SC[4], '되돌림(영상 점검)'), ('box', SC[5], '그 밖(L 없음)'), ('box', UNDEC, '아직 안 정함'), ('edge', '#2C2C2A', '이번 단계'), ('lband', '#9C9A92', '±L'), ('line', NAVY, '구역 상자')]
+             ('box', SC[31], '영상 따름(보정)'), ('box', SC[4], '되돌림(영상 점검)'), ('box', SC[5], '그 밖(L 없음)'), ('box', UNDEC_3D, '아직 안 정함(사전 정보 높이)'), ('edge', '#2C2C2A', '이번 단계'), ('lband', '#9C9A92', '±L'), ('line', NAVY, '구역 상자')]
     for kind, col, txt in items:
         if kind == 'pt': lax.plot(x+5, 17, 'o', ms=4.5, color=col)
         elif kind == 'box': lax.add_patch(plt.Rectangle((x, 11), 11, 12, color=col))
@@ -178,7 +208,7 @@ def prepare(F):
         cache[f'band{k}'] = dict(i=bi, s=s[bi], hp=hp, ht=ht, L=p['L'][bi], nz=np.abs(n[:, 2]), w=np.sqrt(p['area'][bi])/2)
     return cache
 
-FADE = [.2, .4, .6, .8]; FADE_FRAMES = 12; HOLD_FRAMES = 38; RES_FRAMES = 50
+FADE = [i/8 for i in range(1, 8)]; FADE_FRAMES = 21; HOLD_FRAMES = 38; RES_FRAMES = 50   # v2: 0.84 s movement (7 x 3 frames) + 1.52 s hold
 def main(mode):
     F = Frame(); t0 = time.monotonic(); cache = prepare(F); p = cache['p']; rec = dict(at=now(), rule=__doc__, frames=[], scientific_verdict=None)
     print('PREP', round(time.monotonic()-t0, 1), flush=True)
