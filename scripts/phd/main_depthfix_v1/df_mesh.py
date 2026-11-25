@@ -18,6 +18,8 @@ def main(workers, *specs):
     for m in (A, TL): m.O = PO; m.FAST = FAST
     gm.FAST = FAST; gm.SH = PO/'gtj'; (PO/'logs').mkdir(exist_ok=True)
     orig = A.gtjscript
+    og = TL.gtjcmd   # issues 33: te_mesh.py through df_te_mesh.py (same code, box read from this task's own views file)
+    TL.gtjcmd = lambda *a, **k: [x.replace('/repo/scripts/phd/main_trainerr_v1/te_mesh.py', '/repo/scripts/phd/main_depthfix_v1/df_te_mesh.py') for x in og(*a, **k)]
     A.gtjscript = lambda script, args, gpu=None: orig('../main_depthfix_v1/df_render.py' if script == 'g3_render_model.py' else script, args, gpu)
     jobs = []
     for s in specs:

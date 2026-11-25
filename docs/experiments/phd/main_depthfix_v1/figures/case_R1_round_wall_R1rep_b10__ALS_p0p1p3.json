@@ -1,0 +1,36 @@
+{
+ "place": "R1_round_wall",
+ "label": "R1 둥근 건물 벽",
+ "stem": "R1rep_b10__ALS",
+ "view": "DJI_20241217103611_0075_D",
+ "view_place_pixels": 394,
+ "line_A": [
+  18.398319098696465,
+  16.29873863394836
+ ],
+ "line_B": [
+  23.201680901303536,
+  9.901261366051637
+ ],
+ "slab_half_m": 0.25,
+ "patches_in_section": 29,
+ "rows": [
+  {
+   "run": "R1rep_b10__ALS:p0_s0",
+   "mesh": "/df/gtj/meshes/R1rep_b10__ALS__df_p0_s0_base/final.ply",
+   "mesh_exists": true
+  },
+  {
+   "run": "R1rep_b10__ALS:p1_s0",
+   "mesh": "/df/gtj/meshes/R1rep_b10__ALS__df_p1_s0_base/final.ply",
+   "mesh_exists": true
+  },
+  {
+   "run": "R1rep_b10__ALS:p3_s0",
+   "mesh": "/df/gtj/meshes/R1rep_b10__ALS__df_p3_s0_base/final.ply",
+   "mesh_exists": true
+  }
+ ],
+ "rule": "Order 7 site figures (CPU): per place, one row per arm run in that scene, three panels — photo crop, same-view render of the result surface (base extraction mesh),\nsection. Section: vertical plane through the place line A→B, slab ±0.25 m; GT points (gray), per patch in the slab: prior face disc (blue), image-depth face disc (orange),\n판 0 target disc (green) with its ±τ band (light green), result mesh vertices in the slab (red). View = among training views where both section ends project inside the frame, the one whose 판 0 target map has the most pixels of the\nplace patches (no GT, no result). Places from config 'places' (lines below); same place and view for every arm.\nusage: df15_case.py <place> <run>[,<run>...] [tag]   writes /docs/figures/case_<place>_<tag>.png/.pdf/.json",
+ "scientific_verdict": null
+}

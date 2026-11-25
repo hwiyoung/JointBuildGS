@@ -9,7 +9,7 @@ tables/res_criteria.csv  : order 6 condition values only (no verdict)"""
 import sys, glob
 sys.path.insert(0, '/repo/scripts/phd/main_depthfix_v1')
 from df_common import *
-c = cfg(); ARM_KO = {'p0': '판 0', 'p1': '판 1', 'p2': '판 2', 'p3': '판 3', 'p4': '판 4', 'p5': '판 5', 'p6': '판 6', 'p7': '판 7', 'p8': '판 8'}
+c = cfg(); ARM_KO = {'p0': '판 0', 'p1': '판 1', 'p2': '판 2', 'p3': '판 3', 'p4': '판 4', 'p5': '판 5', 'p6': '판 6', 'p7': '판 7', 'p8': '판 8', 'p9': '판 9', 'p10': '판 10', 'p11': '판 11'}
 VK = {'base': '기준 추출', 'occl10': '가림 제외(10 m)', 'occlga': '가림 제외(가 지도)'}
 S = {}; [S.__setitem__((d['stem'], d['run']), d) for d in (json.loads(Path(p).read_text()) for p in sorted(glob.glob(str(O/'score/*.json'))))]
 FL = {(d['stem'], d['run']): d for d in (json.loads(Path(p).read_text()) for p in sorted(glob.glob(str(O/'float/*.json'))))}

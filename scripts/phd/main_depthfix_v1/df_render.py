@@ -13,6 +13,15 @@ import torch
 from scene import GaussianModel
 from gaussian_renderer import render
 from types import SimpleNamespace
+_ensure_views_inherited = ensure_views
+def ensure_views(site):
+    # issues 33: RESCORE meshes/B173nb_b10__ALS__r8_30000/final_work/inputs/meta.json (box source) was removed by another session's cleanup on 11-24;
+    # this task's own views/<site>.json already holds the same box (written by the inherited ensure_views before), so read it first. Values unchanged.
+    own = O/'views'/f'{site}.json'
+    if own.exists():
+        z = json.loads(own.read_text())
+        if 'box' in z and 'views' in z: return z
+    return _ensure_views_inherited(site)
 STAGE1 = Path('/te/stage1'); MVS = Path('/art/phase-payloads/phd/main_stage0_v1/PHD-MAIN-STAGE0-v1/fork_inputs/s61')
 
 @torch.no_grad()
