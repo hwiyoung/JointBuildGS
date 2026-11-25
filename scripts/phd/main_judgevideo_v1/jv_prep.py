@@ -21,7 +21,7 @@ from pathlib import Path
 MF = Path('/art/phase-payloads/phd/main_mvsfilter_v1/PHD-MAIN-MVSFILTER-v1/judge/patches4_ALS.csv.gz')
 JP = Path('/art/phase-payloads/phd/main_judgeprobe_v1/PHD-MAIN-JUDGEPROBE-v1/patch_ALS.npz')
 OUT = Path('/out'); JD = Path('/jdocs')
-COLS = ['patch_index', 'patch_id', 'kind', 'area', 'none_n', 'none_judgment', 'none_significant', 'region', 'building', 'd_m', 'L_m', 'mix_large', 'combo_D_returned', 'combo_D_judgment']
+COLS = ['patch_index', 'patch_id', 'kind', 'area', 'none_n', 'none_judgment', 'none_significant', 'region', 'building', 'd_m', 'L_m', 'mix_large', 'combo_D_returned', 'combo_D_judgment', 'A2_n', 'photo_result']
 STEPN = {0: '아직 안 정함', 1: '① 결측', 11: '① 제거(시선 검사)', 2: '② 일치', 3: '③ 작은 차이(일치 목표)', 31: '③ 영상 따름', 4: '④ 되돌림(영상 점검)'}
 def main():
     c = cfg(); t = pd.read_csv(MF, usecols=COLS); z = loadz(JP, ['centre', 'normal', 'tangent1', 'area', 'prior_height_m', 'mvs_mean_m', 'sigma_P', 'u_M', 'd_m', 'L_m', 'n', 'kind'])
@@ -45,7 +45,10 @@ def main():
     with np.errstate(invalid='ignore', divide='ignore'): wavg = (hP/sP**2 + hM/uM**2)/(1/sP**2 + 1/uM**2)
     tgt = np.where(fin == 2, hM, np.where(fin == 0, np.where(np.isfinite(wavg), wavg, hP), hP))
     savez(OUT/'scene_patches_ALS.npz', patch_index=ix, patch_id=np.array(s['patch_id'].astype(str).tolist()), step=step, final=fin, area=s['area'].values.astype(float), centre=P[ix], normal=z['normal'][ix], tangent1=z['tangent1'][ix],
-          prior_h=hP, mvs_h=hM, target_h=tgt, L=s['L_m'].values.astype(float), d=s['d_m'].values.astype(float), n=n.astype(int), sig=sig.astype(bool), mix=mix.astype(float), ret=ret.astype(bool))
+          prior_h=hP, mvs_h=hM, target_h=tgt, L=s['L_m'].values.astype(float), d=s['d_m'].values.astype(float), n=n.astype(int), sig=sig.astype(bool), mix=mix.astype(float), ret=ret.astype(bool), j0=j0.astype(int), a2n=s['A2_n'].values.astype(int), photo=np.array(s['photo_result'].fillna('').astype(str).tolist()))
+    # v3 evidence of step 4 (mf18 base3): returned = (sig & 0 <= A2_n < 4 & photo != 반박) | (sig & photo == 지지); check against the stored combo_D_returned
+    a2 = s['A2_n'].values; ph = s['photo_result'].fillna('').values; rr = (sig & (a2 >= 0) & (a2 < 4) & (ph != '반박')) | (sig & (ph == '지지'))
+    ck['step4_rule_equals_combo_D_returned'] = bool(np.array_equal(rr, ret)); ck['photo_values'] = {str(k): int(v) for k, v in pd.Series(ph[sig & (mix == 1)]).value_counts().items()}
     rec = dict(at=now(), rule=__doc__, inputs={str(MF): sha(MF), str(JP): sha(JP)}, checks=ck, scientific_verdict=None); dump(OUT/'scene_patches_ALS.json', rec)
     print(json.dumps(ck, ensure_ascii=False, indent=1)[:4000])
 main()

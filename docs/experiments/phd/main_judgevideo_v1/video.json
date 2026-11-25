@@ -1,16 +1,16 @@
 {
-  "at": "2026-11-25T11:53:43.394514+09:00",
+  "at": "2026-11-25T13:24:46.576008+09:00",
   "rule": "PHD-MAIN-JUDGEVIDEO-v1 encode (video image: imageio_ffmpeg's ffmpeg). No new drawing.\n  1 B173_판단과정_v1.mp4      the judgment frames (jv_frames.py, frames_all.json order and repeats) at 25 fps: v1: per step 4 fade x 3 + hold 38 = 2.0 s; v2: patches move to their target height in 7 x 3 frames + hold 38 = 2.36 s; result 2.0 s\n  2 B173_판단학습과정_v1.mp4  the r6 'input' frame (1.2 s, as in the r6 video) -> the judgment section -> the r6 frames 0 ... 30,000 (1.2 s each, the last 3.0 s)\n  both H.264 libx264 -preset veryfast, yuv420p, crf 18, 25 fps constant (the r6 encode rule), via the ffmpeg concat demuxer (durations).\n  stills: the last (alpha 1) frame of each step -> stills/B173_판단_<n>_<step>.png (5). scientific_verdict: null",
   "ffmpeg": "/out/tmp/pylib/imageio_ffmpeg/binaries/ffmpeg-linux64-v4.2.2",
   "scientific_verdict": null,
   "judgment": {
     "path": "/out/B173_판단과정_v1.mp4",
-    "sha256": "b88ad907aed6de39a62ee024e8781a59721984173720fcf7ab8649960f99392a",
-    "bytes": 1468736,
+    "sha256": "5ea3f30e222164bd1fefc5efbf79562d1f86831ff59f6481fd34fff2fde022a9",
+    "bytes": 1219369,
     "expected_seconds": 11.44,
     "probe": [
-      "Duration: 00:00:11.48, start: 0.000000, bitrate: 1023 kb/s",
-      "Stream #0:0(und): Video: h264 (High) (avc1 / 0x31637661), yuv420p, 1920x1080 [SAR 1:1 DAR 16:9], 1020 kb/s, 25 fps, 25 tbr, 12800 tbn, 50 tbc (default)"
+      "Duration: 00:00:11.48, start: 0.000000, bitrate: 849 kb/s",
+      "Stream #0:0(und): Video: h264 (High) (avc1 / 0x31637661), yuv420p, 1920x1080 [SAR 1:1 DAR 16:9], 846 kb/s, 25 fps, 25 tbr, 12800 tbn, 50 tbc (default)"
     ],
     "command": [
       "/out/tmp/pylib/imageio_ffmpeg/binaries/ffmpeg-linux64-v4.2.2",
@@ -39,12 +39,12 @@
   },
   "combined": {
     "path": "/out/B173_판단학습과정_v1.mp4",
-    "sha256": "a6151236b8202cec2649a5d5138ecfc2e3f1d6b6e944de47e1e605288ef9c77a",
-    "bytes": 3652638,
+    "sha256": "fd2492bb82805ae7ae0b6cef13e648333c63a2f464b981eb18595dbe3c9472b2",
+    "bytes": 3533394,
     "expected_seconds": 27.64,
     "probe": [
-      "Duration: 00:00:27.68, start: 0.000000, bitrate: 1055 kb/s",
-      "Stream #0:0(und): Video: h264 (High) (avc1 / 0x31637661), yuv420p, 1920x1080 [SAR 1:1 DAR 16:9], 1053 kb/s, 25 fps, 25 tbr, 12800 tbn, 50 tbc (default)"
+      "Duration: 00:00:27.68, start: 0.000000, bitrate: 1021 kb/s",
+      "Stream #0:0(und): Video: h264 (High) (avc1 / 0x31637661), yuv420p, 1920x1080 [SAR 1:1 DAR 16:9], 1018 kb/s, 25 fps, 25 tbr, 12800 tbn, 50 tbc (default)"
     ],
     "command": [
       "/out/tmp/pylib/imageio_ffmpeg/binaries/ffmpeg-linux64-v4.2.2",
@@ -124,27 +124,27 @@
   "stills": [
     {
       "png": "/out/stills/B173_판단_1_영상깊이유무.png",
-      "sha256": "935ca44c9a11ddb11d5ba35b706c790121d7035acbc0a73b02e3b3927827a5f4",
+      "sha256": "83600fc9a4b49c2790c02c9e4dda81279de2f7b657005cb9922202947ff5e20c",
       "from_": "/out/frames/j1_7.png"
     },
     {
       "png": "/out/stills/B173_판단_2_변화탐지.png",
-      "sha256": "b53ecd0e2450194b95fab2628ca93fab8804820fcd7f6b813c18470765078bfc",
+      "sha256": "df2a24c0e612f46f6207294c84a64304e734ff4ca88252ced2716c5715394c65",
       "from_": "/out/frames/j2_7.png"
     },
     {
       "png": "/out/stills/B173_판단_3_영상따름.png",
-      "sha256": "982058650866bfa8547db860827ec6d8878c8a2aa7392d39a30e2668d3512107",
+      "sha256": "a2f02c9bbe9b78e2c181aada4876c54bb22d4bbc5ccfdc2cf3ae06d6e0329973",
       "from_": "/out/frames/j3_7.png"
     },
     {
       "png": "/out/stills/B173_판단_4_영상점검.png",
-      "sha256": "275d2c11c2a65cdcd2071b6f29ba548e03531e8177d8bd4da76e687a34be5e5a",
+      "sha256": "59c17a71ef08a991c2c87ade7457b8b8d7d7cf417ee2aad0fc2f2ad36e958dff",
       "from_": "/out/frames/j4_7.png"
     },
     {
       "png": "/out/stills/B173_판단_5_판단결과.png",
-      "sha256": "7ae7f8b49168f190cf787161b21d915194e7f0918877e88d3a3c37f25849f111",
+      "sha256": "6e8a0b30ab34fc5efc1e9f6abefeb27bcc906512cf8883ea05a5285d7a72fdaa",
       "from_": "/out/frames/res_0.png"
     }
   ]
