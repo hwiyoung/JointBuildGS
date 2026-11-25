@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><title>판단 정답 3차원 보기 · PHD-MAIN-JUDGEGT-v1</title>
+<style>
+:root{--bg:#f6f5f1;--ink:#2c2c2a;--mute:#6b6a64;--line:#d9d7cf}
+*{box-sizing:border-box}body{margin:0;font:13px/1.45 "Noto Sans CJK KR","Noto Sans KR",sans-serif;color:var(--ink);background:var(--bg);display:grid;grid-template-columns:290px 1fr 300px;height:100vh;overflow:hidden}
+aside{overflow:auto;padding:10px 12px;border-right:1px solid var(--line);background:#fff}aside.r{border-left:1px solid var(--line);border-right:0}
+h1{font-size:14px;margin:0 0 6px}h2{font-size:12px;margin:12px 0 4px;color:var(--mute);font-weight:600}
+#list button{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;margin:2px 0;padding:4px 6px;border-radius:5px;cursor:pointer;font:inherit;font-size:12px}
+#list button.on{border-color:#2c2c2a;background:#efede6}#list .sw{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:baseline}
+label{display:block;margin:2px 0;cursor:pointer}.lg span{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+#c{position:relative;height:100vh}#c canvas{display:block}#hint{position:absolute;left:10px;bottom:8px;color:var(--mute);font-size:11px;background:#fffc;padding:2px 6px;border-radius:4px}
+table{border-collapse:collapse;width:100%;font-size:12px}td{padding:2px 4px;border-bottom:1px solid #eeece6;vertical-align:top}td:first-child{color:var(--mute);white-space:nowrap}
+.ok{color:#0f6e56;font-weight:600}.bad{color:#a32d2d;font-weight:600}#title{font-weight:600;margin-bottom:4px}
+</style></head><body>
+<aside><h1>판단 정답 3차원 보기</h1><div style="color:var(--mute);font-size:11px">세 실험 지역 · 정방향 정답 · 장면 = 그림 2~4 본보기 자리 ± 5 m</div>
+<h2>층</h2>
+<label><input type="checkbox" id="Lp" checked> 사전 정보 패치(정답 색)</label>
+<label><input type="checkbox" id="Lm" checked> 영상 깊이 점(초록)</label>
+<label><input type="checkbox" id="Lg" checked> 드론 LiDAR 참값 점(검정)</label>
+<label><input type="checkbox" id="Lc" checked> 고른 패치 기둥·띠</label>
+<label>점 크기 <input type="range" id="ps" min="1" max="8" value="3"></label>
+<label>패치 불투명도 <input type="range" id="po" min="10" max="100" value="85"></label>
+<h2>정답 (눌러서 끄고 켜기)</h2><div id="lg" class="lg"></div>
+<h2>장면</h2><div id="list"></div></aside>
+<div id="c"><div id="hint">왼쪽 끌기 = 돌리기 · 오른쪽 끌기(또는 Shift) = 옮기기 · 휠 = 가까이 · 패치 누르기 = 고르기</div></div>
+<aside class="r"><div id="title">패치를 누르세요</div><table id="info"></table>
+<h2>기둥 안 참값 점 다시 셈(이 화면)</h2><table id="re"></table>
+<div style="color:var(--mute);font-size:11px;margin-top:8px">기둥 = 0.25 × 0.25 m 칸을 법선으로 늘인 것(지붕 ±10, 벽 ±5 m). 보라 띠 = 0 ± τ(사전 정보 자리), 연두 띠 = h_M ± τ(영상 자리). 띠 안 참값 점은 빨강으로 칠함. 참값 점은 줄이지 않고 모두 담음(다시 센 수 = 저장값이면 초록). 영상 깊이 점만 25만 개 넘으면 줄여 보임.</div></aside>
+<script type="module">
+import * as THREE from './three.module.min.js';
+const $=id=>document.getElementById(id);
+const IDX=await (await fetch('data/scenes.json')).json(); const COL=IDX.colours;
+const ANS=['두 자료','영상','사전 정보(영상 틀림)','사전 정보(영상 없음)','둘 다 틀림','정답 없음','사전 정보 높이 없음'];
+const hidden=new Set();
+$('lg').innerHTML=ANS.map(a=>`<label data-a="${a}"><span style="background:${COL[a]}"></span>${a}</label>`).join('');
+$('lg').querySelectorAll('label').forEach(l=>l.onclick=e=>{e.preventDefault();const a=l.dataset.a;hidden.has(a)?hidden.delete(a):hidden.add(a);l.style.opacity=hidden.has(a)?.35:1;buildPatches();});
+const FIGN={fig2_정답단면_LoD2:'그림 2 · LoD2',fig2_정답단면_ALS:'그림 2 · 항공 LiDAR',fig3_옛새차이_LoD2:'그림 3 · LoD2',fig3_옛새차이_ALS:'그림 3 · 항공 LiDAR',fig4_참값무리:'그림 4 · 무리 둘 이상'};
+let html='',last='';for(const s of IDX.scenes){if(s.fig!==last){html+=`<h2>${FIGN[s.fig]||s.fig}</h2>`;last=s.fig;}
+ html+=`<button data-n="${s.name}"><span class="sw" style="background:${COL[s.answer]}"></span>${s.answer}${s.old?' ← 옛 '+s.old:''}<br><span style="color:#6b6a64">${s.building.replace('DEBY_LOD2_','')} · ${s.surface} · ${s.place}</span></button>`;}
+$('list').innerHTML=html;$('list').querySelectorAll('button').forEach(b=>b.onclick=()=>load(b.dataset.n));
+// three
+const host=$('c');const R=new THREE.WebGLRenderer({antialias:true});R.setPixelRatio(devicePixelRatio);host.appendChild(R.domElement);
+const scene=new THREE.Scene();scene.background=new THREE.Color('#f6f5f1');const cam=new THREE.PerspectiveCamera(45,1,.05,500);cam.up.set(0,0,1);
+scene.add(new THREE.AmbientLight(0xffffff,1));
+function resize(){const w=host.clientWidth,h=host.clientHeight;R.setSize(w,h);cam.aspect=w/h;cam.updateProjectionMatrix();}addEventListener('resize',resize);resize();
+// 시점 조작
+let tgt=new THREE.Vector3(),rad=14,az=-.8,el=.6;function upd(){cam.position.set(tgt.x+rad*Math.cos(el)*Math.cos(az),tgt.y+rad*Math.cos(el)*Math.sin(az),tgt.z+rad*Math.sin(el));cam.lookAt(tgt);}
+let drag=null,moved=0;R.domElement.addEventListener('contextmenu',e=>e.preventDefault());
+R.domElement.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,pan:e.button===2||e.shiftKey};moved=0;});
+addEventListener('pointerup',e=>{if(drag&&moved<4&&e.target===R.domElement)pick(e);drag=null;});
+addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;moved+=Math.abs(dx)+Math.abs(dy);drag.x=e.clientX;drag.y=e.clientY;
+ if(drag.pan){const f=rad*.0016;const right=new THREE.Vector3().subVectors(cam.position,tgt).cross(cam.up).normalize();const up=new THREE.Vector3().copy(cam.up);
+  const fw=new THREE.Vector3().subVectors(tgt,cam.position).normalize();const u2=new THREE.Vector3().crossVectors(right,fw).normalize();tgt.addScaledVector(right,dx*f).addScaledVector(u2,dy*f);}
+ else{az-=dx*.006;el=Math.max(-1.5,Math.min(1.5,el+dy*.006));}upd();});
+R.domElement.addEventListener('wheel',e=>{e.preventDefault();rad*=Math.exp(e.deltaY*.001);rad=Math.max(.3,Math.min(80,rad));upd();},{passive:false});
+// 장면
+let D=null,G=null,M=null,gtPts=null,gtObj=null,mvsObj=null,patchMesh=null,colObj=null,sel=-1;
+const ps=()=>+$('ps').value;
+function pointsObj(arr,color){const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(arr,3));const c=new Float32Array(arr.length);const k=new THREE.Color(color);for(let i=0;i<c.length;i+=3){c[i]=k.r;c[i+1]=k.g;c[i+2]=k.b;}
+ g.setAttribute('color',new THREE.BufferAttribute(c,3));return new THREE.Points(g,new THREE.PointsMaterial({size:ps(),sizeAttenuation:false,vertexColors:true}));}
+async function bin(n){return new Float32Array(await (await fetch(n)).arrayBuffer());}
+async function load(name){if(decodeURIComponent(location.hash.slice(1))!==name)history.replaceState(null,'','#'+name);
+ document.querySelectorAll('#list button').forEach(b=>b.classList.toggle('on',b.dataset.n===name));
+ D=await (await fetch(`data/${name}.json`)).json();[gtPts,M]=await Promise.all([bin(`data/${name}_gt.bin`),bin(`data/${name}_mvs.bin`)]);
+ for(const o of [gtObj,mvsObj,patchMesh,colObj])if(o)scene.remove(o);
+ gtObj=pointsObj(gtPts,'#111111');mvsObj=pointsObj(M,'#3B6D11');mvsObj.material.opacity=.75;mvsObj.material.transparent=true;scene.add(gtObj,mvsObj);
+ buildPatches();sel=D.patches.example;tgt.set(0,0,0);rad=12;upd();select(sel);vis();}
+function basis(i){const P=D.patches;const n=new THREE.Vector3(...P.normal[i]);let u=new THREE.Vector3(...P.t1[i]);u.addScaledVector(n,-u.dot(n));if(u.length()<1e-6){u=new THREE.Vector3(0,0,1).cross(n);}u.normalize();const v=new THREE.Vector3().crossVectors(n,u);return {n,u,v,s:new THREE.Vector3(...P.surf[i])};}
+let triOwner=[];
+function buildPatches(){if(!D)return;if(patchMesh)scene.remove(patchMesh);const P=D.patches,N=P.answer.length;const pos=[],col=[];triOwner=[];
+ for(let i=0;i<N;i++){if(hidden.has(P.answer[i]))continue;const {n,u,v,s}=basis(i);const h=.12;const k=new THREE.Color(COL[P.answer[i]]||'#999');
+  const cs=[[-h,-h],[h,-h],[h,h],[-h,h]].map(([a,b])=>s.clone().addScaledVector(u,a).addScaledVector(v,b));
+  for(const t of [0,1,2,0,2,3]){pos.push(cs[t].x,cs[t].y,cs[t].z);col.push(k.r,k.g,k.b);}triOwner.push(i,i);}
+ const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));g.setAttribute('color',new THREE.Float32BufferAttribute(col,3));
+ patchMesh=new THREE.Mesh(g,new THREE.MeshBasicMaterial({vertexColors:true,side:THREE.DoubleSide,transparent:true,opacity:+$('po').value/100,depthWrite:false}));scene.add(patchMesh);vis();}
+const ray=new THREE.Raycaster();
+function pick(e){if(!patchMesh||!patchMesh.visible)return;const r=R.domElement.getBoundingClientRect();const m=new THREE.Vector2((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);
+ ray.setFromCamera(m,cam);const h=ray.intersectObject(patchMesh);if(h.length)select(triOwner[h[0].faceIndex]);}
+function box(cx,u,v,n,lo,hi,color,fill){const g=new THREE.BoxGeometry(.25,.25,hi-lo);const mtx=new THREE.Matrix4().makeBasis(u,v,n);mtx.setPosition(cx.clone().addScaledVector(n,(lo+hi)/2));
+ const grp=new THREE.Group();const e=new THREE.LineSegments(new THREE.EdgesGeometry(g),new THREE.LineBasicMaterial({color}));e.applyMatrix4(mtx);grp.add(e);
+ if(fill){const f=new THREE.Mesh(g,new THREE.MeshBasicMaterial({color,transparent:true,opacity:.28,depthWrite:false}));f.applyMatrix4(mtx);grp.add(f);}return grp;}
+function select(i){if(!D||i<0)return;sel=i;const P=D.patches;const {n,u,v,s}=basis(i);const H=P.surface[i]==='벽'?5:10;const tau=P.tau_m[i],hM=P.h_M_m[i];
+ if(colObj)scene.remove(colObj);colObj=new THREE.Group();colObj.add(box(s,u,v,n,-H,H,'#5F5E5A',false));colObj.add(box(s,u,v,n,-tau,tau,'#7F77DD',true));if(hM!==null)colObj.add(box(s,u,v,n,hM-tau,hM+tau,'#639922',true));scene.add(colObj);
+ // 다시 셈 + 띠 안 참값 점 빨강
+ const c=gtObj.geometry.attributes.color.array;let nt=0,n0=0,nM=0;const d=[];
+ for(let k=0;k<gtPts.length;k+=3){const p=new THREE.Vector3(gtPts[k]-s.x,gtPts[k+1]-s.y,gtPts[k+2]-s.z);const t=p.dot(n),a=p.dot(u),b=p.dot(v);let r=.07,g=.07,bb=.07;
+  if(Math.abs(a)<=.125&&Math.abs(b)<=.125&&Math.abs(t)<=H){nt++;d.push(t);const i0=Math.abs(t)<=tau,iM=hM!==null&&Math.abs(t-hM)<=tau;if(i0)n0++;if(iM)nM++;if(i0||iM){r=.85;g=.1;bb=.1;}else{r=.95;g=.55;bb=.1;}}
+  c[k]=r;c[k+1]=g;c[k+2]=bb;}gtObj.geometry.attributes.color.needsUpdate=true;
+ const f=x=>x===null||x===undefined||Number.isNaN(x)?'–':(typeof x==='number'?(Number.isInteger(x)?x.toLocaleString():x.toFixed(3)):x);
+ $('title').innerHTML=`<span style="color:${COL[P.answer[i]]}">■</span> ${P.answer[i]}`;
+ const rows=[['패치',P.patch_id[i]],['건물',P.building[i]],['면 · 자리',P.surface[i]+' · '+P.place[i]],['사전 정보',D.prior==='ALS'?'항공 LiDAR':'LoD2'],['τ (m)',f(tau)],['h_M (m)',hM===null?'영상 없음':f(hM)],
+  ['원통 안 영상 점',f(P.image_cylinder[i])],['기둥 안 참값 점',f(P.gt_column[i])],['0 ± τ 참값 점',f(P.gt_band_prior[i])],['h_M ± τ 참값 점',P.gt_band_image[i]<0?'–':f(P.gt_band_image[i])],
+  ['참값 무리',f(P.gt_clusters[i])+(P.clusters[i].length?' ('+P.clusters[i].map(q=>q[0]+'점@'+q[1].toFixed(2)).join(', ')+')':'')],['옛 정답',P.initial_state[i]],['판정 (가) JC-v2',P.judgment_jc2[i]],['판정 (나) 11/22',P.judgment_1122[i]],['넓이 m²',f(P.area_m2[i])]];
+ $('info').innerHTML=rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('');
+ const sc=D.gt_points/Math.max(1,D.gt_points_in_box);const cmp=(a,b)=>`<span class="${a===b?'ok':'bad'}">${a}</span> / ${b<0?'–':b}`;
+ $('re').innerHTML=[['기둥 안 (다시 셈 / 저장)',cmp(nt,P.gt_column[i])],['0 ± τ',cmp(n0,P.gt_band_prior[i])],['h_M ± τ',hM===null?'–':cmp(nM,P.gt_band_image[i])],['보이는 참값 점 비율',(100*sc).toFixed(1)+' %']].map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('');
+ vis();}
+function vis(){if(patchMesh)patchMesh.visible=$('Lp').checked;if(mvsObj)mvsObj.visible=$('Lm').checked;if(gtObj)gtObj.visible=$('Lg').checked;if(colObj)colObj.visible=$('Lc').checked;}
+['Lp','Lm','Lg','Lc'].forEach(k=>$(k).onchange=vis);$('ps').oninput=()=>{for(const o of [gtObj,mvsObj])if(o)o.material.size=ps();};$('po').oninput=()=>{if(patchMesh)patchMesh.material.opacity=+$('po').value/100;};
+(function loop(){R.render(scene,cam);requestAnimationFrame(loop);})();
+const want=decodeURIComponent(location.hash.slice(1));load(IDX.scenes.some(s=>s.name===want)?want:IDX.scenes[0].name);
+addEventListener('hashchange',()=>{const w=decodeURIComponent(location.hash.slice(1));if(IDX.scenes.some(s=>s.name===w))load(w);});
+</script></body></html>
