@@ -109,6 +109,7 @@ def main():
         o1 = r1m.copy(); o1[d.t == 0] = 0; o1[np.isin(d.t, [1, 2, 4])] = 1; o1[d.t == 3] = 2
         o2 = r2m.copy(); o2[none & (d.t == 1)] = 1; o2[none & np.isin(d.t, [0, 2, 3, 4])] = 0
         a, b = d.r3(); oa = a.copy(); ob = b.copy(); img_ok = np.isin(d.t, [0, 1]); bad = np.isin(d.t, [2, 3]); oa[img_ok] = 1; oa[bad] = 0; ob[img_ok] = 1; ob[bad] = 0
+        J['판 4(크기 경계 넣음)'] = d.plan(4, r1=d.r1(size=True)); J['판 4(한계 원문)'] = d.plan(4, r1=d.r1(Lver='orig'))
         J['상한: ①만 정답'] = d.plan(4, r1=o1); J['상한: ②만 정답'] = d.plan(4, r2=o2); J['상한: ③만 정답'] = d.plan(4, r3=(oa, ob))
         def score4(**kw): jj = d.plan(4, **kw); return acc(d.t, jj, d.area)[0]
         b1 = max(cand1, key=lambda k: score4(r1=d.r1(**k))); b2 = max(cand2, key=lambda k: score4(r2=d.r2(**k))); b3 = max(cand3, key=lambda r: score4(r3=d.r3(r)))

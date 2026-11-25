@@ -1,0 +1,32 @@
+{
+ "at": "2026-11-26T02:08:20+09:00",
+ "stage": "ga3",
+ "scientific_verdict": null,
+ "LoD2": {
+  "best": {
+   "step1": "두 번 재기 · 중앙값 · 크기 경계 뺌 · 한계 원문",
+   "step2": {
+    "rule": "one",
+    "delta": 1
+   },
+   "step3": "main"
+  },
+  "area": 54784.62834436015,
+  "plan4_sum_equal": true,
+  "plan4_without_23_equals_plan1": true
+ },
+ "ALS": {
+  "best": {
+   "step1": "길이 짧음 · 평균 · 크기 경계 넣음 · 한계 원문",
+   "step2": {
+    "rule": "pixel",
+    "delta": 1
+   },
+   "step3": "main"
+  },
+  "area": 16516.663026671664,
+  "plan4_sum_equal": true,
+  "plan4_without_23_equals_plan1": true
+ },
+ "best_rule": "단계마다 그 단계 후보만 바꾼 판 4의 판정 정확도(넓이, 전체)가 가장 높은 후보"
+}

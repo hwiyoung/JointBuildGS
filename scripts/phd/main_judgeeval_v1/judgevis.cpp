@@ -31,8 +31,8 @@ int NI,W,H;std::vector<Cam> cams;std::vector<std::vector<float>> depth,normal;
 static std::vector<float> readmap(const std::string&p,int ch){std::ifstream f(p,std::ios::binary);if(!f)throw std::runtime_error("open "+p);std::string hdr;int amp=0;char c;
  while(amp<3&&f.get(c)){hdr+=c;if(c=='&')amp++;}int w,h,cc;char x;std::istringstream is(hdr);is>>w>>x>>h>>x>>cc;if(w!=W||h!=H||cc!=ch)throw std::runtime_error("size "+p);
  std::vector<float> raw((size_t)w*h*cc);f.read((char*)raw.data(),raw.size()*4);std::vector<float> out((size_t)w*h*cc);
- // COLMAP: column-major per channel: raw[ch][col][row] -> out[(row*W+col)*cc+ch]
- for(int k=0;k<cc;k++)for(int col=0;col<w;col++)for(int row=0;row<h;row++)out[((size_t)row*w+col)*cc+k]=raw[(size_t)k*w*h+(size_t)col*h+row];return out;}
+ // COLMAP .bin maps: per channel, rows of w values (same as mfcommon.read_depth / read_bin, verified by unprojection): raw[ch][row][col] -> out[(row*W+col)*cc+ch]
+ for(int k=0;k<cc;k++)for(int row=0;row<h;row++)for(int col=0;col<w;col++)out[((size_t)row*w+col)*cc+k]=raw[(size_t)k*w*h+(size_t)row*w+col];return out;}
 static void load(const char*cb,const char*mt,bool normals){std::ifstream f(cb,std::ios::binary);f.read((char*)&NI,4);f.read((char*)&W,4);f.read((char*)&H,4);cams.resize(NI);
  for(auto&c:cams){double v[16];f.read((char*)v,128);for(int i=0;i<9;i++)c.R[i]=v[i];for(int i=0;i<3;i++)c.t[i]=v[9+i];c.fx=v[12];c.fy=v[13];c.cx=v[14];c.cy=v[15];}
  std::ifstream m(mt);std::vector<std::pair<std::string,std::string>> P;std::string line;while(std::getline(m,line)){auto k=line.find('\t');P.push_back({line.substr(0,k),line.substr(k+1)});}
