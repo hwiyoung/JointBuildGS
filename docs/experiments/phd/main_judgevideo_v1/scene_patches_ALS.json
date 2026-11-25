@@ -1,0 +1,96 @@
+{
+  "at": "2026-11-25T11:08:43.311224+09:00",
+  "rule": "PHD-MAIN-JUDGEVIDEO-v1 prep (CPU, no training, no new judgment): the B173 scene patches of the ALS prior with their STORED values.\nInputs (read only):\n  MVSFILTER-v1 bundle 나5 patch table judge/patches4_ALS.csv.gz (columns none_n, none_judgment, none_significant, d_m, L_m, mix_large, combo_D_returned, combo_D_judgment)\n  JUDGEPROBE-v1 patch_ALS.npz (JUDGECHECK-v2 per-patch values, same row order; checked by patch order = patch_index) for centre, normal, tangent1, area,\n  prior_height_m, mvs_mean_m, sigma_P, u_M (place of the patch and its heights).\nScene = TRAINLOG-v1 scope (trainlog_v1.json scope.buffered_footprint and z range) applied to the patch centre (derive_states.scope_mask).\nStep of each patch (painting order of the video; the judgment itself is read, not recomputed):\n  1 image depth present?   none_n < 4 -> missing (결측); none_judgment == 3 -> removed by the sight check (제거, grey hatch)\n  2 change detection       not significant (none_significant False) with none_judgment == 0 -> agree (일치)\n  3 follow the image       significant: mix_large == 0 -> small difference, agree target (작은 차이); mix_large == 1 -> image depth (영상 따름)\n  4 image check            significant, mix_large == 1 and combo_D_returned == 1 -> returned to the prior (되돌림)\n  anything else stays 'not decided' (아직 안 정함) and is counted.\nFinal judgment code (mix boundary panel, treatment W) = none_judgment, big & returned -> 1, small -> 0 (mf19 panel_lo); checked against combo_D_judgment\non the big patches. scientific_verdict: null",
+  "inputs": {
+    "/art/phase-payloads/phd/main_mvsfilter_v1/PHD-MAIN-MVSFILTER-v1/judge/patches4_ALS.csv.gz": "1760f9041bed2522e95b78b26a51a7ea39fd429b49f6811f0c182392f7143848",
+    "/art/phase-payloads/phd/main_judgeprobe_v1/PHD-MAIN-JUDGEPROBE-v1/patch_ALS.npz": "481e06744cbef7739e8be5f2dbde8ed79e958cce46d38290b0d46dc697b1f7d3"
+  },
+  "checks": {
+    "rows_table": 789428,
+    "scene_patches": 24747,
+    "area_equal": true,
+    "n_equal": true,
+    "d_equal_or_both_nan": true,
+    "L_equal_or_both_nan": true,
+    "final_equals_combo_D_on_big": true,
+    "final_equals_combo_D_outside_sig": true,
+    "crosstab_area_m2": {
+      "① 결측": {
+        "(False, 0)": 0.0,
+        "(False, 1)": 0.0,
+        "(False, 2)": 0.0,
+        "(False, 3)": 0.0,
+        "(False, 4)": 3.23,
+        "(False, 9)": 0.33,
+        "(True, 2)": 0.0
+      },
+      "① 제거(시선 검사)": {
+        "(False, 0)": 0.0,
+        "(False, 1)": 0.0,
+        "(False, 2)": 0.0,
+        "(False, 3)": 4.4,
+        "(False, 4)": 0.0,
+        "(False, 9)": 0.0,
+        "(True, 2)": 0.0
+      },
+      "② 일치": {
+        "(False, 0)": 259.13,
+        "(False, 1)": 0.0,
+        "(False, 2)": 0.0,
+        "(False, 3)": 0.0,
+        "(False, 4)": 0.0,
+        "(False, 9)": 0.0,
+        "(True, 2)": 0.0
+      },
+      "③ 영상 따름": {
+        "(False, 0)": 0.0,
+        "(False, 1)": 0.0,
+        "(False, 2)": 0.0,
+        "(False, 3)": 0.0,
+        "(False, 4)": 0.0,
+        "(False, 9)": 0.0,
+        "(True, 2)": 1194.53
+      },
+      "③ 작은 차이(일치 목표)": {
+        "(False, 0)": 0.0,
+        "(False, 1)": 0.0,
+        "(False, 2)": 0.0,
+        "(False, 3)": 0.0,
+        "(False, 4)": 0.0,
+        "(False, 9)": 0.0,
+        "(True, 2)": 70.27
+      },
+      "④ 되돌림(영상 점검)": {
+        "(False, 0)": 0.0,
+        "(False, 1)": 0.0,
+        "(False, 2)": 0.0,
+        "(False, 3)": 0.0,
+        "(False, 4)": 0.0,
+        "(False, 9)": 0.0,
+        "(True, 2)": 74.57
+      },
+      "아직 안 정함": {
+        "(False, 0)": 0.0,
+        "(False, 1)": 21.81,
+        "(False, 2)": 8.51,
+        "(False, 3)": 0.0,
+        "(False, 4)": 0.0,
+        "(False, 9)": 40.28,
+        "(True, 2)": 0.0
+      }
+    },
+    "n_lt4_by_judgment": {
+      "3": 67,
+      "4": 45,
+      "9": 5
+    },
+    "sig_mix_missing": 0,
+    "not_decided_patches": 937,
+    "not_decided_by_judgment": {
+      "9": 555,
+      "1": 257,
+      "2": 125
+    }
+  },
+  "scientific_verdict": null
+}

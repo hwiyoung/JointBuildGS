@@ -1,0 +1,125 @@
+{
+  "at": "2026-11-25T11:11:48.122319+09:00",
+  "rule": "PHD-MAIN-JUDGEVIDEO-v1 area table and check (CPU). judge_steps_B173_ALS.csv: per step the patches newly decided (count, area) and the cumulative area\nshare of each category after the step (the categories the video paints, jv_frames.stage_colours). Check: the result-scene areas per category = a direct\nrecount from the MVSFILTER patch table (patches4_ALS.csv.gz read again, rows = the scene patch_index list, category from its own columns), and the\n'그 밖 판정' patches broken down by stored judgment and JUDGECHECK-v2 j_reason. scientific_verdict: null",
+  "total_area_m2": 1677.0518396445357,
+  "patches": 24747,
+  "check_result_vs_direct": [
+    {
+      "category": "결측",
+      "video_m2": 3.56,
+      "direct_m2": 3.56,
+      "patches": 50,
+      "equal": true
+    },
+    {
+      "category": "제거(시선 검사)",
+      "video_m2": 4.4,
+      "direct_m2": 4.4,
+      "patches": 67,
+      "equal": true
+    },
+    {
+      "category": "일치",
+      "video_m2": 259.13,
+      "direct_m2": 259.13,
+      "patches": 3687,
+      "equal": true
+    },
+    {
+      "category": "작은 차이(일치 목표)",
+      "video_m2": 70.27,
+      "direct_m2": 70.27,
+      "patches": 976,
+      "equal": true
+    },
+    {
+      "category": "영상 따름",
+      "video_m2": 1194.53,
+      "direct_m2": 1194.53,
+      "patches": 17917,
+      "equal": true
+    },
+    {
+      "category": "되돌림(영상 점검)",
+      "video_m2": 74.57,
+      "direct_m2": 74.57,
+      "patches": 1113,
+      "equal": true
+    },
+    {
+      "category": "그 밖(L 없음)",
+      "video_m2": 70.59,
+      "direct_m2": 70.59,
+      "patches": 937,
+      "equal": true
+    }
+  ],
+  "all_equal": true,
+  "other_breakdown": [
+    {
+      "stored_judgment": "미판정",
+      "j_reason": "[9, 9, 9, 0, 9, 9, 9, 9]",
+      "geometry": "[9]",
+      "L_finite": false,
+      "count": 17,
+      "sum": 1.3569492568
+    },
+    {
+      "stored_judgment": "미판정",
+      "j_reason": "[9, 9, 9, 1, 9, 9, 9, 9]",
+      "geometry": "[9]",
+      "L_finite": false,
+      "count": 44,
+      "sum": 2.9898426228
+    },
+    {
+      "stored_judgment": "미판정",
+      "j_reason": "[9, 9, 9, 2, 9, 9, 9, 9]",
+      "geometry": "[9]",
+      "L_finite": false,
+      "count": 462,
+      "sum": 33.4613802381
+    },
+    {
+      "stored_judgment": "미판정",
+      "j_reason": "[9, 9, 9, 9, 9, 9, 9, 9]",
+      "geometry": "[9]",
+      "L_finite": false,
+      "count": 13,
+      "sum": 1.106656245
+    },
+    {
+      "stored_judgment": "미판정",
+      "j_reason": "[9, 9, 9, 9, 9, 9, 9, 9]",
+      "geometry": "[9]",
+      "L_finite": true,
+      "count": 19,
+      "sum": 1.3617017494
+    },
+    {
+      "stored_judgment": "사전정보 사용",
+      "j_reason": "[9, 9, 2, 0, 0, 0, 0, 0]",
+      "geometry": "[9]",
+      "L_finite": false,
+      "count": 3,
+      "sum": 0.2306302615
+    },
+    {
+      "stored_judgment": "사전정보 사용",
+      "j_reason": "[9, 9, 2, 2, 2, 2, 2, 2]",
+      "geometry": "[9]",
+      "L_finite": false,
+      "count": 254,
+      "sum": 21.5759217584
+    },
+    {
+      "stored_judgment": "영상 깊이 사용",
+      "j_reason": "[9, 9, 2, 1, 1, 1, 1, 1]",
+      "geometry": "[9]",
+      "L_finite": false,
+      "count": 125,
+      "sum": 8.5087066302
+    }
+  ],
+  "scientific_verdict": null
+}
