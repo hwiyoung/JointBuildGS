@@ -1,0 +1,166 @@
+{
+ "scientific_verdict": null,
+ "note": "코드 실행 차례의 마디. yes/no = 다음 마디 id 또는 판정 이름(일치 0, 사전정보 사용 1, 영상 깊이 사용 2, 제거 3, 결측 4, 미판정 9). 코드 = JointBuildGS-wt-mvsfilter1 HEAD 566eecaeba00a043498f75adb0067ccb0ebb5e9b. 앞단 셈(1~4)은 다음 마디로만 이어짐(yes=no).",
+ "methods": {
+  "본 방법": [
+   {
+    "id": 1,
+    "label": "MVS 원통 측정",
+    "detail": "R: LoD2 벽 0.125 m, 그 밖 0.075 m; H: 지붕 10 m, 벽 5 m; +H부터 0.05 m씩 0.3 m 층, 점 ≥20 % 인 첫 층 o = top−0.15; [o−1, o+1] 점 수 n, 평균 h_M (s1_geometry.py:51-55, cylinders.cpp:56-74)",
+    "yes": 2,
+    "no": 2
+   },
+   {
+    "id": 2,
+    "label": "정밀도와 한계",
+    "detail": "d = h_M − h_P; L = 1.96·(√(u_M²+σ_P²+σ_W²)+|r|) (s2_calibrate.py:65-69)",
+    "yes": 3,
+    "no": 3
+   },
+   {
+    "id": 3,
+    "label": "사전 정보 면·법선 있음?",
+    "detail": "h_P 유한 & 법선 유한 (jc2_judge.py:55)",
+    "yes": 4,
+    "no": "미판정 (9)"
+   },
+   {
+    "id": 4,
+    "label": "점 4개 미만?",
+    "detail": "0 ≤ n < 4 (jc2_judge.py:56)",
+    "yes": 5,
+    "no": 6
+   },
+   {
+    "id": 5,
+    "label": "시선 검사: 너머가 보임?",
+    "detail": "free = 지붕 free10 / 벽 free5; 지나쳐 본 영상 ≥2 & 과반 (s2_sight.py:40, core_r7.py:58)",
+    "yes": "제거 (3)",
+    "no": "결측 (4)"
+   },
+   {
+    "id": 6,
+    "label": "|d| ≤ L ?",
+    "detail": "geometry 0 (n ≥ 4, d·L 유한) (jc2_judge.py:47)",
+    "yes": "일치 (0)",
+    "no": 7
+   },
+   {
+    "id": 7,
+    "label": "|d| > L 또는 u_M 없음?",
+    "detail": "geometry 1, 또는 geometry 9 & u_M NaN (jc2_judge.py:57-58,64)",
+    "yes": 8,
+    "no": "미판정 (9)"
+   },
+   {
+    "id": 8,
+    "label": "광도 결과 지지?",
+    "detail": "s_P ≥ t > s_M, 덮어쓰기 7>6>4>5 뒤 code 0 (jc2_judge.py:34-39,66)",
+    "yes": "사전정보 사용 (1)",
+    "no": 9
+   },
+   {
+    "id": 9,
+    "label": "광도 결과 반박?",
+    "detail": "s_P < t ≤ s_M, code 1 (jc2_judge.py:34,67)",
+    "yes": "영상 깊이 사용 (2)",
+    "no": 10
+   },
+   {
+    "id": 10,
+    "label": "기본 판정",
+    "detail": "code 2–7·9 → ALS 사전정보 사용(1), LoD2 영상 깊이 사용(2) (jc2_judge.py:54,65)",
+    "yes": "ALS: 사전정보 사용 (1) / LoD2: 영상 깊이 사용 (2)",
+    "no": "ALS: 사전정보 사용 (1) / LoD2: 영상 깊이 사용 (2)"
+   }
+  ],
+  "11/22 새 구조": [
+   {
+    "id": 1,
+    "label": "화소마다 일치 영상 수 c",
+    "detail": "c = 1(자기) + 다른 학습 영상 중 |δ| ≤ 1 %, 되비춤 ≤ 2 px, 법선 ≤ 10° 인 영상 수 (a2_count.cpp:62-88)",
+    "yes": 2,
+    "no": 2
+   },
+   {
+    "id": 2,
+    "label": "점 걸러내기 A2",
+    "detail": "점(한 영상 한 화소)의 c ≥ 5 이면 남김 (mf12_A2.py:24, mf2_patch.py:18-26)",
+    "yes": 3,
+    "no": 3
+   },
+   {
+    "id": 3,
+    "label": "남은 점으로 원통 다시",
+    "detail": "같은 원통·바깥 첫 면 → n_A2 (mf2_patch.py:53-55)",
+    "yes": 4,
+    "no": 4
+   },
+   {
+    "id": 4,
+    "label": "지금 점군의 본 방법 판정",
+    "detail": "J.decide 그대로 → rb (mf4_judge.py:45-49)",
+    "yes": 5,
+    "no": 5
+   },
+   {
+    "id": 5,
+    "label": "차이가 유의?",
+    "detail": "sig = 사전 정보 면·법선 있음 & n ≥ 4 & |d| > L (mf4_judge.py:50)",
+    "yes": 6,
+    "no": "본 방법 판정 그대로 (rb)"
+   },
+   {
+    "id": 6,
+    "label": "A2 점 4개 미만이고 광도 반박 아님?",
+    "detail": "0 ≤ n_A2 < 4 & photo_code ≠ 1 (mf18_addendum3.py:26,43)",
+    "yes": "사전정보 사용 (1), combo_D_returned = 1",
+    "no": 7
+   },
+   {
+    "id": 7,
+    "label": "광도 결과 지지?",
+    "detail": "photo_code = 0 (본 방법 저장 값) (mf18_addendum3.py:43-44)",
+    "yes": "사전정보 사용 (1), combo_D_returned = 1",
+    "no": "영상 깊이 사용 (2), combo_D_returned = 0"
+   },
+   {
+    "id": 8,
+    "label": "덧붙임 4: 차이 크기 (판, 열 아님)",
+    "detail": "combo_D_returned 가 아닌 sig 패치 가운데 |d| ≥ T 면 영상 깊이 사용(2); |d| < T 면 처리 P 사전정보 사용(1) / 처리 W 일치(0). returned 이면서 |d| < T 도 처리 P 1 / 처리 W 0. T = 0.3–2 m, 2·3·5 L, 혼합 경계(mix_large = |d| ≥ Tmix) (mf19_addendum4.py:56-59,132)",
+    "yes": "큰 차이: 2 (returned 면 1)",
+    "no": "작은 차이: P 1 / W 0"
+   }
+  ]
+ },
+ "sources": [
+  "scripts/phd/main_judgecheck_v2/jc2_judge.py",
+  "scripts/phd/main_judgecheck_v2/s1_geometry.py",
+  "scripts/phd/main_judgecheck_v2/inherited/cylinders.cpp",
+  "scripts/phd/main_judgecheck_v2/inherited/cylinder.py",
+  "scripts/phd/main_judgecheck_v2/inherited/geometry.py",
+  "scripts/phd/main_judgecheck_v2/s1_ring.py",
+  "scripts/phd/main_judgecheck_v2/inherited/ring_kernel.py",
+  "scripts/phd/main_judgecheck_v2/inherited/u_core.py",
+  "scripts/phd/main_judgecheck_v2/s2_calibrate.py",
+  "scripts/phd/main_judgecheck_v2/s2_sight.py",
+  "scripts/phd/main_judgecheck_v2/inherited/main_target_v1__disappearance_core_r7.py",
+  "scripts/phd/main_judgecheck_v2/s2_photo_groups.py",
+  "scripts/phd/main_judgecheck_v2/s3_score.py",
+  "scripts/phd/main_judgecheck_v2/inherited/photo_score_reply2.py",
+  "scripts/phd/main_judgecheck_v2/s5_judge.py",
+  "configs/phd/main_judgecheck_v2/judgecheck_v2.json",
+  "configs/phd/main_judgecheck_v2/order_v2.txt",
+  "configs/phd/main_uncert_v1/uncert_v1.json",
+  "scripts/phd/main_mvsfilter_v1/a2_count.cpp",
+  "scripts/phd/main_mvsfilter_v1/mf12_A2.py",
+  "scripts/phd/main_mvsfilter_v1/mf2_patch.py",
+  "scripts/phd/main_mvsfilter_v1/mf4_judge.py",
+  "scripts/phd/main_mvsfilter_v1/mf18_addendum3.py",
+  "scripts/phd/main_mvsfilter_v1/mf19_addendum4.py",
+  "JointBuildGS-exp: configs/phd/main_judgeapply_v1/judgeapply_v1.json"
+ ],
+ "at": "2026-11-26T01:36:56+09:00",
+ "figure": "fig0_flow_current.png",
+ "source": "판단코드_옮겨적기.md (하위 에이전트가 코드를 읽어 적음; 줄 번호 넷을 직접 맞대 확인)"
+}
