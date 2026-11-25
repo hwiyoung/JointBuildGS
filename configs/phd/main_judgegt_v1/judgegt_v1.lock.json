@@ -1,7 +1,7 @@
 {
  "task_id": "PHD-MAIN-JUDGEGT-v1",
  "locked_at": "2026-11-25T21:04:15+09:00",
- "config_sha256": "092bccbbb010fd2a26f8813c313ac0c37e09f8c86b023f17161f27dddda06f03",
+ "config_sha256": "d0c82e5897a255736b46a17b6288881688b4153be7ed9935bc80639061ba5552",
  "inputs": {
   "tau": {
    "path": "/art/phase-payloads/phd/main_judgecheck_v2/PHD-MAIN-JUDGECHECK-v2/stage0/tau.json",
@@ -254,6 +254,11 @@
    "stage": "단계 1 정방향(151동)",
    "at": "2026-11-25T21:46:40+09:00",
    "config_sha256": "a77f19fa6a2833452086b4ae5998b6a18a1d0473cac255c61d5e253ace7eaf26"
+  },
+  {
+   "stage": "가2 정방향(덧붙임 4)",
+   "at": "2026-11-25T22:34:53+09:00",
+   "config_sha256": "d0c82e5897a255736b46a17b6288881688b4153be7ed9935bc80639061ba5552"
   }
  ],
  "changes": [
@@ -262,6 +267,13 @@
    "previous_config_sha256": "a77f19fa6a2833452086b4ae5998b6a18a1d0473cac255c61d5e253ace7eaf26",
    "config_sha256": "092bccbbb010fd2a26f8813c313ac0c37e09f8c86b023f17161f27dddda06f03",
    "why": "사용자 덧붙임 2(역방향 빼기)·3(세 실험 지역에서 멈추기): include_reverse=false, addenda 기록. 정방향 규칙·값은 그대로",
+   "after_results": true
+  },
+  {
+   "at": "2026-11-25T22:33:48+09:00",
+   "previous_config_sha256": "092bccbbb010fd2a26f8813c313ac0c37e09f8c86b023f17161f27dddda06f03",
+   "config_sha256": "d0c82e5897a255736b46a17b6288881688b4153be7ed9935bc80639061ba5552",
+   "why": "덧붙임 4: 영상 자리 규칙(가2, 패치 기둥 2τ 창)·뽑기 씨앗·뷰어 설정 더함. 묶음 가 규칙(ga)은 그대로 남김",
    "after_results": true
   }
  ],

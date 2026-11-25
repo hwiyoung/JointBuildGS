@@ -5,6 +5,8 @@
 //             square column: |t|<=H, |u|<=half, |v|<=half with u = t1 axis, v = n x t1 (t measured from c)
 //             -> out: n_total, n_band0 (|t|<=tau), n_bandM (|t-hM|<=tau; -1 if hM NaN), n_dens (|t|<=1), n_clusters,
 //                     then clusters 1..6 (count, median) in ascending t, clusters split where neighbour gap > gap   (5+12 = 17 doubles)
+//  mode img : core = c(3) n(3) t1(3) half H tau  -> out: n_col, best_n, h_I (median of the densest 2tau window, tie -> |median| smallest), tie flag
+//             (another max window with median > tau away), second_n, second_median (densest window wholly outside the best), best_lo, best_hi  (8 doubles)
 //  mode pca : core = c(3)                          -> out: n05, normal05(3), n10, normal10(3)   (points within 0.5 / 1.0 m)   (8 doubles)
 #include <algorithm>
 #include <array>
@@ -77,7 +79,7 @@ int main(int argc,char**argv){try{
  if(off+N*3*(f64?8:4)>size_t(st.st_size))throw std::runtime_error("point size");
  void*map=mmap(nullptr,st.st_size,PROT_READ,MAP_PRIVATE,fd,0);if(map==MAP_FAILED)throw std::runtime_error("mmap");
  Tree tree(static_cast<const char*>(map)+off,N,f64);std::cerr<<"KD_TREE "<<N<<" points\n";
- int cw=mode=="cyl"?8:(mode=="col"?13:(mode=="pca"?3:0)),ow=mode=="cyl"?2:(mode=="col"?17:8);if(!cw)throw std::runtime_error("mode");
+ int cw=mode=="cyl"?8:(mode=="col"?13:(mode=="img"?12:(mode=="pca"?3:0))),ow=mode=="cyl"?2:(mode=="col"?17:8);if(!cw)throw std::runtime_error("mode");
  std::vector<double> cores(nc*cw),out(nc*ow,NAN);
  {std::ifstream f(argv[5],std::ios::binary);f.read(reinterpret_cast<char*>(cores.data()),cores.size()*8);if(!f)throw std::runtime_error("short cores");}
  #pragma omp parallel for schedule(dynamic,256)
@@ -89,12 +91,22 @@ int main(int argc,char**argv){try{
   if(mode=="cyl"){double r=q[6],H=q[7];V u,v;perp(n,u,v);V axes[3]={n,u,v};double lim[3]={H,r,r};std::vector<double> t;
    if(N)tree.box(0,c,axes,lim,[&](const V&d,const V&){double tt=dot(d,n);if(std::abs(tt)>H)return;double r2=0;for(int k=0;k<3;k++){double e=d[k]-tt*n[k];r2+=e*e;}if(r2<=r*r)t.push_back(tt);});
    o[0]=t.size();o[1]=median(t);continue;}
-  V u={q[6],q[7],q[8]};double un=std::sqrt(dot(u,u));double half=q[9],H=q[10],tau=q[11],hM=q[12];
+  V u={q[6],q[7],q[8]};double un=std::sqrt(dot(u,u));double half=q[9],H=q[10],tau=q[11],hM=mode=="col"?q[12]:NAN;
   // make u exactly perpendicular to n
   double un_=dot(u,n);for(int k=0;k<3;k++)u[k]-=un_*n[k];un=std::sqrt(dot(u,u));if(!(un>1e-9)){V a,b;perp(n,a,b);u=a;}else for(double&x:u)x/=un;
   V v=cross(n,u);V axes[3]={n,u,v};double lim[3]={H,half,half};std::vector<double> t;
   if(N)tree.box(0,c,axes,lim,[&](const V&d,const V&){double tt=dot(d,n);if(std::abs(tt)>H)return;if(std::abs(dot(d,u))>half||std::abs(dot(d,v))>half)return;t.push_back(tt);});
-  std::sort(t.begin(),t.end());long b0=0,bm=0,dn=0;for(double x:t){if(std::abs(x)<=tau)b0++;if(std::isfinite(hM)&&std::abs(x-hM)<=tau)bm++;if(std::abs(x)<=1.)dn++;}
+  std::sort(t.begin(),t.end());
+  if(mode=="img"){   // addendum 4: densest window of width 2 tau over the column's image points
+   o[0]=t.size();o[1]=0;o[2]=NAN;o[3]=0;o[4]=0;o[5]=NAN;o[6]=NAN;o[7]=NAN;size_t T=t.size();if(!T)continue;
+   std::vector<size_t> J(T);size_t mx=0;for(size_t i=0,j=0;i<T;i++){if(j<i)j=i;while(j<T&&t[j]<=t[i]+2*tau)j++;J[i]=j;mx=std::max(mx,j-i);}
+   double best=NAN;size_t bi=0;for(size_t i=0;i<T;i++)if(J[i]-i==mx){std::vector<double> s(t.begin()+i,t.begin()+J[i]);double m=median(s);if(!std::isfinite(best)||std::abs(m)<std::abs(best)){best=m;bi=i;}}
+   int tie=0;for(size_t i=0;i<T;i++)if(J[i]-i==mx){std::vector<double> s(t.begin()+i,t.begin()+J[i]);if(std::abs(median(s)-best)>tau)tie=1;}
+   double lo=t[bi],hi=t[J[bi]-1];size_t sn=0;double sm=NAN;
+   // second: densest window lying wholly outside the best window [lo, hi]
+   for(size_t i=0;i<T;i++){if(!(t[i]>hi||t[J[i]-1]<lo))continue;size_t c=J[i]-i;if(c>sn){sn=c;std::vector<double> s(t.begin()+i,t.begin()+J[i]);sm=median(s);}}
+   o[1]=mx;o[2]=best;o[3]=tie;o[4]=sn;o[5]=sm;o[6]=lo;o[7]=hi;continue;}
+  long b0=0,bm=0,dn=0;for(double x:t){if(std::abs(x)<=tau)b0++;if(std::isfinite(hM)&&std::abs(x-hM)<=tau)bm++;if(std::abs(x)<=1.)dn++;}
   o[0]=t.size();o[1]=b0;o[2]=std::isfinite(hM)?bm:-1;o[3]=dn;
   // order 3.2: clusters split where the neighbour gap exceeds 4 tau
   double g=4.*tau;

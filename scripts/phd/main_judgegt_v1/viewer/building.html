@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><title>판단 GT 3차원 보기 (가2)</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden;font:12.5px/1.45 "Noto Sans CJK KR","Noto Sans KR","Malgun Gothic",sans-serif;color:#2c2c2a;background:#f6f5f1}
+#c{position:fixed;inset:0}
+.panel{position:fixed;background:#fffffff0;border:1px solid #d9d7cf;border-radius:8px;padding:9px 11px;box-shadow:0 1px 4px #0001}
+#left{left:10px;top:10px;width:262px;max-height:calc(100% - 20px);overflow:auto}#right{right:10px;top:10px;width:330px;display:none}
+h1{font-size:13.5px;margin:0 0 2px}h2{font-size:11.5px;margin:9px 0 3px;color:#6b6a64;font-weight:600}
+label{display:block;margin:1px 0;cursor:pointer}.lg label{display:flex;align-items:center;gap:5px}.lg span.s{width:12px;height:12px;border-radius:2px;flex:none}.lg .a{margin-left:auto;color:#6b6a64;font-size:11px}
+button{font:inherit;font-size:12px;border:1px solid #c9c7bf;background:#fff;border-radius:5px;padding:3px 8px;cursor:pointer;margin:2px 2px 0 0}button:hover{background:#efede6}
+#thin{left:10px;bottom:10px;font-size:11px;color:#5f5e5a}#scale{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);text-align:center;font-size:11px}
+#scale div{height:6px;border:2px solid #2c2c2a;border-top:0;margin:0 auto}
+table{border-collapse:collapse;width:100%;font-size:12px}td{padding:2px 4px;border-bottom:1px solid #eeece6}td:first-child{color:#6b6a64;white-space:nowrap}
+#sec{width:306px;height:250px;border:1px solid #e3e1da;margin-top:6px;background:#fff}
+</style></head><body>
+<div id="c"></div>
+<div class="panel" id="left"><h1 id="t1"></h1><div id="t2" style="color:#6b6a64;font-size:11px"></div>
+<h2>층</h2>
+<label><input type="checkbox" id="Ls" checked> <span id="Lsn">사전 정보 면</span></label>
+<label><input type="checkbox" id="Lp" checked> 판단 GT 패치(가2 정답 색)</label>
+<label><input type="checkbox" id="Lm"> 영상 깊이 점(초록, 처음엔 꺼 둠)</label>
+<label><input type="checkbox" id="Lg" checked> 드론 LiDAR(검정)</label>
+<label>점 크기 <input type="range" id="ps" min="1" max="6" value="2" style="width:120px;vertical-align:middle"></label>
+<h2>정답 (누르면 끄고 켜기 · 넓이 m²)</h2><div id="lg" class="lg"></div>
+<h2>보기</h2><button id="vTop">위에서</button><button id="vObl">비스듬히</button><button id="vHome">처음 화면</button>
+<div style="color:#6b6a64;font-size:11px;margin-top:6px">왼쪽 끌기 돌리기 · 오른쪽 끌기(Shift) 옮기기 · 휠 크기 · 패치 누르기 고르기</div></div>
+<div class="panel" id="right"><div id="rt" style="font-weight:600"></div><table id="info"></table><canvas id="sec" width="612" height="500"></canvas>
+<div style="font-size:10.5px;color:#6b6a64">단면: 패치 칸 옆 방향 ±3 m, 두께 ±0.125 m. 보라 띠 0 ± τ, 연두 띠 h_I ± τ, 점선 = 패치 칸. 화면의 점은 솎은 점이라 기둥 안 점 수는 위 표(저장값)를 봄.</div>
+<button id="close">닫기</button></div>
+<div class="panel" id="thin"></div><div id="scale"><div id="sb"></div><span id="sbt"></span></div>
+<script type="text/plain" id="threesrc">/*THREE*/</script>
+<script type="application/json" id="meta">/*META*/</script>
+<script type="application/json" id="polys">/*POLYS*/</script>
+<script type="application/json" id="patches">/*PATCHES*/</script>
+<script type="application/json" id="points">/*POINTS*/</script>
+<script type="module">
+const THREE=await import(URL.createObjectURL(new Blob([document.getElementById('threesrc').textContent],{type:'text/javascript'})));
+const $=id=>document.getElementById(id);const J=id=>JSON.parse($(id).textContent);
+const META=J('meta'),POLY=J('polys'),PAT=J('patches'),PTS=J('points');const COL=META.colours,ANS=META.answers;
+const dec=(s,T)=>{const b=atob(s);const u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return new T(u.buffer);};
+$('t1').textContent=`${META.site} · ${META.building.replace('DEBY_LOD2_','')} · ${META.prior_name}`;
+$('t2').textContent=`패치 ${META.patches.toLocaleString()}개(솎지 않음) · 정답 = 가2(영상 자리 h_I = 패치 기둥 안 가장 많이 몰린 2τ 창)`;
+$('Lsn').textContent=META.prior==='LoD2'?'사전 정보 면(LoD2 다각형, 회색)':'사전 정보(항공 LiDAR 원래 점, 회색)';
+const nm={mvs:'영상 깊이 점',gt:'드론 LiDAR',als:'항공 LiDAR'};
+$('thin').innerHTML='보이는 점 / 모든 점<br>'+Object.entries(META.info).map(([k,v])=>`${nm[k]}: ${v.shown.toLocaleString()} / ${v.total.toLocaleString()} (${(100*v.ratio).toFixed(1)} %)`).join('<br>')+'<br>패치: 모두';
+// three
+const R=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});R.setPixelRatio(devicePixelRatio);$('c').appendChild(R.domElement);
+const scene=new THREE.Scene();scene.background=new THREE.Color('#f6f5f1');
+const E=META.ext,ctr=new THREE.Vector3(...META.view.c);const span=Math.max(META.view.span,META.view.h*1.6);
+const cam=new THREE.OrthographicCamera(-1,1,1,-1,-1000,1000);cam.up.set(0,0,1);let tgt=ctr.clone(),az=-Math.PI/2.6,el=.62;
+function resize(){const w=innerWidth,h=innerHeight;R.setSize(w,h);const a=w/h,v=span*.55;cam.left=-v*a;cam.right=v*a;cam.top=v;cam.bottom=-v;cam.updateProjectionMatrix();scale();}
+function upd(){const d=200;cam.position.set(tgt.x+d*Math.cos(el)*Math.cos(az),tgt.y+d*Math.cos(el)*Math.sin(az),tgt.z+d*Math.sin(el));if(el>1.55)cam.up.set(-Math.cos(az),-Math.sin(az),0);else cam.up.set(0,0,1);cam.lookAt(tgt);scale();}
+function scale(){const mpp=(cam.top-cam.bottom)/cam.zoom/innerHeight;const want=120*mpp;const p=10**Math.floor(Math.log10(want));const n=[1,2,5,10].map(k=>k*p).filter(k=>k<=want).pop()||p;$('sb').style.width=(n/mpp)+'px';$('sbt').textContent=n+' m';}
+addEventListener('resize',resize);
+// 시점 조작
+let drag=null,moved=0;R.domElement.addEventListener('contextmenu',e=>e.preventDefault());
+R.domElement.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,pan:e.button===2||e.shiftKey};moved=0;});
+addEventListener('pointerup',e=>{if(drag&&moved<4&&e.target===R.domElement)pick(e);drag=null;});
+addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;moved+=Math.abs(dx)+Math.abs(dy);drag.x=e.clientX;drag.y=e.clientY;
+ if(drag.pan){const mpp=(cam.top-cam.bottom)/cam.zoom/innerHeight;const right=new THREE.Vector3().setFromMatrixColumn(cam.matrixWorld,0),up=new THREE.Vector3().setFromMatrixColumn(cam.matrixWorld,1);tgt.addScaledVector(right,-dx*mpp).addScaledVector(up,dy*mpp);}
+ else{az-=dx*.006;el=Math.max(-0.2,Math.min(1.5708,el+dy*.006));}upd();});
+R.domElement.addEventListener('wheel',e=>{e.preventDefault();cam.zoom=Math.max(.3,Math.min(200,cam.zoom*Math.exp(-e.deltaY*.0012)));cam.updateProjectionMatrix();scale();},{passive:false});
+// 사전 정보 면
+const groups={};
+if(META.prior==='LoD2'&&POLY&&POLY.v){const V=POLY.v,pos=[],lin=[];for(const t of POLY.f)for(const k of t)pos.push(...V[k]);for(const [a,b] of POLY.e)lin.push(...V[a],...V[b]);
+ const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));const gl=new THREE.BufferGeometry();gl.setAttribute('position',new THREE.Float32BufferAttribute(lin,3));
+ groups.s=new THREE.Group();groups.s.add(new THREE.Mesh(g,new THREE.MeshBasicMaterial({color:'#8c8a83',transparent:true,opacity:.28,side:THREE.DoubleSide,depthWrite:false})));groups.s.add(new THREE.LineSegments(gl,new THREE.LineBasicMaterial({color:'#4a4945'})));}
+const P3={};function pts(k,color){if(!PTS[k])return null;const q=dec(PTS[k],Uint16Array);const a=new Float32Array(q.length);for(let i=0;i<q.length;i++)a[i]=q[i]/65535*E[i%3];P3[k]=a;
+ const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(a,3));return new THREE.Points(g,new THREE.PointsMaterial({color,size:+$('ps').value,sizeAttenuation:false}));}
+if(META.prior==='ALS')groups.s=pts('als','#8a8a8a');groups.m=pts('mvs','#3B6D11');if(groups.m){groups.m.material.transparent=true;groups.m.material.opacity=.55;groups.m.material.depthWrite=false;}groups.g=pts('gt','#111111');
+// 패치
+const C=dec(PAT.c,Float32Array),Nn=dec(PAT.n,Int8Array),T1=dec(PAT.t1,Int8Array),A=dec(PAT.a,Uint8Array),HI=dec(PAT.hI,Float32Array),NB0=dec(PAT.nb0,Float32Array),NBI=dec(PAT.nbI,Float32Array),NC=dec(PAT.ncol,Float32Array),TAU=dec(PAT.tau,Float32Array),PLc=dec(PAT.pl,Uint8Array),K=dec(PAT.k,Uint8Array),ID=dec(PAT.id,Int32Array),TL=dec(PAT.tl,Uint8Array);const pid=i=>`${META.id_prefix}:${META.patch_tiles[TL[i]]}:${ID[i]}`;
+const NP=A.length;const hidden=new Set();let triOwner=new Int32Array(0);
+function basis(i){const n=new THREE.Vector3(Nn[3*i],Nn[3*i+1],Nn[3*i+2]).normalize();let u=new THREE.Vector3(T1[3*i],T1[3*i+1],T1[3*i+2]);u.addScaledVector(n,-u.dot(n));if(u.length()<1e-3)u=new THREE.Vector3(0,0,1).cross(n);u.normalize();return {n,u,v:new THREE.Vector3().crossVectors(n,u),s:new THREE.Vector3(C[3*i],C[3*i+1],C[3*i+2])};}
+function buildPatches(){if(groups.p)scene.remove(groups.p);const keep=[];for(let i=0;i<NP;i++)if(!hidden.has(A[i]))keep.push(i);const pos=new Float32Array(keep.length*18),col=new Float32Array(keep.length*18);triOwner=new Int32Array(keep.length*2);const h=.11;
+ keep.forEach((i,j)=>{const {u,v,s}=basis(i);const k=new THREE.Color(COL[ANS[A[i]]]);const cs=[[-h,-h],[h,-h],[h,h],[-h,h]].map(([a,b])=>s.clone().addScaledVector(u,a).addScaledVector(v,b));
+  [0,1,2,0,2,3].forEach((t,q)=>{pos.set([cs[t].x,cs[t].y,cs[t].z],j*18+q*3);col.set([k.r,k.g,k.b],j*18+q*3);});triOwner[2*j]=i;triOwner[2*j+1]=i;});
+ const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(pos,3));g.setAttribute('color',new THREE.BufferAttribute(col,3));
+ groups.p=new THREE.Mesh(g,new THREE.MeshBasicMaterial({vertexColors:true,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:-6,polygonOffsetUnits:-6}));scene.add(groups.p);vis();}
+for(const k of ['s','m','g'])if(groups[k])scene.add(groups[k]);
+$('lg').innerHTML=ANS.map((a,j)=>`<label data-j="${j}"><span class="s" style="background:${COL[a]}"></span>${a}<span class="a">${(META.area_by_answer[a]||0).toFixed(0)}</span></label>`).join('');
+$('lg').querySelectorAll('label').forEach(l=>l.onclick=e=>{e.preventDefault();const j=+l.dataset.j;hidden.has(j)?hidden.delete(j):hidden.add(j);l.style.opacity=hidden.has(j)?.35:1;buildPatches();});
+function vis(){const m={s:'Ls',p:'Lp',m:'Lm',g:'Lg'};for(const k in m)if(groups[k])groups[k].visible=$(m[k]).checked;if(selObj)selObj.visible=$('Lp').checked;}
+['Ls','Lp','Lm','Lg'].forEach(k=>$(k).onchange=vis);$('ps').oninput=()=>{for(const k of ['s','m','g'])if(groups[k]&&groups[k].material&&groups[k].isPoints)groups[k].material.size=+$('ps').value;};
+// 고르기
+const ray=new THREE.Raycaster();let selObj=null;
+function pick(e){if(!groups.p||!groups.p.visible)return;const m=new THREE.Vector2(e.clientX/innerWidth*2-1,-e.clientY/innerHeight*2+1);ray.setFromCamera(m,cam);const h=ray.intersectObject(groups.p);if(h.length)select(triOwner[h[0].faceIndex]);}
+function select(i){const {n,u,v,s}=basis(i);const H=K[i]===2?5:10,tau=TAU[i],hI=HI[i];if(selObj)scene.remove(selObj);selObj=new THREE.Group();
+ const add=(lo,hi,color,fill)=>{const g=new THREE.BoxGeometry(.25,.25,hi-lo);const mt=new THREE.Matrix4().makeBasis(u,v,n);mt.setPosition(s.clone().addScaledVector(n,(lo+hi)/2));const l=new THREE.LineSegments(new THREE.EdgesGeometry(g),new THREE.LineBasicMaterial({color}));l.applyMatrix4(mt);selObj.add(l);
+  if(fill){const f=new THREE.Mesh(g,new THREE.MeshBasicMaterial({color,transparent:true,opacity:.35,depthWrite:false}));f.applyMatrix4(mt);selObj.add(f);}};
+ add(-H,H,'#2c2c2a',false);add(-tau,tau,'#7F77DD',true);if(isFinite(hI))add(hI-tau,hI+tau,'#639922',true);scene.add(selObj);
+ const f=x=>isFinite(x)?(Number.isInteger(x)?x.toLocaleString():x.toFixed(3)):'–';$('right').style.display='block';
+ $('rt').innerHTML=`<span style="color:${COL[ANS[A[i]]]}">■</span> ${ANS[A[i]]}`;
+ const rows=[['패치 번호',pid(i)],['면 · 자리',(K[i]===2?'벽':'지붕')+' · '+META.places[PLc[i]]],['τ (m)',f(tau)],['h_I (m)',isFinite(hI)?f(hI):'영상 없음'],['기둥 안 참값 점',f(NC[i])],['0 ± τ 참값 점',f(NB0[i])],['h_I ± τ 참값 점',NBI[i]<0?'–':f(NBI[i])]];
+ $('info').innerHTML=rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('');section(i,{n,u,v,s},H,tau,hI);vis();}
+function section(i,b,H,tau,hI){const cv=$('sec'),x=cv.getContext('2d');const W=cv.width,Hh=cv.height;x.clearRect(0,0,W,Hh);
+ let lo=Math.min(0,isFinite(hI)?hI:0)-2,hi=Math.max(0,isFinite(hI)?hI:0)+2;lo=Math.max(lo,-H);hi=Math.min(hi,H);const X=a=>(a+3)/6*W,Y=t=>Hh-(t-lo)/(hi-lo)*Hh;
+ const band=(a,b2,c)=>{x.fillStyle=c;x.fillRect(X(-.125),Y(b2),X(.125)-X(-.125),Y(a)-Y(b2));};band(-tau,tau,'#AFA9EC99');if(isFinite(hI))band(hI-tau,hI+tau,'#97C45999');
+ x.setLineDash([5,4]);x.strokeStyle='#5f5e5a';for(const a of [-.125,.125]){x.beginPath();x.moveTo(X(a),0);x.lineTo(X(a),Hh);x.stroke();}x.setLineDash([]);
+ const plot=(arr,c,r)=>{if(!arr)return;x.fillStyle=c;for(let k=0;k<arr.length;k+=3){const dx=arr[k]-b.s.x,dy=arr[k+1]-b.s.y,dz=arr[k+2]-b.s.z;const vv=dx*b.v.x+dy*b.v.y+dz*b.v.z;if(Math.abs(vv)>.125)continue;
+  const uu=dx*b.u.x+dy*b.u.y+dz*b.u.z;if(Math.abs(uu)>3)continue;const t=dx*b.n.x+dy*b.n.y+dz*b.n.z;if(t<lo||t>hi)continue;x.fillRect(X(uu)-r/2,Y(t)-r/2,r,r);}};
+ if(META.prior==='ALS')plot(P3.als,'#534AB7',3);else plot(C,'#534AB7',4);plot(P3.mvs,'#3B6D11aa',2.2);plot(P3.gt,'#111',2.6);
+ x.fillStyle='#2c2c2a';x.font='20px sans-serif';for(let t=Math.ceil(lo);t<=hi;t++){x.fillText(t+' m',4,Y(t)+6);}x.fillText('−3 m',4,Hh-6);x.fillText('+3 m',W-56,Hh-6);}
+$('close').onclick=()=>{$('right').style.display='none';if(selObj){scene.remove(selObj);selObj=null;}};
+function fit(){const a=new THREE.Vector3(...META.view.bl),b=new THREE.Vector3(...META.view.bh);cam.zoom=1;cam.updateProjectionMatrix();upd();cam.updateMatrixWorld();
+ const r=new THREE.Vector3().setFromMatrixColumn(cam.matrixWorld,0),u=new THREE.Vector3().setFromMatrixColumn(cam.matrixWorld,1);let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;
+ for(const X of [a.x,b.x])for(const Y of [a.y,b.y])for(const Z of [a.z,b.z]){const p=new THREE.Vector3(X,Y,Z);const px=p.dot(r),py=p.dot(u);x0=Math.min(x0,px);x1=Math.max(x1,px);y0=Math.min(y0,py);y1=Math.max(y1,py);}
+ tgt=ctr.clone().addScaledVector(r,(x0+x1)/2-ctr.dot(r)).addScaledVector(u,(y0+y1)/2-ctr.dot(u));
+ const W=cam.right-cam.left,H=cam.top-cam.bottom;cam.zoom=Math.min(W*.8/(x1-x0),H*.86/(y1-y0));cam.updateProjectionMatrix();upd();}
+function home(){tgt=ctr.clone();az=-Math.PI/2.6;el=.62;fit();}
+$('vTop').onclick=()=>{el=1.5708;fit();};$('vObl').onclick=()=>{el=.62;fit();};$('vHome').onclick=home;
+buildPatches();resize();home();(function loop(){R.render(scene,cam);requestAnimationFrame(loop);})();
+const q=new URLSearchParams(location.hash.slice(1));if(q.get('view')==='top'){el=1.5708;fit();}if(q.get('mvs')==='1'){$('Lm').checked=true;vis();}if(q.get('pick')){const want=q.get('pick');let j=-1;for(let i=0;i<NP;i++)if(pid(i)===want){j=i;break;}if(j>=0)select(j);}
+window.__ready=true;
+</script></body></html>

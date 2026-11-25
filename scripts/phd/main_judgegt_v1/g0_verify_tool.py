@@ -5,7 +5,7 @@ def main():
     p = O/'tmp/verify_pts.npy'; p.parent.mkdir(exist_ok=True, parents=True); np.save(p, X); n = 40
     c = rng.uniform(-.5, .5, (n, 3)); nr = rng.normal(size=(n, 3)); nr /= np.linalg.norm(nr, axis=1)[:, None]; nr[:3] = np.eye(3); t1 = rng.normal(size=(n, 3))
     r = rng.choice([.075, .125, .5], n); H = rng.choice([5., 10.], n); tau = rng.uniform(.05, .6, n); hM = rng.uniform(-2, 2, n); hM[::7] = np.nan
-    cy = run('cyl', p, np.c_[c, nr, r, H], 'v_cyl'); co = run('col', p, np.c_[c, nr, t1, np.full(n, .125), H, tau, hM], 'v_col'); pc = run('pca', p, c, 'v_pca'); bad = 0
+    cy = run('cyl', p, np.c_[c, nr, r, H], 'v_cyl'); co = run('col', p, np.c_[c, nr, t1, np.full(n, .125), H, tau, hM], 'v_col'); pc = run('pca', p, c, 'v_pca'); im = run('img', p, np.c_[c, nr, t1, np.full(n, .125), H, tau], 'v_img'); bad = 0
     for i in range(n):
         d = X - c[i]; t = d@nr[i]; rr = np.linalg.norm(d - t[:, None]*nr[i], axis=1); s = t[(np.abs(t) <= H[i]) & (rr <= r[i])]
         bad += int(len(s) != cy[i, 0]) + int(len(s) and not np.isclose(np.median(s), cy[i, 1]))
@@ -13,6 +13,11 @@ def main():
         exp = [len(s), (np.abs(s) <= tau[i]).sum(), (np.abs(s - hM[i]) <= tau[i]).sum() if np.isfinite(hM[i]) else -1, (np.abs(s) <= 1).sum()]
         cuts = np.flatnonzero(np.diff(s) > 4*tau[i]) + 1; seg = np.split(s, cuts) if len(s) else []; exp.append(len(seg))
         bad += int(not np.allclose(co[i, :5], exp)); bad += sum(int(not (co[i, 5+2*k] == len(g) and np.isclose(co[i, 6+2*k], np.median(g)))) for k, g in enumerate(seg[:6]))
+        if len(s):   # img: densest 2 tau window
+            J = np.searchsorted(s, s + 2*tau[i], 'right'); cnt = J - np.arange(len(s)); mx = cnt.max(); meds = np.array([np.median(s[k:J[k]]) for k in range(len(s))])
+            cand = np.flatnonzero(cnt == mx); b = cand[np.argmin(np.abs(meds[cand]))]; lo, hi = s[b], s[J[b]-1]
+            out = np.flatnonzero((s > hi) | (s[J - 1] < lo)); sn = cnt[out].max() if len(out) else 0
+            bad += int(im[i, 0] != len(s) or im[i, 1] != mx or not np.isclose(im[i, 2], meds[b]) or im[i, 4] != sn or int(np.any(np.abs(meds[cand] - meds[b]) > tau[i])) != im[i, 3])
         q = np.linalg.norm(X - c[i], axis=1)
         for j, rad in enumerate([.5, 1.]):
             Q = X[q <= rad]; bad += int(len(Q) != pc[i, 4*j])

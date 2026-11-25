@@ -9,7 +9,7 @@ import matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt; from 
 from matplotlib.patches import Rectangle, Patch
 for f in ['/fonts/NotoSansCJK-Regular.ttc', '/fonts/NotoSansCJK-Bold.ttc']: fm.fontManager.addfont(f)
 plt.rcParams.update({'font.family': 'Noto Sans CJK JP', 'font.size': 7, 'axes.titlesize': 7.5, 'axes.linewidth': .5})
-REVON = True; FD = D/'figures'; SUB = '가' if STAGE == 'ga' else '151동'; COL = None; SRC = {}
+REVON = True; HLAB = 'h_M'; FD = D/'figures'; SUB = '가' if STAGE == 'ga' else '151동'; COL = None; SRC = {}
 SITE_LIST = ['B0', 'B173 주변', 'R1']
 def fsave(fig, name, meta):
     FD.mkdir(parents=True, exist_ok=True); fig.savefig(FD/f'{name}.png', dpi=300, bbox_inches='tight', pad_inches=.08); plt.close(fig)
@@ -120,6 +120,10 @@ def draw(ax, e, Sp, extra=''):
     a, t = loc(e['gt']); ax.scatter(a, t, s=1.0, color='k', lw=0, zorder=5, label='드론 LiDAR')
     for (ca, cm) in e['clusters']: ax.plot([.18, .5], [cm, cm], color='#A32D2D', lw=.8, zorder=6); ax.text(.55, cm, f'{int(ca)}', fontsize=5, color='#A32D2D', va='center')
     ax.set_xlim(-W, W); ax.set_ylim(lo, hi); ax.tick_params(labelsize=5, length=2, width=.4)
+    if e.get('blind'):   # 덧붙임 4 점검: 정답 이름·색·점 수를 칸에 적지 않음
+        for sp in ax.spines.values(): sp.set_color('#5F5E5A'); sp.set_linewidth(.8)
+        ax.set_title(e['label'], fontsize=6.5, fontweight='bold', color='#2C2C2A')
+        ax.text(0, -.13, f"{e['building'].replace('DEBY_LOD2_', '')} · {e['place']} · {e['surface']} · τ {e['tau']:.2f}", transform=ax.transAxes, fontsize=4.6, va='top'); return
     for sp in ax.spines.values(): sp.set_color(COL[e['answer']]); sp.set_linewidth(1.6)
     hm = f"{hM:+.2f}" if np.isfinite(hM) else '없음'; nbM = f"{int(e['nbM'])}" if np.isfinite(e['nbM']) and e['nbM'] >= 0 else '-'
     ax.set_title(e['answer'] + extra, color=COL[e['answer']] if e['answer'] != '정답 없음' else '#5F5E5A', fontweight='bold', fontsize=6.5)
@@ -134,7 +138,7 @@ def grid(exs, nrow, ncol, title, name, meta, extras=None):
     for k, ax in enumerate(axs.flat):
         if k >= len(exs) or exs[k] is None: ax.axis('off'); continue
         e = exs[k]; draw(ax, e, dict(prior=e['prior_pts']), extras[k] if extras else '')
-    hd = [Patch(color='k', label='드론 LiDAR'), Patch(color='#534AB7', label='사전 정보 면'), Patch(color='#3B6D11', label='영상 깊이 점'), Patch(color='#AFA9EC', label='0 ± τ'), Patch(color='#97C459', label='h_M ± τ')]
+    hd = [Patch(color='k', label='드론 LiDAR'), Patch(color='#534AB7', label='사전 정보 면'), Patch(color='#3B6D11', label='영상 깊이 점'), Patch(color='#AFA9EC', label='0 ± τ'), Patch(color='#97C459', label=HLAB + ' ± τ')]
     fig.legend(handles=hd, loc='lower center', ncol=5, fontsize=5.5, frameon=False, bbox_to_anchor=(.5, -.03)); fig.suptitle(title, fontsize=8.5)
     fig.supxlabel('패치 칸 옆 방향 (m)', fontsize=6); fig.supylabel('법선 방향 거리 (m, 사전 정보 = 0)', fontsize=6)
     meta['examples'] = [None if e is None else {k: (v if not isinstance(v, np.ndarray) else v.tolist()) for k, v in e.items() if k not in ['gt', 'mvs', 'prior_pts']} for e in exs]; fsave(fig, name, meta)

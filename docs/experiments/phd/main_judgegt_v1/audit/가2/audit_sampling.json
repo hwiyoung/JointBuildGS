@@ -1,0 +1,159 @@
+{
+ "at": "2026-11-25T23:15:14+09:00",
+ "seed": 20261126,
+ "rule": {
+  "seed": 20261126,
+  "per_answer": 20,
+  "max_per_building": 5,
+  "roof_wall_split": "넓이 비율대로(반올림, 합 20), 모자라면 있는 만큼",
+  "page": "4 x 5 = 20칸, 사전 정보마다 정답 종류마다 한 쪽, 쪽 안 차례 섞음",
+  "label": "L-<정답 약칭>-NN 대신 정답을 감춘 번호 L-NNN / A-NNN 를 칸 위에 적음"
+ },
+ "counts": [
+  {
+   "prior": "LoD2",
+   "answer": "두 자료",
+   "surface": "지붕",
+   "wanted": 11,
+   "got": 11,
+   "candidates": 224709
+  },
+  {
+   "prior": "LoD2",
+   "answer": "두 자료",
+   "surface": "벽",
+   "wanted": 9,
+   "got": 9,
+   "candidates": 169526
+  },
+  {
+   "prior": "LoD2",
+   "answer": "영상",
+   "surface": "지붕",
+   "wanted": 11,
+   "got": 11,
+   "candidates": 52545
+  },
+  {
+   "prior": "LoD2",
+   "answer": "영상",
+   "surface": "벽",
+   "wanted": 9,
+   "got": 9,
+   "candidates": 39943
+  },
+  {
+   "prior": "LoD2",
+   "answer": "사전 정보(영상 틀림)",
+   "surface": "지붕",
+   "wanted": 9,
+   "got": 9,
+   "candidates": 8338
+  },
+  {
+   "prior": "LoD2",
+   "answer": "사전 정보(영상 틀림)",
+   "surface": "벽",
+   "wanted": 11,
+   "got": 11,
+   "candidates": 10034
+  },
+  {
+   "prior": "LoD2",
+   "answer": "사전 정보(영상 없음)",
+   "surface": "지붕",
+   "wanted": 0,
+   "got": 0,
+   "candidates": 57
+  },
+  {
+   "prior": "LoD2",
+   "answer": "사전 정보(영상 없음)",
+   "surface": "벽",
+   "wanted": 20,
+   "got": 20,
+   "candidates": 4346
+  },
+  {
+   "prior": "LoD2",
+   "answer": "둘 다 틀림",
+   "surface": "지붕",
+   "wanted": 6,
+   "got": 6,
+   "candidates": 4778
+  },
+  {
+   "prior": "LoD2",
+   "answer": "둘 다 틀림",
+   "surface": "벽",
+   "wanted": 14,
+   "got": 14,
+   "candidates": 12169
+  },
+  {
+   "prior": "LoD2",
+   "answer": "정답 없음",
+   "surface": "지붕",
+   "wanted": 0,
+   "got": 0,
+   "candidates": 4611
+  },
+  {
+   "prior": "LoD2",
+   "answer": "정답 없음",
+   "surface": "벽",
+   "wanted": 20,
+   "got": 20,
+   "candidates": 345499
+  },
+  {
+   "prior": "항공 LiDAR",
+   "answer": "두 자료",
+   "surface": "지붕",
+   "wanted": 20,
+   "got": 20,
+   "candidates": 218382
+  },
+  {
+   "prior": "항공 LiDAR",
+   "answer": "영상",
+   "surface": "지붕",
+   "wanted": 20,
+   "got": 20,
+   "candidates": 18855
+  },
+  {
+   "prior": "항공 LiDAR",
+   "answer": "사전 정보(영상 틀림)",
+   "surface": "지붕",
+   "wanted": 20,
+   "got": 20,
+   "candidates": 8182
+  },
+  {
+   "prior": "항공 LiDAR",
+   "answer": "사전 정보(영상 없음)",
+   "surface": "지붕",
+   "wanted": 20,
+   "got": 19,
+   "candidates": 115
+  },
+  {
+   "prior": "항공 LiDAR",
+   "answer": "둘 다 틀림",
+   "surface": "지붕",
+   "wanted": 20,
+   "got": 20,
+   "candidates": 4313
+  },
+  {
+   "prior": "항공 LiDAR",
+   "answer": "정답 없음",
+   "surface": "지붕",
+   "wanted": 20,
+   "got": 20,
+   "candidates": 2256
+  }
+ ],
+ "scientific_verdict": null
+}

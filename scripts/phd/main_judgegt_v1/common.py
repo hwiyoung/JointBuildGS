@@ -51,7 +51,7 @@ def inp(k, **kw): return Path(cfg()['inputs'][k].format(**kw))
 WI = PH/'main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal'
 def buildings(stage=None):
     rows = json.loads(inp('buildings').read_text())['rows']; stage = stage or STAGE
-    if stage == 'ga': return {r['building']: r for r in rows if r['in_scope'] and r['group'] == 'experiment'}
+    if stage in ('ga', 'ga2'): return {r['building']: r for r in rows if r['in_scope'] and r['group'] == 'experiment'}
     return {r['building']: r for r in rows if r['in_scope']}
 def tau_table(): return json.loads(inp('tau').read_text())['values']
 def tile_core(tile):
@@ -66,7 +66,7 @@ def build():
     dump(BIN.parent/'gtcols.build.json', dict(at=now(), source_sha256=sha(src), binary_sha256=sha(BIN), compiler=subprocess.check_output(['g++', '--version'], text=True).splitlines()[0]))
 def run(mode, points, cores, tag):
     """points: .npy (N,3) f4/f8; cores: (nc, k) float64 -> (nc, ow) float64"""
-    ow = {'cyl': 2, 'col': 17, 'pca': 8}[mode]; tmp = O/'tmp'; tmp.mkdir(exist_ok=True, parents=True)
+    ow = {'cyl': 2, 'col': 17, 'img': 8, 'pca': 8}[mode]; tmp = O/'tmp'; tmp.mkdir(exist_ok=True, parents=True)
     cf = tmp/f'{tag}.cores.bin'; of = tmp/f'{tag}.out.bin'; np.ascontiguousarray(cores, '<f8').tofile(cf)
     with Path(points).open('rb') as f:
         v = np.lib.format.read_magic(f); shape, order, dtype = np.lib.format._read_array_header(f, v); off = f.tell()
