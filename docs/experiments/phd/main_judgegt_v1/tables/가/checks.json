@@ -1,0 +1,46 @@
+{
+ "at": "2026-11-25T21:51:41+09:00",
+ "stage": "ga",
+ "scientific_verdict": null,
+ "LoD2_cyl_check": {
+  "sample": 1000,
+  "equal": 1000,
+  "all_patches": 876555,
+  "all_equal": 876555
+ },
+ "LoD2_area": {
+  "forward": 54784.62834436015,
+  "prior_patches": 54784.62834436015
+ },
+ "ALS_cyl_check": {
+  "sample": 1000,
+  "equal": 1000,
+  "all_patches": 252368,
+  "all_equal": 252368
+ },
+ "ALS_area": {
+  "forward": 16516.663026671664,
+  "prior_patches": 16516.663026671664
+ },
+ "both_check": [
+  {
+   "prior": "LoD2",
+   "new_both_pct": 44.099733319605804,
+   "new_both_pct_of_with_answer": 73.42799342761352,
+   "old_both_patch_pct": 41.39893011126877,
+   "old_both_patch_pct_of_with_case": 77.98003674614004,
+   "old_both_point_pct": 76.3645490193801,
+   "old_points": 2755196
+  },
+  {
+   "prior": "항공 LiDAR",
+   "new_both_pct": 83.65161879732285,
+   "new_both_pct_of_with_answer": 84.56580248680054,
+   "old_both_patch_pct": 80.80186041336925,
+   "old_both_patch_pct_of_with_case": 85.25819958741366,
+   "old_both_point_pct": 82.72694040540011,
+   "old_points": 1507301
+  }
+ ],
+ "seconds": 132.35312119615264
+}

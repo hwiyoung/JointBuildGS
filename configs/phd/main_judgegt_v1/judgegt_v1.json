@@ -1,0 +1,140 @@
+{
+ "task_id": "PHD-MAIN-JUDGEGT-v1",
+ "created_at": "2026-11-25T20:50:00+09:00",
+ "scientific_verdict": null,
+ "order": "판단GT 발주문 v2 + 덧붙임 1 (세 실험 지역 먼저, 묶음 가)",
+ "no_training": true,
+ "frame": {
+  "crs": "EPSG:25832",
+  "world_shift_xyz_m": [
+   690953,
+   5336071,
+   604
+  ],
+  "sign": "patch outward normal positive (patch centre = 0; ALS: judgment prior height = 0)"
+ },
+ "inputs": {
+  "patches": "/art/phase-payloads/phd/main_judgeprobe_v1/PHD-MAIN-JUDGEPROBE-v1/patch_{prior}.npz",
+  "patch_table": "/art/phase-payloads/phd/main_mvsfilter_v1/PHD-MAIN-MVSFILTER-v1/judge/patches4_{prior}.csv.gz",
+  "patch_table_note": "= MVSFILTER 묶음 나5 payload/patches_{prior}.csv.gz (same sha256)",
+  "image_points": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/{tile}/mvs_a_xyz.npy",
+  "truth_points": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/{tile}/gt_xyz.npy",
+  "tau": "/art/phase-payloads/phd/main_judgecheck_v2/PHD-MAIN-JUDGECHECK-v2/stage0/tau.json",
+  "tau_release": "/repo/docs/experiments/phd/main_release_v1/tables/stage0/tau_values.csv",
+  "buildings": "/art/phase-payloads/phd/main_judgecheck_v2/PHD-MAIN-JUDGECHECK-v2/stage0/buildings.json",
+  "cameras": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/mvs/full/sparse/images.bin",
+  "image_split": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/image_split.json"
+ },
+ "scope": {
+  "ga": "buildings of buildings.json with group = experiment (experiment_sites B0_b10, B173nb_b10, R1rep_b10): 10 buildings",
+  "full": "buildings.json in_scope = true: 151 buildings",
+  "priors": [
+   "LoD2",
+   "ALS"
+  ]
+ },
+ "tile": {
+  "size_m": 100,
+  "buffer_m": 10,
+  "rule": "each tile point file covers its 100 m tile + 10 m buffer; patches are read per tile from the tile's own point files (as the judgment did)"
+ },
+ "forward": {
+  "cell_half_m": 0.125,
+  "cell_axes": "tangent1 of the patch and normal x tangent1",
+  "column_half_length_m": {
+   "roof": 10,
+   "wall": 5
+  },
+  "image_cylinder_radius_m": {
+   "LoD2_roof": 0.075,
+   "LoD2_wall": 0.125,
+   "ALS_roof": 0.075
+  },
+  "image_cylinder_half_length_m": {
+   "roof": 10,
+   "wall": 5
+  },
+  "image_cylinder_axis": "patch centre and normal (judgment cylinder), h_M = median of all normal distances in the cylinder minus prior height (ALS); no outer-face rule",
+  "min_points": 4,
+  "layer_gap_tau_multiple": 4,
+  "density_band_m": 1.0,
+  "answers": [
+   "두 자료",
+   "영상",
+   "사전 정보(영상 틀림)",
+   "사전 정보(영상 없음)",
+   "둘 다 틀림",
+   "정답 없음"
+  ],
+  "no_prior_height": "ALS patch without judgment prior height or patch without normal: '사전 정보 높이 없음' (counted, not an answer)"
+ },
+ "reverse": {
+  "grid_m": 0.25,
+  "grid_rule": "3D grid on image points; patch centre = the image point nearest the mean of the points in the cell",
+  "evaluation_range": "image points of the tile's own 100 m tile (no buffer) with XY within 1.0 m of a LoD2 patch centre of the scope buildings",
+  "evaluation_range_xy_m": 1.0,
+  "normal_radius_m": [
+   0.5,
+   1.0
+  ],
+  "normal_min_points": 10,
+  "normal_points": "all image points of the tile file",
+  "orientation": "towards the nearest training camera centre (images.bin, image_split train)",
+  "roof_max_angle_from_vertical_deg": 45,
+  "cell_half_m": 0.125,
+  "column_half_length_m": {
+   "roof": 10,
+   "wall": 5
+  },
+  "nearest_prior_patch": "nearest prior surface point (patch centre + prior height x normal) among the patches of all 151 buildings of that prior; lateral and normal parts in the frame of that prior patch",
+  "tau": "region, prior and roof/wall of the nearest prior patch",
+  "answers": [
+   "영상 사용(새 면)",
+   "버림",
+   "정답 없음"
+  ],
+  "patch_area_m2": 0.0625
+ },
+ "tau_rule": "JUDGECHECK-v2 stage0 tau.json values[region][prior_kind]; ALS uses ALS_roof; equal to RELEASE-v1 tau_values.csv (multiple 1) for B0 (B0), B173nb (R2), R1rep (R1)",
+ "compare": {
+  "judgecheck_v2_method": "JUDGEPROBE patch_{prior}.npz j_region[:, VARIANTS.index('method') = 4], codes 0 일치 1 사전정보 사용 2 영상 깊이 사용 3 제거 4 결측 9 미판정",
+  "new_structure_1122": "patch table combo_D_judgment",
+  "correct": {
+   "두 자료": [
+    "일치"
+   ],
+   "영상": [
+    "영상 깊이 사용"
+   ],
+   "사전 정보(영상 틀림)": [
+    "사전정보 사용"
+   ],
+   "사전 정보(영상 없음)": [
+    "결측",
+    "사전정보 사용"
+   ]
+  },
+  "old_truth": "patch table initial_state"
+ },
+ "figure_map_display": {
+  "reverse_drawn_if": "nearest prior patch lateral > 0.125 m or normal > 10 m"
+ },
+ "colours": {
+  "두 자료": "#1D9E75",
+  "영상": "#378ADD",
+  "사전 정보(영상 틀림)": "#D85A30",
+  "사전 정보(영상 없음)": "#EF9F27",
+  "둘 다 틀림": "#A32D2D",
+  "정답 없음": "#B4B2A9",
+  "영상 사용(새 면)": "#7F77DD",
+  "버림": "#444441",
+  "사전 정보 높이 없음": "#E7E5DF"
+ },
+ "seed": 20261125,
+ "include_reverse": false,
+ "addenda": {
+  "1": "세 실험 지역 먼저, 묶음 가",
+  "2": "역방향 빼기: 역방향 정답을 표·그림·보고에서 뺌. 이미 계산한 work/ga/reverse_*.npz·reverse_*_ga.csv.gz 는 PH에 남기고 묶음에 넣지 않음 (덧붙임 본문은 받지 못함, 제목대로 따름)",
+  "3": "세 실험 지역에서 멈춤: 151동 계산 안 함 (덧붙임 본문은 받지 못함, 제목대로 따름)"
+ }
+}

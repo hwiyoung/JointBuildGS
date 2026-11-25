@@ -1,0 +1,269 @@
+{
+ "task_id": "PHD-MAIN-JUDGEGT-v1",
+ "locked_at": "2026-11-25T21:04:15+09:00",
+ "config_sha256": "092bccbbb010fd2a26f8813c313ac0c37e09f8c86b023f17161f27dddda06f03",
+ "inputs": {
+  "tau": {
+   "path": "/art/phase-payloads/phd/main_judgecheck_v2/PHD-MAIN-JUDGECHECK-v2/stage0/tau.json",
+   "sha256": "290746bc937461a2302d5897e57554779391b2326d72c8025310ee55c802aca3"
+  },
+  "buildings": {
+   "path": "/art/phase-payloads/phd/main_judgecheck_v2/PHD-MAIN-JUDGECHECK-v2/stage0/buildings.json",
+   "sha256": "0b70c4508768349600f45cb86e2fb40c1a6523d173cba2c9666bf66ab99d26b9"
+  },
+  "cameras": {
+   "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/mvs/full/sparse/images.bin",
+   "sha256": "54203353363a6e72edb1fc8af5eb610ab4b50d7d76408f85f3d54bdc6f57ea0c"
+  },
+  "image_split": {
+   "path": "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/image_split.json",
+   "sha256": "b3d4e8a05345c386ee05f0a1bcdada8938521615c9cdb87efc68369369b64240"
+  },
+  "tau_release": {
+   "path": "/repo/docs/experiments/phd/main_release_v1/tables/stage0/tau_values.csv",
+   "sha256": "792e5bd00870d415b9676757580eb9958967f4fef4d5c1b237be1242bad0c720"
+  },
+  "patches_LoD2": {
+   "path": "/art/phase-payloads/phd/main_judgeprobe_v1/PHD-MAIN-JUDGEPROBE-v1/patch_LoD2.npz",
+   "sha256": "ab7309a3c72c77eea072b4fd102d86cd9caaa7cecaef1f202ead8aed38781f6b"
+  },
+  "patch_table_LoD2": {
+   "path": "/art/phase-payloads/phd/main_mvsfilter_v1/PHD-MAIN-MVSFILTER-v1/judge/patches4_LoD2.csv.gz",
+   "sha256": "3ad616dc813046942b0ce236badad8eba5005379284fdc54171e8784d7bf56be"
+  },
+  "patches_ALS": {
+   "path": "/art/phase-payloads/phd/main_judgeprobe_v1/PHD-MAIN-JUDGEPROBE-v1/patch_ALS.npz",
+   "sha256": "481e06744cbef7739e8be5f2dbde8ed79e958cce46d38290b0d46dc697b1f7d3"
+  },
+  "patch_table_ALS": {
+   "path": "/art/phase-payloads/phd/main_mvsfilter_v1/PHD-MAIN-MVSFILTER-v1/judge/patches4_ALS.csv.gz",
+   "sha256": "1760f9041bed2522e95b78b26a51a7ea39fd429b49f6811f0c182392f7143848"
+  }
+ },
+ "point_files": {
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6907_53359/gt_xyz.npy": {
+   "bytes": 12240872,
+   "mtime": 1792770122.394792
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6907_53359/mvs_a_xyz.npy": {
+   "bytes": 22422344,
+   "mtime": 1792780586.299539
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6907_53360/gt_xyz.npy": {
+   "bytes": 4043072,
+   "mtime": 1792770122.4087927
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6907_53360/mvs_a_xyz.npy": {
+   "bytes": 17108672,
+   "mtime": 1792780587.5586104
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6908_53358/gt_xyz.npy": {
+   "bytes": 8045816,
+   "mtime": 1792770122.549801
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6908_53358/mvs_a_xyz.npy": {
+   "bytes": 44680340,
+   "mtime": 1792780589.4197161
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6908_53359/gt_xyz.npy": {
+   "bytes": 264823352,
+   "mtime": 1792770123.4548547
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6908_53359/mvs_a_xyz.npy": {
+   "bytes": 945772448,
+   "mtime": 1792780625.3277533
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6908_53360/gt_xyz.npy": {
+   "bytes": 169755488,
+   "mtime": 1792770124.079892
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6908_53360/mvs_a_xyz.npy": {
+   "bytes": 930401492,
+   "mtime": 1792780671.6023798
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6908_53361/gt_xyz.npy": {
+   "bytes": 129533120,
+   "mtime": 1792770124.4909163
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6908_53361/mvs_a_xyz.npy": {
+   "bytes": 473407412,
+   "mtime": 1792780697.9408755
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6908_53362/gt_xyz.npy": {
+   "bytes": 63453968,
+   "mtime": 1792770124.6859279
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6908_53362/mvs_a_xyz.npy": {
+   "bytes": 46579064,
+   "mtime": 1792780704.7892644
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6909_53358/gt_xyz.npy": {
+   "bytes": 115894280,
+   "mtime": 1792770125.1029525
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6909_53358/mvs_a_xyz.npy": {
+   "bytes": 154468364,
+   "mtime": 1792780710.909612
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6909_53359/gt_xyz.npy": {
+   "bytes": 429121208,
+   "mtime": 1792770126.4880345
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6909_53359/mvs_a_xyz.npy": {
+   "bytes": 1004511572,
+   "mtime": 1792780758.190298
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6909_53360/gt_xyz.npy": {
+   "bytes": 289360256,
+   "mtime": 1792770127.6611042
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6909_53360/mvs_a_xyz.npy": {
+   "bytes": 726437528,
+   "mtime": 1792780797.1395118
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6909_53361/gt_xyz.npy": {
+   "bytes": 694048688,
+   "mtime": 1792770129.905237
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6909_53361/mvs_a_xyz.npy": {
+   "bytes": 1152333068,
+   "mtime": 1792780864.047316
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6909_53362/gt_xyz.npy": {
+   "bytes": 425906528,
+   "mtime": 1792770131.3573232
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6909_53362/mvs_a_xyz.npy": {
+   "bytes": 459135920,
+   "mtime": 1792780890.068796
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6909_53363/gt_xyz.npy": {
+   "bytes": 93472640,
+   "mtime": 1792770131.7223446
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6909_53363/mvs_a_xyz.npy": {
+   "bytes": 75935996,
+   "mtime": 1792780897.4752173
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6910_53358/gt_xyz.npy": {
+   "bytes": 37132808,
+   "mtime": 1792770131.8513525
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6910_53358/mvs_a_xyz.npy": {
+   "bytes": 16332044,
+   "mtime": 1792780899.050307
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6910_53359/gt_xyz.npy": {
+   "bytes": 110546912,
+   "mtime": 1792770132.3063793
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6910_53359/mvs_a_xyz.npy": {
+   "bytes": 268480352,
+   "mtime": 1792780908.6018503
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6910_53360/gt_xyz.npy": {
+   "bytes": 212489600,
+   "mtime": 1792770133.0544236
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6910_53360/mvs_a_xyz.npy": {
+   "bytes": 569091044,
+   "mtime": 1792780935.1583612
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6910_53361/gt_xyz.npy": {
+   "bytes": 601075856,
+   "mtime": 1792770135.100545
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6910_53361/mvs_a_xyz.npy": {
+   "bytes": 819580292,
+   "mtime": 1792780981.1969812
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6910_53362/gt_xyz.npy": {
+   "bytes": 450031040,
+   "mtime": 1792770137.04566
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6910_53362/mvs_a_xyz.npy": {
+   "bytes": 431204204,
+   "mtime": 1792781000.7250926
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6910_53363/gt_xyz.npy": {
+   "bytes": 160126568,
+   "mtime": 1792770137.8257062
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6910_53363/mvs_a_xyz.npy": {
+   "bytes": 159090716,
+   "mtime": 1792781010.5286508
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6911_53360/gt_xyz.npy": {
+   "bytes": 2327120,
+   "mtime": 1792770137.88871
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6911_53360/mvs_a_xyz.npy": {
+   "bytes": 18761984,
+   "mtime": 1792781012.9647894
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6911_53361/gt_xyz.npy": {
+   "bytes": 46653248,
+   "mtime": 1792770138.1597261
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6911_53361/mvs_a_xyz.npy": {
+   "bytes": 62521580,
+   "mtime": 1792781015.0019054
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6911_53362/gt_xyz.npy": {
+   "bytes": 193110008,
+   "mtime": 1792770138.8767686
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6911_53362/mvs_a_xyz.npy": {
+   "bytes": 159234992,
+   "mtime": 1792781020.2242026
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6911_53363/gt_xyz.npy": {
+   "bytes": 56408384,
+   "mtime": 1792770139.086781
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6911_53363/mvs_a_xyz.npy": {
+   "bytes": 53073896,
+   "mtime": 1792781023.5383914
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6912_53362/gt_xyz.npy": {
+   "bytes": 128,
+   "mtime": 1792770139.0957816
+  },
+  "/art/phase-payloads/phd/main_widen0_v2/PHD-MAIN-WIDEN0-v2/holdout/internal/points/6912_53362/mvs_a_xyz.npy": {
+   "bytes": 780164,
+   "mtime": 1792781024.325436
+  }
+ },
+ "stages": [
+  {
+   "stage": "단계 1 정방향(가)",
+   "at": "2026-11-25T21:04:15+09:00",
+   "config_sha256": "a77f19fa6a2833452086b4ae5998b6a18a1d0473cac255c61d5e253ace7eaf26"
+  },
+  {
+   "stage": "단계 2 역방향(가)",
+   "at": "2026-11-25T21:28:27+09:00",
+   "config_sha256": "a77f19fa6a2833452086b4ae5998b6a18a1d0473cac255c61d5e253ace7eaf26"
+  },
+  {
+   "stage": "단계 3 집계(가)",
+   "at": "2026-11-25T21:40:42+09:00",
+   "config_sha256": "a77f19fa6a2833452086b4ae5998b6a18a1d0473cac255c61d5e253ace7eaf26"
+  },
+  {
+   "stage": "단계 1 정방향(151동)",
+   "at": "2026-11-25T21:46:40+09:00",
+   "config_sha256": "a77f19fa6a2833452086b4ae5998b6a18a1d0473cac255c61d5e253ace7eaf26"
+  }
+ ],
+ "changes": [
+  {
+   "at": "2026-11-25T21:51:09+09:00",
+   "previous_config_sha256": "a77f19fa6a2833452086b4ae5998b6a18a1d0473cac255c61d5e253ace7eaf26",
+   "config_sha256": "092bccbbb010fd2a26f8813c313ac0c37e09f8c86b023f17161f27dddda06f03",
+   "why": "사용자 덧붙임 2(역방향 빼기)·3(세 실험 지역에서 멈추기): include_reverse=false, addenda 기록. 정방향 규칙·값은 그대로",
+   "after_results": true
+  }
+ ],
+ "scientific_verdict": null
+}
