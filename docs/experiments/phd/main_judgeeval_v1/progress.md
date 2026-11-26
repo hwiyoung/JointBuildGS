@@ -39,3 +39,8 @@
 - 2026-11-26T09:40:05+09:00: 채점 나: 124 s
 - 2026-11-26T09:58:17+09:00: 점검 묶음(가): 239칸
 - 2026-11-26T10:02:55+09:00: 빠진 다섯 고침 끝(audit_key 같음, 판 1~4 값 같음). 묶음 나 다시 내고 커밋.
+- 2026-11-26T11:52:53+09:00: 덧붙임 1 시작. 설정 judgeeval_v1_add1.json 잠금 sha256 006f28a7eb6da84c9c57ae044c8411152a1f6ba5b35a1a4264ff349c731d3055 (본 설정 judgeeval_v1.json 은 그대로).
+- 2026-11-26T11:53:00+09:00: 계산 전 고침: 설정의 학습 코드 줄 번호 17 -> 18(셈 전), 새 sha256 e4691e2b7bd8df1b6ba3206cfa42aa2d42b11fb20ad474f98570e851fcf766cf
+- 2026-11-26T11:54:26+09:00: 4절 ② 확인: 인공 시험 모두 맞음 True, 25 s
+- 2026-11-26T11:56:46+09:00: 4절 카메라 쪽 나눔·4.5·fig7_2 v2: {'LoD2': {'front_plus_back_equals_step2': True, 'patches_checked': 876555}, 'ALS': {'front_plus_back_equals_step2': True, 'patches_checked': 252103}, 'at': '2026-11-26T11:56:46+09:00', 'seconds': 37.5272565970663, 'scientific_verdict': None}
+- 2026-11-26T11:57:14+09:00: 4절 카메라 쪽 나눔·4.5·fig7_2 v2: {'LoD2': {'front_plus_back_equals_step2': True, 'patches_checked': 876555}, 'ALS': {'front_plus_back_equals_step2': True, 'patches_checked': 252103}, 'at': '2026-11-26T11:57:14+09:00', 'seconds': 9.907744013005868, 'scientific_verdict': None}
