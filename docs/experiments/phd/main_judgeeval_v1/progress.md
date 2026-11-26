@@ -93,3 +93,6 @@
 - 2026-11-26T20:54:47+09:00: 덧붙임 2 시작 — 설정 judgeeval_v1_add2.json 잠금(sha 55e8505c…), mvs_mean_m 출처 맞댐(g19, 학습 목표 파일 값과 다름), v2 채점 g20_score_add2.py 백그라운드
 - 2026-11-26T20:58:51+09:00: 덧붙임 2 v2 채점: {'at': '2026-11-26T20:56:10+09:00', 'scientific_verdict': None, 'add2_config_sha256': '55e8505cb691d98b488b0c65415422521a10dca6fc64c1c281bf1517aa3df022', 'prior_cells_same': {'LoD2': True, 'ALS': True}, 'LoD2': {'patches': 876555, 'plan4_target_acc_area': 92.01277502922723, 'plan4_judgment4_area': 77.07472866210088}, 'ALS': {'patches': 252380, 'plan4_target_acc_area': 96.67602951811458, 'plan4_judgment4_area': 83.17834307823392}, 'merge3_cells_different': 0, 'matrix_trace_consistent': True, 'seconds': 160.80013169394806}
 - 2026-11-26T21:00:21+09:00: 덧붙임 2 v2 채점 끝(161 s), 그림 셋, 보고 마 앞부분 → 묶음 마-1
+- 2026-11-26T21:05:52+09:00: 덧붙임 2 2.5절 표 t6·t7, 그림 d6: 246 s
+- 2026-11-26T21:09:19+09:00: 덧붙임 2 2.5절 표 t6·t7, 그림 d6: 189 s
+- 2026-11-26T21:10:18+09:00: 덧붙임 2 2.5절 t6·t7·fig_d6 끝(82 s), 보고 마 채움 → 묶음 마-2
