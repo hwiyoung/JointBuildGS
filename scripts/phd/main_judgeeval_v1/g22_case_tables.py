@@ -1,7 +1,8 @@
 """덧붙임 2 2.5절(판단 다시 돌리지 않음, 이미 있는 패치 값으로 표만. 참값 h_I·정답은 갈래 나누기와 채점에만).
 가 t6_image_case_v2: 정답 영상 -> 판 4 판정 두 자료(① 같다)와 정답 영상 -> ① 값 없음(② 사전 정보 / ③으로).
   ① '값 없음' 조건(judge_lib.py step1, 16~17줄): ok = (n >= 4) & isfinite(L) & isfinite(d), 아니면 값 없음. n = 본 길이(지붕 10 / 벽 5 m) 원통 안 영상 점 수, d = 그 점 평균 − 사전 정보 높이, L = 저장 한계 L_m = 1.96(√(u_M² + σ_P² + σ_W²) + |r|) (g4_step1.py 34줄 점검식). (ㄷ)은 어느 항이 없는지도 셈.
-  까닭(코드 조건 차례로, 서로 겹치지 않게): (ㄱ) n < 4 이고 정답 영상 자리가 길이 안(|h_I| ≤ 반길이), (ㄴ) n < 4 이고 정답 영상 자리가 길이 밖(|h_I| > 반길이; 채점용 갈래),
+  까닭 = 코드 조건(서로 겹치지 않음): (ㄱ) n < 4, (ㄷ) n ≥ 4 인데 L 없음, (ㄹ) 그 밖(n ≥ 4, L 있음, d 없음). (ㄴ) '원통 안 점은 있으나(n ≥ 1) 정답 영상 자리가 길이 밖(|h_I| > 반길이)'은 코드 조건이 아니고 참값으로만 가르는 채점용 갈래라,
+  (ㄱ)·(ㄷ)·(ㄹ)과 겹쳐 따로 세고, 각 까닭 안에서도 '그중 길이 밖'을 센다.
   (ㄷ) n ≥ 4 인데 L 없음, (ㄹ) 그 밖(n ≥ 4, L 있음, d 없음).
 나 t7_step3_catch: 정답 영상 틀림·정답 영상이 ③에 도착(① 다르다 -> ③, ① 값 없음 -> ② -> ③)한 넓이와 ③ 출력.
 그림 fig_d6_sections: 가-1·가-2 에서 넓은 차례 둘씩(같은 넓이는 패치 번호 차례), 덧붙임 1 5절 단면과 같은 꼴.
@@ -30,7 +31,7 @@ def main():
         hI = np.abs(loadz(O/'work'/STAGE/f'truth_{prior}.npz', ['h_I'])['h_I'][:, 0]); n = S1['n'][:, 2]; dd = S1['d_mean'][:, 2]; L = S1['L_m']; H = S1['Hs'][:, 2]
         # 코드 조건 그대로 다시 내어 맞댐
         okc = (n >= 4) & np.isfinite(L) & np.isfinite(dd); assert np.array_equal(okc, r1 != JL.NONE), 'none condition replay differs'
-        why = np.full(len(n), 3, np.int8); why[(n < 4) & (hI <= H)] = 0; why[(n < 4) & ~(hI <= H)] = 1; why[(n >= 4) & ~np.isfinite(L)] = 2
+        why = np.full(len(n), 3, np.int8); why[n < 4] = 0; why[(n >= 4) & ~np.isfinite(L)] = 2; outside = hI > H
         mx = pd.read_csv(TD/'t1_matrix4_v2.csv'); mx = mx[(mx.plan == PL) & (mx.prior == PN[prior])]
         for sn, sm in G8.surfaces(d):
             for (vn, vm), (un, w) in [(v, u) for v, u in G8.UV(d)] + [((vn_, vm_), ('패치', np.ones(len(d.t)))) for vn_, vm_ in G8.versions(d)]:
@@ -48,13 +49,15 @@ def main():
                 # 가-2
                 for after, gm in [('② 사전 정보', r2 == 0), ('② -> ③', r2 == 1), ('모두', np.ones(len(r2), bool))]:
                     g = m & (r1 == JL.NONE) & gm; r = dict(part=f'가-2 정답 영상 -> ① 값 없음 ({after})', prior=PN[prior], surface=sn, version=vn, unit=un, total=w[g].sum())
-                    names = ['(ㄱ) n<4, 정답 자리 길이 안', '(ㄴ) n<4, 정답 자리 길이 밖', '(ㄷ) n≥4, L 없음', '(ㄹ) 그 밖']
+                    names = ['(ㄱ) n<4', None, '(ㄷ) n≥4, L 없음', '(ㄹ) 그 밖']
                     for k, nm in enumerate(names):
-                        gg = g & (why == k); r[nm] = w[gg].sum(); r[f'{nm[:3]} n 중앙값'] = med(n[gg]); r[f'{nm[:3]} |h_I| 중앙값 m'] = med(hI[gg])
+                        if nm is None: continue
+                        gg = g & (why == k); r[nm] = w[gg].sum(); r[f'{nm[:3]} 그중 정답 자리 길이 밖'] = w[gg & outside].sum(); r[f'{nm[:3]} n 중앙값'] = med(n[gg]); r[f'{nm[:3]} |h_I| 중앙값 m'] = med(hI[gg])
+                    gn = g & (n >= 1) & outside; r['(ㄴ) n≥1, 정답 자리 길이 밖(겹침)'] = w[gn].sum(); r['(ㄴ) n 중앙값'] = med(n[gn]); r['(ㄴ) |h_I| 중앙값 m'] = med(hI[gn])
                     gL = g & (why == 2)
                     for tk in ['u_M', 'sigma_P', 'sigma_W', 'r_m']: r[f'(ㄷ) 중 {tk} 없음'] = w[gL & ~np.isfinite(S1[tk])].sum()
-                    r['(ㄱ)+(ㄴ) 중 n = 0'] = w[g & (n == 0)].sum(); r['v2 목표 맞음 %'] = 100*w[g & ok].sum()/w[g].sum() if w[g].sum() else np.nan
-                    assert np.isclose(sum(r[x] for x in names), r['total']); r6.append(r)
+                    r['(ㄱ) 중 n = 0'] = w[g & (n == 0)].sum(); r['v2 목표 맞음 %'] = 100*w[g & ok].sum()/w[g].sum() if w[g].sum() else np.nan
+                    assert np.isclose(sum(r[x] for x in names if x), r['total']); r6.append(r)
                 # 나
                 for tn, tv in [('영상 틀림', 2), ('영상', 1)]:
                     mt = sm & vm & (d.t == tv)
@@ -72,11 +75,11 @@ def main():
             for part, g in [('가-1 정답 영상 -> 두 자료', (d.t == 1) & (j4 == 0) & (d.kind == 1)), ('가-2 정답 영상 -> ① 값 없음', (d.t == 1) & (r1 == JL.NONE) & (d.kind == 1))]:
                 ii = np.flatnonzero(g); ii = ii[np.lexsort((ii, -d.area[ii]))][:2]; picks += [(part, int(k)) for k in ii]
             ext = dict(n=n, d=dd, L=L, why=why, j4=j4, st=st, ok=ok, hT=F[f'hT_{PL}'], r2=r2)
-    write('t6_image_case_v2', pd.DataFrame(r6), '2.5 가: 정답 영상이 다른 판정으로 간 까닭(판 4). 넓이 m² 또는 패치 수. ① 값 없음 조건은 judge_lib.py step1 16~17줄 그대로, (ㄴ)은 참값으로만 가른 채점용 갈래. 목표 맞음은 v2')
+    write('t6_image_case_v2', pd.DataFrame(r6), '2.5 가: 정답 영상이 다른 판정으로 간 까닭(판 4). 넓이 m² 또는 패치 수. ① 값 없음 조건은 judge_lib.py step1 16~17줄 그대로, (ㄴ)은 겹치는 채점용 갈래, 참값으로만 가른 채점용 갈래. 목표 맞음은 v2')
     write('t7_step3_catch', pd.DataFrame(r7), '2.5 나: ③에 도착한 정답 영상 틀림·정답 영상 패치와 ③ 출력(판 4). ③ 도착 넓이 = 4 × 4 행렬 그 줄의 영상 + 사전 정보·영상 틀림 칸 합(점검 통과)')
     chk.update(none_condition_replay=True, reason_sum=True, arrival_equals_matrix=True, seconds=T.s()); dump(TD/'checks_2_5.json', chk)
     # 그림
-    L_ = load('LoD2'); Z = loadz(O/'work'/STAGE/'truth_LoD2.npz', ['h_I', 'tau_P', 'tau_I']); WN = ['(ㄱ) n<4·길이 안', '(ㄴ) n<4·길이 밖', '(ㄷ) L 없음', '(ㄹ) 그 밖']
+    L_ = load('LoD2'); Z = loadz(O/'work'/STAGE/'truth_LoD2.npz', ['h_I', 'tau_P', 'tau_I']); WN = ['(ㄱ) n<4', '', '(ㄷ) L 없음', '(ㄹ) 그 밖']
     fig, axs = plt.subplots(1, 4, figsize=(16, 5)); meta = []
     for ax, (part, k) in zip(axs, picks):
         ref, nn, u, v, P = section_pts(L_, k, 1.5, 10.); a, t, _, _ = P['mvs']; ax.scatter(a, t, s=1, color='#97C459', lw=0, label='영상 깊이 점'); a, t, _, _ = P['gt']; ax.scatter(a, t, s=1.4, color='k', lw=0, label='드론 LiDAR')
