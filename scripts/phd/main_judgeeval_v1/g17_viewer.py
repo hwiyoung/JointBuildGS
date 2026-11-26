@@ -3,12 +3,15 @@ JUDGEGT g9_viewer2.py 를 복사해 고침(그 파일은 그대로). 범위 = �
 패치 색: 정답 / ① / ② / ③ / 판정 넷 / 판단 맞음·틀림(틀림은 판정을 정한 단계로) / 목표 맞음·틀림 (판 4, judge4_<prior>.npz).
 기둥 점을 솎지 않고 담는 패치(파일 크기 때문에 모두는 못 담음): 틀림 목록(정답 → 판정 칸마다 다섯) + 정답 x 판정 칸마다 20개 + 채점 밖 정답마다 10개(씨앗 고정).
   그 패치마다: 원통(반지름 1.5 m, 반길이 지붕 10 / 벽 5 m) 안 점 가운데 두께 ±0.125 m 의 참값·영상 점(mm), ②를 거친 패치는 영상마다 중심 시선 끝, ③을 거친 패치는 ③ 시작 점과 일관됨(judgevis fuse 다시).
+VIEWER_V=2 이면 judge4_v2_<prior>.npz(덧붙임 2 목표 값)를 읽어 docs/figures/viewer_v2/ 에 씀(앞 판 그대로).
 나오는 것: docs/figures/viewer/<지역>_<건물>_<사전 정보>.html(+json), index.json. 사용: GT_STAGE=ga3 g17_viewer.py"""
 from common import *
 import pandas as pd, base64
 from g11_figs import read_depth
 A1 = json.loads((C/'judgeeval_v1_add1.json').read_text()); assert sha(C/'judgeeval_v1_add1.json') == json.loads((C/'judgeeval_v1_add1.lock.json').read_text())['config_sha256']
-VD = D/'figures/viewer'; SHIFT = np.array([690953.0, 5336071.0, 604.0]); PL = {'면 안쪽': 0, '면 경계': 1, '건물 가장자리': 2, '자리 없음': 3}
+V2 = os.environ.get('VIEWER_V', '1') == '2'   # 덧붙임 2: 목표 값 v2(h_M = 저장 mvs_mean_m), 판단은 같음
+if V2: assert sha(C/'judgeeval_v1_add2.json') == json.loads((C/'judgeeval_v1_add2.lock.json').read_text())['config_sha256'], 'add2 config changed after lock'
+VD = D/('figures/viewer_v2' if V2 else 'figures/viewer'); SHIFT = np.array([690953.0, 5336071.0, 604.0]); PL = {'면 안쪽': 0, '면 경계': 1, '건물 가장자리': 2, '자리 없음': 3}
 COLG = json.loads((R/'configs/phd/main_judgegt_v1/judgegt_v1.json').read_text())['colours']
 J4N = ['두 자료', '영상', '사전 정보·영상 없음', '사전 정보·영상 틀림']; T4 = {0: 0, 1: 1, 3: 2, 2: 3, 4: 4, 5: 5, -1: 6}
 J4C = [COLG['두 자료'], COLG['영상'], COLG['사전 정보(영상 없음)'], COLG['사전 정보(영상 틀림)']]
@@ -92,7 +95,7 @@ def classify(X_, rows, area, rng):
                  r3=dict(title='패치: ③ 결과(③을 거친 패치만)', names=['사전 정보', '영상'], colors=['#D85A30', '#378ADD'], area=A(m_r3, 2), note='① 다르다, 또는 ① 값 없음·② ③으로 패치만 칠함'),
                  j4=dict(title='패치: 최종 판정(판정 넷)', names=J4N + ['그 밖'], colors=J4C + ['#444441'], area=A(m_j4, 5)),
                  okj=dict(title='패치: 판단 맞음·틀림', names=['맞음', '틀림: ①이 정함', '틀림: ②가 정함', '틀림: ③이 정함', '채점 밖'], colors=['#D3D1C7', '#E24B4A', '#EF9F27', '#7F77DD', '#F1EFE8'], area=A(okj, 5), note='판정을 정한 단계: 뺀 단계 없음(판 4). 채점 밖 = 정답이 둘 다 틀림·정답 없음·높이 없음'),
-                 okt=dict(title='패치: 목표 맞음·틀림', names=['맞음', '틀림', '채점 밖'], colors=['#D3D1C7', '#E24B4A', '#F1EFE8'], area=A(okt, 3), note='목표 높이 h_T 의 ±τ_T 안에 참값 점 4개 이상'))
+                 okt=dict(title='패치: 목표 맞음·틀림', names=['맞음', '틀림', '채점 밖'], colors=['#D3D1C7', '#E24B4A', '#F1EFE8'], area=A(okt, 3), note='목표 높이 h_T 의 ±τ_T 안에 참값 점 4개 이상' + (' · v2: h_M = 저장 mvs_mean_m(덧붙임 2)' if V2 else '')))
     # 틀림 목록과 기둥 점 담을 패치
     worst = []; emb = set()
     for k in range(4):
@@ -114,7 +117,7 @@ def main():
     G = {p: loadz(inp('patches', prior=p), ['centre', 'normal', 'tangent1', 'prior_height_m', 'tile', 'tiles', 'kind']) for p in PRIORS}
     DD = {}
     for p in PRIORS:
-        Z = loadz(O/'work'/STAGE/f'truth_{p}.npz', ['patch_index', 'answer', 'h_I', 'img_col', 'n_total', 'tau_P', 'tau_I', 'two_layer']); F4 = loadz(O/'work'/STAGE/f'judge4_{p}.npz'); Jg = loadz(O/'work'/STAGE/f'judgments_{p}.npz')
+        Z = loadz(O/'work'/STAGE/f'truth_{p}.npz', ['patch_index', 'answer', 'h_I', 'img_col', 'n_total', 'tau_P', 'tau_I', 'two_layer']); F4 = loadz(O/'work'/STAGE/(f'judge4_v2_{p}.npz' if V2 else f'judge4_{p}.npz')); Jg = loadz(O/'work'/STAGE/f'judgments_{p}.npz')
         S1 = loadz(O/'work'/STAGE/f'step1_{p}.npz', ['patch_index', 'd_mean', 'L_m', 'starts', 'start_owner']); S2 = loadz(O/'work'/STAGE/f'step2_{p}.npz', ['patch_index', 'counts', 'pass_pix']); S3 = loadz(O/'work'/STAGE/f'step3_{p}.npz')
         for X_ in [F4, Jg, S1, S2, S3]: assert np.array_equal(X_['patch_index'], Z['patch_index'])
         fwd = pd.read_csv(O/f'forward_{p}_ga3.csv.gz', usecols=['patch_index', 'patch_id', 'building', 'place', 'area_m2']).set_index('patch_index').loc[Z['patch_index']].reset_index()
@@ -211,5 +214,5 @@ def main():
             dump(VD/f'{name}.json', dict(at=now(), file=out.name, mb=mb, seconds=T.s(), **{k: v for k, v in meta.items() if k not in ['modes', 'view', 'floats', 'places', 'stage_names']}, area_by_mode={k: dict(zip(v['names'], v['area'])) for k, v in modes.items()}, scientific_verdict=None))
             index.append(dict(file=out.name, building=bid, site=site, prior=prior, patches=len(rows), embedded=len(cols), mb=round(mb, 1), **{f'{k}_shown_pct': round(100*v['ratio'], 1) for k, v in info.items()}))
             print('VIEW', name, len(rows), len(cols), round(mb, 1), round(T.s()), flush=True); progress(f'뷰어 {name}: 패치 {len(rows):,}, 기둥 담음 {len(cols)}, {mb:.1f} MB, {T.s():.0f} s')
-    dump(VD/'index.json', dict(at=now(), files=index, scientific_verdict=None)); progress(f'뷰어(묶음 라): HTML {len(index)}개')
+    dump(VD/'index.json', dict(at=now(), files=index, scientific_verdict=None)); progress(f"뷰어({'v2, 덧붙임 2' if V2 else '묶음 라'}): HTML {len(index)}개")
 if __name__ == '__main__': main()
