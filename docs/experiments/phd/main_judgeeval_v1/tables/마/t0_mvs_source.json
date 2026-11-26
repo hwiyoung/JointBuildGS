@@ -1,0 +1,43 @@
+{
+ "at": "2026-11-26T20:52:01+09:00",
+ "scientific_verdict": null,
+ "training_code": "scripts/phd/main_finaltrain_v1/targets.py: hm = mvs_mean_m (12줄), 두 자료 h = (h_P·u_M² + h_M·σ_P²)/(u_M² + σ_P²) (18줄), 영상(고침) h = h_M (20줄)",
+ "LoD2": {
+  "patches": 876555,
+  "matched": 492860,
+  "both_finite": 354550,
+  "finite_mismatch": 73405,
+  "max_abs_diff_mvs_mean_m": 14.665399898182262,
+  "share_within_1mm": 0.0425553518544634,
+  "median_abs_diff": 0.018973680384573893,
+  "q99_abs_diff": 3.7273611235322175,
+  "share_u_within_1mm": 0.1527400930757298,
+  "max_abs_diff_u": 1.6830801218748093,
+  "max_abs_diff_sigmaP": 0.0,
+  "cur_mean_finite": 772050,
+  "target_files": [
+   "B0_b10__LoD2.npz",
+   "B173nb_b10__LoD2.npz",
+   "R1rep_b10__LoD2.npz"
+  ]
+ },
+ "ALS": {
+  "patches": 252380,
+  "matched": 156,
+  "both_finite": 148,
+  "finite_mismatch": 8,
+  "max_abs_diff_mvs_mean_m": 4.636880658393766,
+  "share_within_1mm": 0.04054054054054054,
+  "median_abs_diff": 0.023384663525001972,
+  "q99_abs_diff": 1.8215044733981791,
+  "share_u_within_1mm": 1.0,
+  "max_abs_diff_u": 0.0,
+  "max_abs_diff_sigmaP": 0.0,
+  "cur_mean_finite": 251581,
+  "target_files": [
+   "B0_b10__ALS.npz",
+   "B173nb_b10__ALS.npz",
+   "R1rep_b10__ALS.npz"
+  ]
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "task_id": "PHD-MAIN-JUDGEEVAL-v1 덧붙임 2",
+ "created_at": "2026-11-26",
+ "scientific_verdict": null,
+ "no_training": "학습·렌더·메시 없음, 판단 다시 돌리지 않음. 판단 규칙과 값은 judgeeval_v1.json(잠금 506bc34f…)과 덧붙임 1(judgeeval_v1_add1.json, 잠금 e4691e2b…) 그대로. 이 파일은 덧붙임 2에서 바뀐 것만",
+ "kinds": {"L": "문헌 기본값", "D": "문헌 규칙으로 자료에서 정함", "S": "이 연구가 정함", "R": "참고 판", "O": "발주문이 정함"},
+ "target_height_v2": {
+  "h_M": ["저장된 mvs_mean_m − 사전 정보 높이 (JUDGEPROBE patch_<prior>.npz 의 mvs_mean_m = step1 cur_mean, 덧붙임 1 heights 의 'cur'; JUDGECHECK-v2 열과 같은 값)", "O"],
+  "두 자료": ["h_T = h_M·σ_P² / (σ_P² + u_M²) = heights 의 'curmix', τ_T = max(τ_P, τ_I)", "O"],
+  "영상": ["h_T = h_M = 'cur', τ_T = τ_I", "O"],
+  "사전 정보": ["h_T = 0, τ_T = τ_P (묶음 다와 같음)", "O"],
+  "applies_to": "판 1~4, 판 3, 상한 셋, 판 4(가장 나은 후보), 늘 영상(h_M = 'cur'). JUDGECHECK-v2·11/22 구조는 이미 'cur'·'curmix' 이므로 그대로. 늘 사전 정보는 바뀌지 않음",
+  "missing": ["mvs_mean_m(또는 섞음에 드는 u_M·σ_P)이 없어 'cur'·'curmix' 가 NaN 인 패치는 묶음 다의 h_T·τ_T 를 그대로 쓰고, 그 넓이·패치 수를 판·면·판정·단계마다 적는다", "S"],
+  "kind": "O(바꿀 값) · S(값 없음 처리)"
+ },
+ "source_note": "학습 코드 scripts/phd/main_finaltrain_v1/targets.py 는 hm = mvs_mean_m(12줄)을 그 학습의 목표 파일(main_finaltrain_v1 targets/<지역>__<prior>.npz)에서 읽는다. 그 파일의 mvs_mean_m 은 JUDGEPROBE 값과 패치마다 다르고(g19_mvs_source.py, tables/마/t0_mvs_source.json, 이 설정을 잠그기 전에 맞댐) 10동 패치를 모두 덮지 않아, 채점은 발주문이 가리킨 JUDGECHECK-v2 열과 같은 값(JUDGEPROBE)으로 한다. 다름은 보고에 사실로 적는다",
+ "curve": "문턱 곡선 τ = 0.10~1.00 m 는 덧붙임 1 heights 의 ok_curve('cur', 'curmix' 포함)를 같은 규칙으로 고른다. 새 참값 셈 없음",
+ "step2_5": {
+  "bins_hI_m": [0, 0.15, 0.30, 0.50, 1.00],
+  "none_reasons": "① 값 없음 까닭은 judge_lib.step1 의 '값 없음' 조건을 코드에서 옮겨 적고 그 조건별로 센다. (ㄴ) '길이 밖 정답 영상 자리'는 참값(정답 h_I)으로만 가르는 채점용 갈래",
+  "plan": "판 4",
+  "kind": "O"
+ }
+}
