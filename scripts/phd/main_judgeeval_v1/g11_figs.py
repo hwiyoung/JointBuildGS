@@ -61,7 +61,7 @@ def fig0():
     ax.set_title(f"판단이 보는 범위 · {L['b'][k].replace('DEBY_LOD2_', '')} · 정답 영상 · h_I {L['hI'][k]:+.2f} m", fontsize=8)
     save(fig, 'fig7_0_range', dict(patch_index=int(L['i'][k]), building=L['b'][k], h_I=float(L['hI'][k]), lengths=S1['Hs'][k].tolist(), rays_seen=len(rays), rays_drawn=[int(x[2]) for x in pick]))
 def fig1():
-    df = pd.read_csv(TD/'t71_step1.csv'); df = df[df.version == '전체']; units = [(p, s) for p in ['LoD2', '항공 LiDAR'] for s in (['지붕', '벽'] if p == 'LoD2' else ['지붕'])]
+    df = pd.read_csv(TD/'t71_step1.csv'); df = df[(df.version == '전체') & (df.unit == '넓이')]; units = [(p, s) for p in ['LoD2', '항공 LiDAR'] for s in (['지붕', '벽'] if p == 'LoD2' else ['지붕'])]
     fig, axs = plt.subplots(1, len(units), figsize=(4.2*len(units), 3.8)); meta = {}
     for ax, (p, s) in zip(axs, units):
         g = df[(df.prior == p) & (df.surface == s)]; main = g.candidate.str.startswith('길이 긺(본) · 평균 · 크기 경계 뺌 · 한계 PM')
@@ -129,7 +129,7 @@ def fig4():
         ax.bar(x - .2, g.judgment_acc_area, .4, color='#378ADD', label='판정 정확도'); ax.bar(x + .2, g.target_acc_area, .4, color='#1D9E75', label='목표 정확도'); ax.set_ylim(0, 100); ax.set_ylabel(f'{p} {s} %'); ax.legend(fontsize=6, loc='lower right')
     axs[-1].set_xticks(np.arange(len(plans))); axs[-1].set_xticklabels(plans, rotation=35, ha='right', fontsize=6); fig.suptitle('판 1~4, 바꿔 끼운 상한, 참고 열의 정확도(넓이, 전체)', fontsize=9)
     save(fig, 'fig7_4_bars', dict(source=str(TD/'t74_plans.csv'), plans=plans))
-    ef = pd.read_csv(TD/'t74_effect.csv'); fig, axs = plt.subplots(1, 4, figsize=(13, 3.6)); meta = {}
+    ef = pd.read_csv(TD/'t74_effect.csv'); ef = ef[(ef.version == '전체') & (ef.unit == '넓이')]; fig, axs = plt.subplots(1, 4, figsize=(13, 3.6)); meta = {}
     for ax, ch in zip(axs, ['판 1 → 판 2', '판 1 → 판 3', '판 3 → 판 4', '판 2 → 판 4']):
         g = ef[(ef.change == ch) & (ef.surface.isin(['모두'])) | (ef.change == ch) & (ef.prior == '항공 LiDAR')]; lab = [f"{r.prior[:2]} {r.truth[:7]}" for r in g.itertuples()]; x = np.arange(len(g))
         ax.bar(x, g['맞게_바뀜'], color='#1D9E75', label='맞게 바뀜'); ax.bar(x, -g['틀리게_바뀜'], color='#A32D2D', label='틀리게 바뀜'); ax.bar(x, g['틀림_틀림'], bottom=g['맞게_바뀜'], color='#B4B2A9', label='틀림 → 틀림')
@@ -144,7 +144,7 @@ def fig4():
             ax.set_aspect('equal'); ax.set_xticks([]); ax.set_yticks([]); ax.set_title(f'{site} · {PN[prior]}'); meta[f'{site}_{prior}'] = dict(changed_m2=float(L['area'][ch].sum()), right_m2=float(L['area'][ch & ~c1 & c4].sum()), wrong_m2=float(L['area'][ch & c1 & ~c4].sum()))
     fig.legend(handles=[Patch(color='#1D9E75', label='맞게 바뀜'), Patch(color='#A32D2D', label='틀리게 바뀜'), Patch(color='#5F5E5A', label='바뀌었으나 맞고 틀림 같음')], loc='lower center', ncol=3, frameon=False)
     fig.suptitle('판 1 → 판 4 판정이 바뀐 패치(바탕 = 모든 패치)', fontsize=9); save(fig, 'fig7_4_maps', dict(area_m2=meta))
-    cu = pd.read_csv(TD/'t74_threshold_curve.csv'); fig, axs = plt.subplots(1, 3, figsize=(11, 3.4)); meta = {}
+    cu = pd.read_csv(TD/'t74_threshold_curve.csv'); cu = cu[(cu.version == '전체') & (cu.unit == '넓이')]; fig, axs = plt.subplots(1, 3, figsize=(11, 3.4)); meta = {}
     for ax, (p, s) in zip(axs, units):
         for nm, col in [('판 1', '#B4B2A9'), ('판 4', '#D85A30'), ('JUDGECHECK-v2 본 방법', '#378ADD'), ('11/22 구조', '#7F77DD')]:
             g = cu[(cu.prior == p) & (cu.surface == s) & (cu.plan == nm)]; ax.plot(g.tau_m, g.judgment_acc, '-o', ms=2.5, color=col, label=f'{nm} 판정'); ax.plot(g.tau_m, g.target_acc, '--', color=col, lw=.8)

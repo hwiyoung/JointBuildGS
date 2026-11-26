@@ -39,6 +39,16 @@ def surfaces(d):
     if (d.kind == 2).any(): out += [('벽', d.kind == 2), ('모두', np.ones(len(d.kind), bool))]
     return out
 def versions(d): return [('전체', np.ones(len(d.t), bool)), ('층 둘 뺌', ~d.two)]
+def UV(d): return [((vn, vm), (un, uw)) for vn, vm in versions(d) for un, uw in [('넓이', d.area), ('점', d.pts)]]
+def kind1(k): return (f"반지름 D · 최소 점 4 L · z 1.96 L · 길이 {'두 번 재기 L(Lague 5.3절)' if k['two_pass'] else ('S(본 = 지금 값)' if k['h'] == 2 else 'S')} · 대푯값 R · 크기 경계 {'R' if k['size'] else '없음'} · "
+                      f"한계 {'L(M3C2-PM, James 2017) + 항은 지금 코드' if k['Lver'] == 'pm' else 'L(Lague 3.3절)'}")
+KIND2 = {'pixel': 'δ L · 화소 분류 L(Merrell 2007) · 패치로 모음 S', 'centre': 'δ L · 중심 한 점 R', 'one': 'δ L · 한 장 이상 R', 'two': 'δ L · 두 장 이상 R(Hebel 2012 5.4.2절을 영상 수로)'}
+KIND3 = {'main': 'COLMAP 기본값 L · 패치 4점 L(M3C2)', 'major': '다수결 S', 'a2': '지금 판 R'}
+def kindp(nm):
+    if nm.startswith('상한'): return '채점용(한 단계를 정답으로 바꿈)'
+    if '가장 나은' in nm: return '결과를 보고 고른 후보(참고)'
+    if nm.startswith('판'): return '단계 값의 종류는 설정·t71~t73'
+    return 'R(참고 열)'
 def confusion(d, j, label, rows, jn=JL.JN + ['그 밖']):
     for sn, sm in surfaces(d):
         for vn, vm in versions(d):
@@ -49,6 +59,9 @@ def confusion(d, j, label, rows, jn=JL.JN + ['그 밖']):
                     for k, jname in enumerate(jn):
                         x = w[mm & (j == k)].sum(); r[jname] = x; r[f'{jname} %'] = 100*x/tot if (tot and ti < 4) else np.nan
                     rows.append(r)
+                s_ = dict(plan=label, prior=PN[d.prior], surface=sn, version=vn, unit=unit, truth='합(칸마다)', total=w[m].sum())
+                for k, jname in enumerate(jn): s_[jname] = w[m & (j == k)].sum(); s_[f'{jname} %'] = 100*s_[jname]/s_['total'] if s_['total'] else np.nan
+                rows.append(s_)
 def main():
     c = cfg(); T = Timer(); rec = dict(at=now(), stage=STAGE, scientific_verdict=None); DD = {p: Data(p, c) for p in PRIORS}
     cand1 = [dict(h=h, rep=rp, size=sz, Lver=lv, two_pass=tp) for tp, hs in [(False, [0, 1, 2]), (True, [2])] for h in hs for rp in ['mean', 'median'] for sz in [False, True] for lv in ['pm', 'orig']]
@@ -61,8 +74,8 @@ def main():
         for k in cand1:
             r = d.r1(**k); hh = 2 if k['two_pass'] else k['h']; dv = (d.S1['d_mean'] if k['rep'] == 'mean' else d.S1['d_med'])[:, hh]
             for sn, sm in surfaces(d):
-                for vn, vm in versions(d):
-                    m = sm & vm; w = d.area; row = dict(candidate=name1(k), prior=PN[p], surface=sn, version=vn, area_m2=w[m].sum())
+                for (vn, vm), (un, w) in UV(d):
+                    m = sm & vm; row = dict(candidate=name1(k), value_kind=kind1(k), prior=PN[p], surface=sn, version=vn, unit=un, area_m2=w[m].sum())
                     for ri, rn in enumerate(['같다', '다르다', '값 없음']):
                         for ti, tn in enumerate(TN[:-1]): row[f'{rn}|{tn}'] = w[m & (r == ri) & (d.t == ti)].sum()
                     same = m & (r == 0); diff = m & (r == 1)
@@ -79,27 +92,27 @@ def main():
         for k in cand2:
             r2 = d.r2(**k)
             for sn, sm in surfaces(d):
-                for vn, vm in versions(d):
-                    m = sm & vm & none; w = d.area; row = dict(rule={'pixel': '화소 표 안정도', 'centre': '중심 한 점 안정도', 'one': '한 장 이상', 'two': '두 장 이상'}[k['rule']], delta=f"{k['delta']} %", prior=PN[p], surface=sn, version=vn, area_m2=w[m].sum())
+                for (vn, vm), (un, w) in UV(d):
+                    m = sm & vm & none; row = dict(value_kind=KIND2[k['rule']], unit=un, rule={'pixel': '화소 표 안정도', 'centre': '중심 한 점 안정도', 'one': '한 장 이상', 'two': '두 장 이상'}[k['rule']], delta=f"{k['delta']} %", prior=PN[p], surface=sn, version=vn, area_m2=w[m].sum())
                     for ri, rn in enumerate(['사전 정보', '③으로']):
                         for ti, tn in enumerate(TN[:-1]): row[f'{rn}|{tn}'] = w[m & (r2 == ri) & (d.t == ti)].sum()
                     row['정답 영상없음 → 사전 정보 %'] = 100*w[m & (d.t == 3) & (r2 == 0)].sum()/max(w[m & (d.t == 3)].sum(), 1e-12); row['정답 영상 → ③으로 %'] = 100*w[m & (d.t == 1) & (r2 == 1)].sum()/max(w[m & (d.t == 1)].sum(), 1e-12)
                     rows_s2.append(row)
         C = d.C2; tot1 = C[:, 0:4].sum(1)
         for ti, tn in enumerate(TN[:-1]):
-            for sn, sm in surfaces(d):
-                m = none & sm & (d.t == ti); w = d.area
+            for (sn, sm), ((vn, vm), (un, w)) in [(a_, b_) for a_ in surfaces(d) for b_ in UV(d)]:
+                m = none & sm & vm & (d.t == ti)
                 if not m.any(): continue
-                rows_s2d.append(dict(prior=PN[p], surface=sn, truth=tn, area_m2=w[m].sum(), **{f'{nm} 화소 비율 %': 100*np.nansum(C[m, j])/max(np.nansum(tot1[m]), 1) for j, nm in enumerate(['못 봄', '지나감', '막힘', '일치'])},
-                                     **{'표 없음(모두 못 봄) 넓이 %': 100*w[m & (np.nan_to_num(C[:, 1:4]).sum(1) == 0)].sum()/w[m].sum()}))
+                rows_s2d.append(dict(prior=PN[p], surface=sn, version=vn, unit=un, truth=tn, area_m2=w[m].sum(), **{f'{nm} 화소 비율 %': 100*np.nansum(C[m, j])/max(np.nansum(tot1[m]), 1) for j, nm in enumerate(['못 봄', '지나감', '막힘', '일치'])},
+                                     **{'표 없음(모두 못 봄) 넓이 %': 100*w[m & (np.nan_to_num(C[:, 1:4]).sum(1) == 0)].sum()/max(w[m].sum(), 1e-12)}))
         # 7.3 ③
         r2m = d.r2(); go3_1 = r1m == 1; go3_2 = (r1m == 2) & (r2m == 1)
         for rule in cand3:
             a, b = d.r3(rule)
             for src, gm, res in [('①에서', go3_1, a), ('②에서', go3_2, b), ('모두', go3_1 | go3_2, np.where(go3_1, a, b))]:
                 for sn, sm in surfaces(d):
-                    for vn, vm in versions(d):
-                        m = sm & vm & gm; w = d.area; row = dict(rule={'main': '본 판(COLMAP 화소 5)', 'major': '다수결', 'a2': '지금 판(A2 영상 5장)'}[rule], source=src, prior=PN[p], surface=sn, version=vn, area_m2=w[m].sum())
+                    for (vn, vm), (un, w) in UV(d):
+                        m = sm & vm & gm; row = dict(value_kind=KIND3[rule], unit=un, rule={'main': '본 판(COLMAP 화소 5)', 'major': '다수결', 'a2': '지금 판(A2 영상 5장)'}[rule], source=src, prior=PN[p], surface=sn, version=vn, area_m2=w[m].sum())
                         for ri, rn in enumerate(['사전 정보', '영상']):
                             for ti, tn in enumerate(TN[:-1]): row[f'{rn}|{tn}'] = w[m & (res == ri) & (d.t == ti)].sum()
                         row['정답 영상 → 영상 %'] = 100*w[m & (d.t == 1) & (res == 1)].sum()/max(w[m & (d.t == 1)].sum(), 1e-12); row['정답 영상틀림 → 사전 정보 %'] = 100*w[m & (d.t == 2) & (res == 0)].sum()/max(w[m & (d.t == 2)].sum(), 1e-12)
@@ -120,29 +133,29 @@ def main():
             for sn, sm in surfaces(d):
                 for vn, vm in versions(d):
                     m = sm & vm; ja, ta = acc(d.t[m], j[m], d.area[m]); jp, tp = acc(d.t[m], j[m], d.pts[m])
-                    rows_plan.append(dict(plan=nm, prior=PN[p], surface=sn, version=vn, judgment_acc_area=ja, target_acc_area=ta, judgment_acc_points=jp, target_acc_points=tp,
+                    rows_plan.append(dict(plan=nm, value_kind=kindp(nm), prior=PN[p], surface=sn, version=vn, judgment_acc_area=ja, target_acc_area=ta, judgment_acc_points=jp, target_acc_points=tp,
                                           judged_m2=d.area[m & np.isin(j, [0, 1, 2])].sum(), other_m2=d.area[m & (j == 3)].sum(), area_m2=d.area[m].sum()))
         for a_, b_ in [('판 1', '판 2'), ('판 1', '판 3'), ('판 3', '판 4'), ('판 2', '판 4')]:
             ch = J[a_] != J[b_]; ca = jcorrect(d.t, J[a_]); cb = jcorrect(d.t, J[b_])
-            for sn, sm in surfaces(d):
+            for (sn, sm), ((vn, vm), (un, w)) in [(x_, y_) for x_ in surfaces(d) for y_ in UV(d)]:
                 for ti, tn in enumerate(TN[:-1]):
-                    m = sm & ch & (d.t == ti); w = d.area
-                    rows_eff.append(dict(change=f'{a_} → {b_}', prior=PN[p], surface=sn, truth=tn, changed_m2=w[m].sum(), 맞게_바뀜=w[m & ~ca & cb].sum(), 틀리게_바뀜=w[m & ca & ~cb].sum(), 틀림_틀림=w[m & ~ca & ~cb].sum(), 맞음_맞음=w[m & ca & cb].sum()))
+                    m = sm & vm & ch & (d.t == ti)
+                    rows_eff.append(dict(change=f'{a_} → {b_}', prior=PN[p], surface=sn, version=vn, unit=un, truth=tn, changed_m2=w[m].sum(), 맞게_바뀜=w[m & ~ca & cb].sum(), 틀리게_바뀜=w[m & ca & ~cb].sum(), 틀림_틀림=w[m & ~ca & ~cb].sum(), 맞음_맞음=w[m & ca & cb].sum()))
         for k_, x in enumerate(c['truth']['threshold_curve_m']):
             tt = d.tc[:, 1+k_]
             for nm in ['판 1', '판 4', 'JUDGECHECK-v2 본 방법', '11/22 구조']:
-                for sn, sm in surfaces(d):
-                    ja, ta = acc(tt[sm], J[nm][sm], d.area[sm]); rows_cur.append(dict(tau_m=x, plan=nm, prior=PN[p], surface=sn, judgment_acc=ja, target_acc=ta))
+                for (sn, sm), ((vn, vm), (un, w)) in [(x_, y_) for x_ in surfaces(d) for y_ in UV(d)]:
+                    mm = sm & vm; ja, ta = acc(tt[mm], J[nm][mm], w[mm]); rows_cur.append(dict(tau_m=x, plan=nm, prior=PN[p], surface=sn, version=vn, unit=un, judgment_acc=ja, target_acc=ta))
         savez(O/'work'/STAGE/f'judgments_{p}.npz', patch_index=d.idx, r1=r1m, r2=r2m, r3a=a, r3b=b, **{f'J_{k}': v for k, v in J.items() if k.startswith('판')})
         rec[p] = dict(best=best[p], area=float(d.area.sum()), plan4_sum_equal=bool(np.isclose(sum(d.area[J['판 4'] == q].sum() for q in [0, 1, 2]), d.area.sum())),
                       plan4_without_23_equals_plan1=bool(np.array_equal(JL.assemble(r1m, r2m, a, b, False, False), J['판 1'])))
-    write('t71_step1', pd.DataFrame(rows_s1), '① M3C2 후보마다 결과(같다/다르다/값 없음) × 정답 넓이, 맞음 비율, 변화 놓침·헛 변화, 값 없음과 그 가운데 정답 영상, 끝에 몰림(|d| > 0.9 반길이)')
+    write('t71_step1', pd.DataFrame(rows_s1), 'value_kind 열: L 문헌 기본값, D 문헌 규칙으로 자료에서 정함, S 이 연구가 정함, R 참고 판. unit 열이 점이면 m² 이름의 열은 기둥 안 참값 점 수. ① M3C2 후보마다 결과(같다/다르다/값 없음) × 정답 넓이, 맞음 비율, 변화 놓침·헛 변화, 값 없음과 그 가운데 정답 영상, 끝에 몰림(|d| > 0.9 반길이)')
     write('t71_radius_rule', pd.DataFrame(rows_rad), '원통 반지름 규칙(Lague 7절) 확인: 본 길이 원통 안 영상 점 수의 중앙값(지역·자료·면)')
     write('t72_step2', pd.DataFrame(rows_s2), '② 결과(사전 정보 / ③으로) × 정답 넓이, ①(본 판)에서 값 없는 패치')
     write('t72_counts', pd.DataFrame(rows_s2d), '② 화소 분류 비율(δ 1 %), ①에서 값 없는 패치, 정답 종류별')
     write('t73_step3', pd.DataFrame(rows_s3), '③ 결과(사전 정보 / 영상) × 정답 넓이, ①·②(본 판)에서 넘어온 패치')
     write('t74_plans', pd.DataFrame(rows_plan), '판 1~4, 바꿔 끼운 상한, 가장 나은 후보 판, 참고 열: 판정 정확도·목표 정확도(넓이, 점)')
-    write('t74_confusion', pd.DataFrame(rows_conf), '혼동 행렬: 정답(줄) × 판정(칸: 두 자료, 영상, 사전 정보, 그 밖) 넓이·점, 비율은 정답 0~3 줄만')
+    write('t74_confusion', pd.DataFrame(rows_conf), '혼동 행렬: 정답(줄) × 판정(칸: 두 자료, 영상, 사전 정보, 그 밖) 넓이·점, 비율은 정답 0~3 줄만, 마지막 줄 = 칸마다 합(그 비율 = 판정 넓이 비율)')
     write('t74_effect', pd.DataFrame(rows_eff), '단계의 효과: 판 사이 판정이 바뀐 넓이를 정답 종류별로 맞게 바뀜·틀리게 바뀜·틀림→틀림')
     write('t74_threshold_curve', pd.DataFrame(rows_cur), '문턱 곡선: 세 자료 같은 τ 정답으로 다시 센 판정·목표 정확도')
     rec['best_rule'] = '단계마다 그 단계 후보만 바꾼 판 4의 판정 정확도(넓이, 전체)가 가장 높은 후보'; dump(TD/'checks.json', rec); progress(f'채점 나: {T.s():.0f} s'); print(json.dumps(jsafe(rec), ensure_ascii=False)[:2000])

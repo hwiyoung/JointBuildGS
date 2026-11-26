@@ -1,6 +1,6 @@
 """4절 이름표 점검 그림(가3 정답). 뽑기 = 가2 규칙(사전 정보마다 정답 여섯 x 20, 씨앗 고정, 한 건물 5개까지(정답 종류 안), 지붕·벽은 넓이 비율, 모자라면 있는 만큼).
 번호는 정답을 감춤(L-001, A-001…), 사전 정보 안 칸을 섞어 쪽(10칸 = 2 x 5)에 나눔. 칸마다 그림 둘:
-  왼쪽 = 단면(옆 ±3 m, 두께 ±0.125 m): 영상 깊이 점(연한 초록, 아래) 위에 드론 LiDAR(검정, 위), 사전 정보 면(보라), 0 ± τ_P·h_I ± τ_I 띠, 점선 = 패치 칸.
+  왼쪽 = 단면(옆 ±3 m, 두께 ±0.125 m): 드론 LiDAR(검정, 조금 크게, 아래) 위에 영상 깊이 점(연한 초록, 위), 사전 정보 면(보라), 0 ± τ_P·h_I ± τ_I 띠, 점선 = 패치 칸.
   오른쪽 = 패치 기둥만(옆 ±0.125 m, 세로 = 기둥 안 점의 범위): 점 하나하나, 영상(초록)·참값(검정)을 옆으로 조금 비켜 그림.
 칸 아래: 건물, 자리, 지붕·벽, τ_P, τ_I, 기둥 안 영상 점, 기둥 안 참값 점, 0 ± τ_P 참값, h_I ± τ_I 참값, two_layer. 정답 이름 없음.
 나오는 것: docs/audit/가/page_{L,A}_NN.png(+json), audit_sheet.csv, audit_key.csv, audit_sampling.json. 사용: GT_STAGE=ga3 g7_audit.py"""
@@ -66,7 +66,7 @@ def main():
                     ax.add_patch(Rectangle((-.125, -tp), .25, 2*tp, color='#AFA9EC', alpha=.55, lw=0, zorder=1))
                     if np.isfinite(hI): ax.add_patch(Rectangle((-.125, hI - ti), .25, 2*ti, color='#97C459', alpha=.55, lw=0, zorder=1))
                 a1.axvline(-.125, color='#5F5E5A', lw=.4, ls='--'); a1.axvline(.125, color='#5F5E5A', lw=.4, ls='--')
-                a1.scatter(ap, tpp, s=2.2, color='#534AB7', lw=0, zorder=3); a1.scatter(am, tm, s=.7, color='#97C459', lw=0, zorder=4); a1.scatter(ag, tg, s=1.1, color='k', lw=0, zorder=5)
+                a1.scatter(ap, tpp, s=2.2, color='#534AB7', lw=0, zorder=3); a1.scatter(ag, tg, s=1.6, color='k', lw=0, zorder=4); a1.scatter(am, tm, s=.6, color='#97C459', lw=0, zorder=5)   # 발주 4절: 영상 점을 참값 위에(참값은 조금 크게)
                 a1.set_xlim(-3, 3); a1.set_ylim(lo_, hi_); a1.set_title(e['label'], fontsize=7, fontweight='bold', loc='left')
                 cm = np.abs(am) <= .125; cg = np.abs(ag) <= .125; ys = np.r_[tm[cm], tg[cg], 0, hI if np.isfinite(hI) else 0]
                 a2.scatter(am[cm] - .03, tm[cm], s=3, color='#3B6D11', lw=0, zorder=4); a2.scatter(ag[cg] + .03, tg[cg], s=3, color='k', lw=0, zorder=5)
