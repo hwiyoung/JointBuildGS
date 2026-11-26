@@ -44,3 +44,12 @@
 - 2026-11-26T11:54:26+09:00: 4절 ② 확인: 인공 시험 모두 맞음 True, 25 s
 - 2026-11-26T11:56:46+09:00: 4절 카메라 쪽 나눔·4.5·fig7_2 v2: {'LoD2': {'front_plus_back_equals_step2': True, 'patches_checked': 876555}, 'ALS': {'front_plus_back_equals_step2': True, 'patches_checked': 252103}, 'at': '2026-11-26T11:56:46+09:00', 'seconds': 37.5272565970663, 'scientific_verdict': None}
 - 2026-11-26T11:57:14+09:00: 4절 카메라 쪽 나눔·4.5·fig7_2 v2: {'LoD2': {'front_plus_back_equals_step2': True, 'patches_checked': 876555}, 'ALS': {'front_plus_back_equals_step2': True, 'patches_checked': 252103}, 'at': '2026-11-26T11:57:14+09:00', 'seconds': 9.907744013005868, 'scientific_verdict': None}
+- 2026-11-26T11:59:01+09:00: g14_heights.py 시작(백그라운드, 어림 40분): ②→③ h_M 다시 fuse, 높이 17 + 곡선 36 목표 맞음
+- 2026-11-26T12:00:51+09:00: ②→③ h_M LoD2: {'cons_counts_equal_step3': True, 'starts': 3593337, 'unique': 3248383, 'no_depth': 0}
+- 2026-11-26T12:05:17+09:00: 목표 맞음(본 τ) LoD2: 375 s
+- 2026-11-26T12:08:23+09:00: 목표 맞음(곡선) LoD2: 561 s
+- 2026-11-26T12:08:32+09:00: ②→③ h_M 항공 LiDAR: {'cons_counts_equal_step3': True, 'starts': 1909222, 'unique': 1880113, 'no_depth': 0}
+- 2026-11-26T12:11:06+09:00: 목표 맞음(본 τ) 항공 LiDAR: 724 s
+- 2026-11-26T12:14:07+09:00: 목표 맞음(곡선) 항공 LiDAR: 905 s
+- 2026-11-26T12:16:17+09:00: 덧붙임 1 채점(1·2·3·5절): {'at': '2026-11-26T12:14:15+09:00', 'scientific_verdict': None, 'LoD2': {'patches': 876555, 'plan4_target_acc_area': 84.48509512501973, 'plan4_judgment4_area': 77.07472866210088}, 'ALS': {'patches': 252380, 'plan4_target_acc_area': 88.44431630456896, 'plan4_judgment4_area': 83.17834307823392}, 'merge3_cells_different': 0, 'matrix_trace_consistent': True, 'seconds': 121.33384614693932}
+- 2026-11-26T12:19:26+09:00: 덧붙임 1 묶음 다: 채점·그림·보고 다 끝. 셋으로 합친 행렬 = t74_confusion(다른 칸 0), 판 4 목표 정확도 LoD2 84.5 % · 항공 LiDAR 88.4 %(넓이, 채점한 넓이).
